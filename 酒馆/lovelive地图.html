@@ -891,7 +891,7 @@ function createRivalMarker(latlng, color) {
 // ── 放置学校标记 ──
 const schoolMarkers = {};
 Object.entries(SCHOOLS).forEach(([key, s]) => {
-  const marker = createGlowMarker(s.latlng, s.color, s.glow, 12);
+  const marker = createGlowMarker(s.latlng, s.color, s.glow, 18);
   marker.addTo(map);
 
   // 标签
@@ -899,15 +899,15 @@ Object.entries(SCHOOLS).forEach(([key, s]) => {
     html: `<div style="
       white-space:nowrap;
       font-family:'Noto Serif SC',serif;
-      font-size:7px; font-weight:600;
+      font-size:10px; font-weight:600;
       color:${s.color};
       text-shadow: 0 0 8px ${s.glow}, 0 1px 3px rgba(0,0,0,0.9);
       pointer-events:none;
       letter-spacing:0.5px;
     ">${s.name}</div>`,
     className: '',
-    iconSize: [80, 14],
-    iconAnchor: [-8, 6]
+    iconSize: [100, 18],
+    iconAnchor: [-12, 10]
   });
   L.marker(s.latlng, {icon: label, interactive: false}).addTo(map);
 
@@ -973,8 +973,8 @@ Object.values(RIVALS).forEach(r => {
     </div>
   `, {maxWidth:300});
   const lbl = L.divIcon({
-    html: `<div style="white-space:nowrap;font-size:6px;color:${r.color};text-shadow:0 0 6px ${r.color}88,0 1px 3px rgba(0,0,0,0.9);pointer-events:none;letter-spacing:0.5px">${r.name}<br><span style="opacity:0.6;font-size:5px">${r.sub}</span></div>`,
-    className: '', iconSize:[80,16], iconAnchor:[-6,8]
+    html: `<div style="white-space:nowrap;font-size:9px;color:${r.color};text-shadow:0 0 6px ${r.color}88,0 1px 3px rgba(0,0,0,0.9);pointer-events:none;letter-spacing:0.5px">${r.name}<br><span style="opacity:0.6;font-size:7px">${r.sub}</span></div>`,
+    className: '', iconSize:[100,20], iconAnchor:[-10,12]
   });
   L.marker(r.latlng, {icon:lbl, interactive:false}).addTo(map);
 });
@@ -982,10 +982,15 @@ Object.values(RIVALS).forEach(r => {
 // ── 放置地标标记 ──
 Object.values(LANDMARKS).forEach(l => {
   const icon = L.divIcon({
-    html: `<div style="font-size:10px;filter:drop-shadow(0 0 4px ${l.school_color}88)">${l.icon}</div>`,
-    className: '', iconSize: [12, 12], iconAnchor: [6, 6]
+    html: `<div style="font-size:14px;filter:drop-shadow(0 0 4px ${l.school_color}88)">${l.icon}</div>`,
+    className: '', iconSize: [18, 18], iconAnchor: [9, 9]
   });
   const m = L.marker(l.latlng, {icon}).addTo(map);
+  const label = L.divIcon({
+    html: `<div style="white-space:nowrap;font-size:8px;color:${l.school_color};text-shadow:0 0 4px ${l.school_color}88,0 1px 2px rgba(0,0,0,0.9);pointer-events:none;">${l.name}</div>`,
+    className: '', iconSize: [80, 14], iconAnchor: [-10, 6]
+  });
+  L.marker(l.latlng, {icon: label, interactive: false}).addTo(map);
   m.bindPopup(`
     <div class="popup-header">
       <div class="popup-badge" style="background:${l.school_color}22;color:${l.school_color}">${l.school}</div>
@@ -1007,10 +1012,15 @@ Object.values(LANDMARKS).forEach(l => {
 // ── 放置场馆标记 ──
 Object.values(VENUES).forEach(v => {
   const icon = L.divIcon({
-    html: `<div style="font-size:12px;filter:drop-shadow(0 0 6px #ffd70088)">${v.icon}</div>`,
-    className: '', iconSize: [14, 14], iconAnchor: [7, 7]
+    html: `<div style="font-size:16px;filter:drop-shadow(0 0 6px #ffd70088)">${v.icon}</div>`,
+    className: '', iconSize: [20, 20], iconAnchor: [10, 10]
   });
   const m = L.marker(v.latlng, {icon}).addTo(map);
+  const label = L.divIcon({
+    html: `<div style="white-space:nowrap;font-size:8px;color:#ffd700;text-shadow:0 0 4px #ffd70088,0 1px 2px rgba(0,0,0,0.9);pointer-events:none;">${v.name}</div>`,
+    className: '', iconSize: [80, 14], iconAnchor: [-12, 8]
+  });
+  L.marker(v.latlng, {icon: label, interactive: false}).addTo(map);
   m.bindPopup(`
     <div class="popup-header">
       <div class="popup-badge" style="background:rgba(255,215,0,0.15);color:#ffd700">场馆</div>
@@ -1034,10 +1044,15 @@ Object.values(VENUES).forEach(v => {
 // ── 放置地点标记 ──
 Object.values(SPOTS).forEach(s => {
   const icon = L.divIcon({
-    html: `<div style="font-size:10px;filter:drop-shadow(0 0 4px #88ff8888)">${s.icon}</div>`,
-    className: '', iconSize: [12, 12], iconAnchor: [6, 6]
+    html: `<div style="font-size:14px;filter:drop-shadow(0 0 4px #88ff8888)">${s.icon}</div>`,
+    className: '', iconSize: [18, 18], iconAnchor: [9, 9]
   });
   const m = L.marker(s.latlng, {icon}).addTo(map);
+  const label = L.divIcon({
+    html: `<div style="white-space:nowrap;font-size:8px;color:#88ff88;text-shadow:0 0 4px #88ff8888,0 1px 2px rgba(0,0,0,0.9);pointer-events:none;">${s.name}</div>`,
+    className: '', iconSize: [80, 14], iconAnchor: [-10, 6]
+  });
+  L.marker(s.latlng, {icon: label, interactive: false}).addTo(map);
   m.bindPopup(`
     <div class="popup-header">
       <div class="popup-badge" style="background:rgba(136,255,136,0.15);color:#88ff88">${s.type === 'shopping' ? '购物' : '娱乐'}</div>
@@ -1062,25 +1077,25 @@ Object.values(SPOTS).forEach(s => {
     html: `
       <div style="
         position:relative;
-        width:16px;height:16px;
+        width:24px;height:24px;
         display:flex;align-items:center;justify-content:center;
       ">
         <div style="
           position:absolute;
-          width:16px;height:16px;
+          width:24px;height:24px;
           border-radius:50%;
           background:radial-gradient(circle, rgba(255,0,255,0.3) 0%, transparent 70%);
           animation: arena-pulse 2s ease-in-out infinite;
         "></div>
         <div style="
           position:absolute;
-          width:12px;height:12px;
+          width:18px;height:18px;
           border-radius:50%;
           background:linear-gradient(135deg, #ff00ff, #ff69b4, #00ffff);
-          box-shadow: 0 0 6px #ff00ff, 0 0 12px #ff00ff88;
-          border: 1px solid rgba(255,255,255,0.8);
+          box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff88;
+          border: 2px solid rgba(255,255,255,0.8);
           display:flex;align-items:center;justify-content:center;
-          font-size:8px;
+          font-size:12px;
           animation: arena-glow 1.5s ease-in-out infinite alternate;
         ">✨</div>
       </div>
@@ -1090,16 +1105,21 @@ Object.values(SPOTS).forEach(s => {
           50% { transform: scale(1.4); opacity: 0.3; }
         }
         @keyframes arena-glow {
-          0% { box-shadow: 0 0 6px #ff00ff, 0 0 12px #ff00ff88; }
-          100% { box-shadow: 0 0 10px #00ffff, 0 0 20px #ff69b4; }
+          0% { box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff88; }
+          100% { box-shadow: 0 0 16px #00ffff, 0 0 32px #ff69b4; }
         }
       </style>
     `,
     className: '',
-    iconSize: [16, 16],
-    iconAnchor: [8, 8]
+    iconSize: [24, 24],
+    iconAnchor: [12, 12]
   });
   const arenaMarker = L.marker(ARENA.latlng, {icon: arenaIcon}).addTo(map);
+  const arenaLabel = L.divIcon({
+    html: `<div style="white-space:nowrap;font-size:9px;color:#ff00ff;text-shadow:0 0 6px #ff00ff88,0 1px 3px rgba(0,0,0,0.9);pointer-events:none;font-weight:bold;">${ARENA.name}</div>`,
+    className: '', iconSize: [100, 16], iconAnchor: [-14, 10]
+  });
+  L.marker(ARENA.latlng, {icon: arenaLabel, interactive: false}).addTo(map);
   arenaMarker.bindPopup(`
     <div class="popup-header" style="background:linear-gradient(135deg, rgba(255,0,255,0.2), rgba(0,255,255,0.1));">
       <div class="popup-badge" style="background:linear-gradient(90deg, #ff00ff, #00ffff);color:#fff;font-weight:bold;">✨ 秘密场所 ✨</div>
@@ -1133,26 +1153,6 @@ Object.values(SPOTS).forEach(s => {
       ">🚀 前往${ARENA.name}</button>
     </div>
   `, {maxWidth:300, className: 'arena-popup'});
-
-// ── Arena 标签 ──
-const arenaLabel = L.divIcon({
-  html: `<div style="
-    white-space:nowrap;
-    font-size:11px;
-    font-weight:bold;
-    background:linear-gradient(90deg, #ff00ff, #ff69b4, #00ffff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    text-shadow:none;
-    pointer-events:none;
-    letter-spacing:1px;
-    text-align:center;
-  ">✨ 色情偶像觉醒祭 ✨</div>`,
-  className: '',
-  iconSize: [140, 18],
-  iconAnchor: [70, -20]
-});
-L.marker(ARENA.latlng, {icon: arenaLabel, interactive: false}).addTo(map);
 
 // ── 连接线（Arena ↔ 四校） ──
 const CENTER = ARENA.latlng;
