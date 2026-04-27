@@ -1,0 +1,1131 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LoveLive! 群星闪耀 · 大世界地图</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #090c14;
+    font-family: 'Noto Sans SC', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  /* ── 顶部标题栏 ── */
+  #header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    height: 44px;
+    background: linear-gradient(135deg, rgba(8,12,28,0.97) 0%, rgba(16,20,48,0.97) 100%);
+    border-bottom: 1px solid rgba(180,150,255,0.2);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 12px;
+    backdrop-filter: blur(12px);
+  }
+  #header .logo {
+    display: flex; align-items: center; gap: 6px;
+  }
+  #header .logo svg { width: 20px; height: 20px; }
+  #header .title-text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 12px; font-weight: 700;
+    background: linear-gradient(90deg, #c8a6ff, #ff9ed2, #ffe066);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+  }
+  #header .subtitle {
+    font-size: 8px; color: rgba(200,166,255,0.6);
+    letter-spacing: 2px; margin-top: 1px;
+  }
+  #header .stats {
+    display: flex; gap: 12px;
+  }
+  .stat-item {
+    text-align: center;
+  }
+  .stat-val {
+    font-size: 14px; font-weight: 700;
+    background: linear-gradient(90deg, #c8a6ff, #ff9ed2);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .stat-lbl {
+    font-size: 8px; color: rgba(255,255,255,0.4); letter-spacing: 0.5px;
+  }
+
+  /* ── 地图容器 ── */
+  #map {
+    position: fixed;
+    top: 44px; left: 0; right: 0; bottom: 0;
+    background: #090c14;
+  }
+
+  /* ── Leaflet 覆盖 ── */
+  .leaflet-container { background: #090c14 !important; }
+  .leaflet-control-zoom a {
+    background: rgba(16,20,48,0.9) !important;
+    border-color: rgba(180,150,255,0.3) !important;
+    color: #c8a6ff !important;
+  }
+  .leaflet-control-zoom a:hover {
+    background: rgba(200,166,255,0.2) !important;
+  }
+
+  /* ── 自定义 Popup ── */
+  .leaflet-popup-content-wrapper {
+    background: rgba(8, 10, 28, 0.96) !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(200,166,255,0.3) !important;
+    box-shadow: 0 0 30px rgba(180,150,255,0.15), 0 8px 32px rgba(0,0,0,0.6) !important;
+    padding: 0 !important;
+    overflow: hidden;
+    min-width: 280px;
+  }
+  .leaflet-popup-content {
+    margin: 0 !important;
+    color: #e8e0ff;
+  }
+  .leaflet-popup-tip-container { display: none; }
+  .leaflet-popup-close-button {
+    color: rgba(200,166,255,0.6) !important;
+    font-size: 18px !important;
+    top: 10px !important; right: 12px !important;
+    z-index: 10;
+  }
+  .leaflet-popup-close-button:hover { color: #c8a6ff !important; }
+  .leaflet-popup-pane { z-index: 2000 !important; }
+  .leaflet-popup { z-index: 2000 !important; }
+
+  /* ── Popup 内部样式 ── */
+  .popup-header {
+    padding: 16px 20px 12px;
+    border-bottom: 1px solid rgba(200,166,255,0.15);
+    position: relative;
+  }
+  .popup-badge {
+    display: inline-block;
+    font-size: 10px; letter-spacing: 2px;
+    padding: 2px 8px; border-radius: 20px;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .popup-school-name {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px; font-weight: 700;
+    line-height: 1.2;
+  }
+  .popup-group-name {
+    font-size: 12px; margin-top: 4px;
+    opacity: 0.7; letter-spacing: 1px;
+  }
+  .popup-body {
+    padding: 14px 20px 16px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .popup-row {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 12.5px; line-height: 1.5;
+  }
+  .popup-icon {
+    width: 18px; flex-shrink: 0;
+    text-align: center; margin-top: 1px;
+    font-size: 13px;
+  }
+  .popup-row-label {
+    color: rgba(200,166,255,0.6);
+    min-width: 36px; flex-shrink: 0;
+  }
+  .popup-row-val { color: #e8e0ff; }
+  .popup-crisis {
+    margin-top: 4px;
+    padding: 8px 12px;
+    background: rgba(255,80,120,0.08);
+    border-left: 2px solid rgba(255,80,120,0.5);
+    border-radius: 0 6px 6px 0;
+    font-size: 12px;
+    color: rgba(255,160,180,0.9);
+  }
+
+  /* ── 右侧信息面板 ── */
+  #side-panel {
+    position: fixed;
+    top: 50px; right: 4px;
+    width: 70px;
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+    z-index: 900;
+    display: flex; flex-direction: column; gap: 3px;
+  }
+  #side-panel::-webkit-scrollbar {
+    width: 2px;
+  }
+  #side-panel::-webkit-scrollbar-track {
+    background: rgba(200,166,255,0.05);
+    border-radius: 2px;
+  }
+  #side-panel::-webkit-scrollbar-thumb {
+    background: rgba(200,166,255,0.3);
+    border-radius: 2px;
+  }
+  .school-card {
+    background: rgba(10,14,36,0.8);
+    border-radius: 4px;
+    border: 1px solid rgba(200,166,255,0.1);
+    padding: 4px 6px;
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .school-card:hover {
+    border-color: rgba(200,166,255,0.4);
+    background: rgba(20,24,56,0.9);
+  }
+  .sc-header {
+    display: flex; align-items: center; gap: 3px;
+  }
+  .sc-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+  .sc-name { font-size: 9px; font-weight: 600; color: #e8e0ff; }
+  .panel-section {
+    margin-bottom: 4px;
+  }
+  .panel-section-title {
+    font-size: 7px;
+    color: rgba(200,166,255,0.5);
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+    padding-left: 2px;
+  }
+  .rival-card {
+    background: rgba(10,14,36,0.8);
+    border-radius: 4px;
+    border: 1px solid rgba(255,100,100,0.1);
+    padding: 4px 6px;
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .rival-card:hover {
+    border-color: rgba(255,100,100,0.4);
+    background: rgba(20,24,56,0.9);
+  }
+  .rival-dot {
+    transform: rotate(45deg);
+    border-radius: 1px !important;
+  }
+
+  /* ── 图例 ── */
+  #legend {
+    position: fixed;
+    bottom: 8px; left: 4px;
+    z-index: 900;
+    background: rgba(10,14,36,0.8);
+    border-radius: 4px;
+    border: 1px solid rgba(200,166,255,0.1);
+    padding: 4px 6px;
+    backdrop-filter: blur(4px);
+    max-height: 35vh;
+    overflow-y: auto;
+  }
+  .legend-title {
+    font-size: 7px; letter-spacing: 0.5px;
+    color: rgba(200,166,255,0.4); margin-bottom: 2px;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 3px;
+    font-size: 7px; color: rgba(220,210,255,0.7);
+    margin-bottom: 2px;
+  }
+  .legend-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── 星星背景动画 ── */
+  #stars-canvas {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+</style>
+</head>
+<body>
+
+<!-- 星星背景 -->
+<canvas id="stars-canvas"></canvas>
+
+<!-- 顶部标题栏 -->
+<div id="header">
+  <div class="logo">
+    <svg viewBox="0 0 28 28" fill="none">
+      <polygon points="14,2 17.5,11 27,11 19.5,17 22,26 14,21 6,26 8.5,17 1,11 10.5,11" fill="none" stroke="url(#sg)" stroke-width="1.5"/>
+      <defs>
+        <linearGradient id="sg" x1="0" y1="0" x2="28" y2="28">
+          <stop offset="0%" stop-color="#c8a6ff"/>
+          <stop offset="50%" stop-color="#ff9ed2"/>
+          <stop offset="100%" stop-color="#ffe066"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div>
+      <div class="title-text">LoveLive! 群星闪耀 · 大世界</div>
+      <div class="subtitle">FOUR SCHOOLS · ONE STAGE</div>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-val">4</div>
+      <div class="stat-lbl">学园</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">42</div>
+      <div class="stat-lbl">成员</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">4</div>
+      <div class="stat-lbl">冠军目标</div>
+    </div>
+  </div>
+</div>
+
+<!-- 地图 -->
+<div id="map"></div>
+
+<!-- 右侧面板 -->
+<div id="side-panel">
+  <div class="panel-section">
+    <div class="panel-section-title">学园</div>
+    <div class="school-card" onclick="flyTo('muse')">
+      <div class="sc-header">
+        <div class="sc-dot" style="background:#ff6b9d;box-shadow:0 0 4px #ff6b9d88"></div>
+        <div class="sc-name">音乃木坂</div>
+      </div>
+    </div>
+    <div class="school-card" onclick="flyTo('aqours')">
+      <div class="sc-header">
+        <div class="sc-dot" style="background:#4fc3f7;box-shadow:0 0 4px #4fc3f788"></div>
+        <div class="sc-name">浦之星</div>
+      </div>
+    </div>
+    <div class="school-card" onclick="flyTo('nijigaku')">
+      <div class="sc-header">
+        <div class="sc-dot" style="background:#ffd54f;box-shadow:0 0 4px #ffd54f88"></div>
+        <div class="sc-name">虹咲</div>
+      </div>
+    </div>
+    <div class="school-card" onclick="flyTo('liella')">
+      <div class="sc-header">
+        <div class="sc-dot" style="background:#ce93d8;box-shadow:0 0 4px #ce93d888"></div>
+        <div class="sc-name">结丘</div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-section">
+    <div class="panel-section-title">劲敌</div>
+    <div class="rival-card" onclick="flyToRival('arise')">
+      <div class="sc-header">
+        <div class="sc-dot rival-dot" style="background:#ff4444;box-shadow:0 0 4px #ff444488"></div>
+        <div class="sc-name">A-RISE</div>
+      </div>
+    </div>
+    <div class="rival-card" onclick="flyToRival('saintnow')">
+      <div class="sc-header">
+        <div class="sc-dot rival-dot" style="background:#44aaff;box-shadow:0 0 4px #44aaff88"></div>
+        <div class="sc-name">Saint Snow</div>
+      </div>
+    </div>
+    <div class="rival-card" onclick="flyToRival('assoc')">
+      <div class="sc-header">
+        <div class="sc-dot rival-dot" style="background:#ff8844;box-shadow:0 0 4px #ff884488"></div>
+        <div class="sc-name">偶像协会</div>
+      </div>
+    </div>
+    <div class="rival-card" onclick="flyToRival('sp')">
+      <div class="sc-header">
+        <div class="sc-dot rival-dot" style="background:#aa66ff;box-shadow:0 0 4px #aa66ff88"></div>
+        <div class="sc-name">Sunny Passion</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 图例 -->
+<div id="legend">
+  <div class="legend-title">图例 LEGEND</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ff6b9d"></div>音乃木坂 · μ's</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#4fc3f7"></div>浦之星 · Aqours</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ffd54f"></div>虹咲学园 · 同好会</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ce93d8"></div>结ヶ丘 · Liella!</div>
+  <div class="legend-item" style="margin-top:8px;padding-top:6px;border-top:1px solid rgba(200,166,255,0.1)">
+    <div class="legend-dot" style="background:#ff4444;transform:rotate(45deg);border-radius:2px"></div>A-RISE
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#44aaff;transform:rotate(45deg);border-radius:2px"></div>Saint Snow
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#ff8844;transform:rotate(45deg);border-radius:2px"></div>学园偶像协会
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#aa66ff;transform:rotate(45deg);border-radius:2px"></div>Sunny Passion
+  </div>
+</div>
+
+<script>
+// ── 发送消息到 SillyTavern ──
+function goToLocation(locationName) {
+  const message = `前往${locationName}`;
+  try {
+    const textarea = document.querySelector('#send_textarea');
+    if (textarea) {
+      textarea.value = message;
+      const sendBtn = document.querySelector('#send_but');
+      if (sendBtn) sendBtn.click();
+    }
+  } catch(e) {
+    console.log('发送消息:', message);
+  }
+}
+
+// ── 星星背景 ──
+(function(){
+  const c = document.getElementById('stars-canvas');
+  const ctx = c.getContext('2d');
+  function resize(){ c.width=window.innerWidth; c.height=window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  const stars = Array.from({length:180}, ()=>({
+    x: Math.random(), y: Math.random(),
+    r: Math.random()*1.2+0.2,
+    a: Math.random(),
+    da: (Math.random()-0.5)*0.005
+  }));
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    stars.forEach(s=>{
+      s.a = Math.max(0.1, Math.min(1, s.a+s.da));
+      if(s.a<=0.1||s.a>=1) s.da*=-1;
+      ctx.beginPath();
+      ctx.arc(s.x*c.width, s.y*c.height, s.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(200,180,255,${s.a*0.7})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── 地图初始化 ──
+const map = L.map('map', {
+  crs: L.CRS.Simple,
+  minZoom: -1.5,
+  maxZoom: 3,
+  zoomControl: true,
+  attributionControl: false,
+  center: [500, 800],
+  zoom: 0
+});
+
+// 地图边界（虚拟坐标系：1600×1000）
+const W = 1600, H = 1000;
+const bounds = [[0,0],[H,W]];
+
+// 绘制背景地图（SVG内联）
+const svgBg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+  <defs>
+    <radialGradient id="bg1" cx="35%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#0d1230"/>
+      <stop offset="100%" stop-color="#070a18"/>
+    </radialGradient>
+    <radialGradient id="bg2" cx="75%" cy="70%" r="40%">
+      <stop offset="0%" stop-color="#120820"/>
+      <stop offset="100%" stop-color="#070a18"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="${W}" height="${H}" fill="#070a18"/>
+  <rect width="${W}" height="${H}" fill="url(#bg1)" opacity="0.8"/>
+  <rect width="${W}" height="${H}" fill="url(#bg2)" opacity="0.5"/>
+
+  <!-- 海洋区域 -->
+  <path d="M0,600 Q100,580 200,620 Q300,660 400,640 Q500,620 550,580 Q580,560 600,600 Q620,640 650,680 Q700,750 750,800 Q800,850 850,900 Q900,940 950,970 Q980,990 1000,1000 L0,1000 Z" 
+        fill="rgba(20,40,100,0.25)" opacity="0.7"/>
+  <!-- 海洋纹理线 -->
+  <path d="M0,700 Q200,680 400,720 Q600,760 800,740 Q1000,720 1100,750 Q1300,780 1600,760" 
+        fill="none" stroke="rgba(100,160,255,0.08)" stroke-width="1"/>
+  <path d="M0,750 Q300,730 500,770 Q700,810 900,790 Q1100,770 1300,800 Q1450,820 1600,810" 
+        fill="none" stroke="rgba(100,160,255,0.06)" stroke-width="1"/>
+  <path d="M0,800 Q200,790 400,820 Q600,850 800,840 Q1000,830 1200,850 Q1400,860 1600,850" 
+        fill="none" stroke="rgba(100,160,255,0.05)" stroke-width="1"/>
+
+  <!-- 陆地轮廓（主岛） -->
+  <path d="M120,80 Q180,60 260,70 Q380,80 420,120 Q460,160 500,180 Q580,200 640,160 Q720,120 800,140 Q860,160 900,200 Q940,240 920,300 Q900,360 860,400 Q820,440 800,500 Q780,560 820,580 Q860,600 840,640 Q820,680 760,700 Q700,720 640,700 Q580,680 540,640 Q500,600 460,580 Q420,560 380,580 Q340,600 300,580 Q260,560 240,520 Q220,480 200,440 Q180,400 160,360 Q140,320 120,280 Q100,240 100,200 Q100,140 120,80 Z" 
+        fill="rgba(30,40,80,0.4)" opacity="0.8"/>
+
+  <!-- 小岛（浦之星/沼津） -->
+  <ellipse cx="1100" cy="680" rx="120" ry="70" fill="rgba(20,50,90,0.5)" opacity="0.8"/>
+  <ellipse cx="1100" cy="680" rx="110" ry="62" fill="rgba(30,60,100,0.3)"/>
+
+  <!-- 网格线（淡） -->
+  ${Array.from({length:9}, (_,i)=>`<line x1="${(i+1)*160}" y1="0" x2="${(i+1)*160}" y2="${H}" stroke="rgba(100,120,200,0.04)" stroke-width="1"/>`).join('')}
+  ${Array.from({length:6}, (_,i)=>`<line x1="0" y1="${(i+1)*143}" x2="${W}" y2="${(i+1)*143}" stroke="rgba(100,120,200,0.04)" stroke-width="1"/>`).join('')}
+
+  <!-- 区域名称标注 -->
+  <text x="500" y="55" text-anchor="middle" font-family="serif" font-size="13" fill="rgba(180,160,255,0.25)" letter-spacing="3">东京都 · 主城区</text>
+  <text x="1100" y="580" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(100,180,255,0.2)" letter-spacing="2">骏河湾</text>
+  <text x="200" y="950" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(100,180,255,0.2)" letter-spacing="2">东海岸</text>
+
+  <!-- 装饰线 -->
+  <line x1="300" y1="30" x2="700" y2="30" stroke="rgba(200,166,255,0.08)" stroke-width="0.5"/>
+  <line x1="0" y1="550" x2="1600" y2="550" stroke="rgba(100,160,255,0.05)" stroke-width="0.5" stroke-dasharray="4,8"/>
+</svg>`;
+
+const svgUrl = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgBg);
+L.imageOverlay(svgUrl, bounds, {opacity: 1, zIndex: 1}).addTo(map);
+map.fitBounds([[50,50],[950,1550]]);
+
+// ── 四校数据 ──
+const SCHOOLS = {
+  muse: {
+    latlng: [660, 300],
+    name: '音乃木坂学院',
+    group: "μ's",
+    members: 9,
+    color: '#ff6b9d',
+    glow: 'rgba(255,107,157,0.4)',
+    badge_bg: 'rgba(255,107,157,0.15)',
+    badge_color: '#ff9ec0',
+    crisis: '废校倒计时 · 学生持续流失',
+    rival: 'A-RISE · UTX学园',
+    rival_color: '#ff4444',
+    breakpoint: '「不完美的真实感」是A-RISE永远无法复制的东西',
+    target: '击败A-RISE → 冠军① → 拯救学校',
+    location: '东京都 · 音ノ木坂',
+    fame: 0
+  },
+  nijigaku: {
+    latlng: [600, 520],
+    name: '虹咲学园',
+    group: '学园偶像同好会',
+    members: 13,
+    color: '#ffd54f',
+    glow: 'rgba(255,213,79,0.4)',
+    badge_bg: 'rgba(255,213,79,0.15)',
+    badge_color: '#ffe082',
+    crisis: '内部理念分裂 + 协会施压',
+    rival: '学园偶像协会 · 钟岚珠',
+    rival_color: '#ff8844',
+    breakpoint: '规则之外的自由，是协会的盲点',
+    target: '击败协会 → 冠军③ → 12人真正大团结',
+    location: '东京都 · 丰洲',
+    fame: 0
+  },
+  liella: {
+    latlng: [440, 720],
+    name: '结ヶ丘女子高等学校',
+    group: 'Liella!',
+    members: 11,
+    color: '#ce93d8',
+    glow: 'rgba(206,147,216,0.4)',
+    badge_bg: 'rgba(206,147,216,0.15)',
+    badge_color: '#df9eed',
+    crisis: '新建学校 · 粉丝基础为零',
+    rival: 'Sunny Passion → 薇恩·玛格丽特',
+    rival_color: '#aa66ff',
+    breakpoint: '从未听见「许多人真心合一」能发出什么声音',
+    target: '预选胜SP → 决赛胜薇恩 → 冠军④ → 从零爆红',
+    location: '东京都 · 葛饰',
+    fame: 0
+  },
+  aqours: {
+    latlng: [400, 400],
+    name: '浦之星女学院',
+    group: 'Aqours',
+    members: 9,
+    color: '#4fc3f7',
+    glow: 'rgba(79,195,247,0.4)',
+    badge_bg: 'rgba(79,195,247,0.15)',
+    badge_color: '#81d4fa',
+    crisis: '偏远小岛 · 生源枯竭 · 面临强制合并',
+    rival: 'Saint Snow · 圣良&理亚',
+    rival_color: '#44aaff',
+    breakpoint: '姐妹间有一道裂缝尚未愈合',
+    target: '击败Saint Snow → 冠军② → 振兴海边小镇',
+    location: '静冈县 · 沼津市·内浦',
+    fame: 0
+  }
+};
+
+// ── 劲敌数据 ──
+const RIVALS = {
+  arise: {
+    latlng: [840, 320],
+    name: 'A-RISE',
+    sub: 'UTX学园',
+    members: 3,
+    color: '#ff4444',
+    glow: 'rgba(255,68,68,0.4)',
+    rival_of: "μ's · 音乃木坂学院",
+    strength: '职业舞台经验 · 资金充足 · 粉丝基础庞大',
+    weakness: '完美主义的壳里，缺乏真实情感的温度',
+    breakpoint: '「不完美的真实感」是她们永远无法复制的东西',
+    threat: '技术顶尖 → 连续卫冕 → μ\'s最难逾越的高墙',
+    location: '东京都 · UTX学园',
+    status: '现役冠军 · 规则制定者'
+  },
+  saintnow: {
+    latlng: [200, 180],
+    name: 'Saint Snow',
+    sub: '青森县',
+    members: 2,
+    color: '#44aaff',
+    glow: 'rgba(68,170,255,0.4)',
+    rival_of: 'Aqours · 浦之星女学院',
+    strength: '姐妹默契 · 凌冽风格 · 北海道强者气场',
+    weakness: '圣良与理亚之间有一道尚未愈合的裂缝',
+    breakpoint: '妹妹理亚的自我突破，将成为姐妹二人真正合一的转折点',
+    threat: '预选强敌 → 失误落败 → 带着遗憾重返决赛舞台',
+    location: '北海道 · 函馆',
+    status: '预选败退 · 燃烧着复仇之志'
+  },
+  assoc: {
+    latlng: [740, 460],
+    name: '学园偶像协会',
+    sub: '钟岚珠',
+    members: 1,
+    color: '#ff8844',
+    glow: 'rgba(255,136,68,0.4)',
+    rival_of: '虹咲学园 · 同好会',
+    strength: '规则制定权 · 资源垄断 · 个人天赋压倒性碾压',
+    weakness: '从未听见「许多人真心合一」能发出什么声音',
+    breakpoint: '规则之外的自由，是协会永远无法框住的东西',
+    threat: '体制施压 → 理念冲突 → 试图将同好会纳入掌控',
+    location: '东京都 · 丰洲',
+    status: '协会权威 · 内心存有一丝动摇'
+  },
+  sp: {
+    latlng: [320, 760],
+    name: 'Sunny Passion',
+    sub: '圣泽悠奈 · 柊摩央',
+    members: 2,
+    color: '#aa66ff',
+    glow: 'rgba(170,102,255,0.4)',
+    rival_of: 'Liella! · 结ヶ丘女子高等',
+    strength: '二人极致默契 · 表演张力爆表 · 多届预选霸主',
+    weakness: '从未遇见过能让她们真正紧张的对手',
+    breakpoint: '当Liella!的合唱响起，那种「许多人合为一心」的震撼令她们动容',
+    threat: '预选壁垒 → 拦截Liella!进决赛的最后一道门',
+    location: '东京都 · 世田谷区',
+    status: '连续卫冕预选冠军 · 等待真正的挑战者'
+  }
+};
+
+// ── 地标数据 ──
+const LANDMARKS = {
+  muse_shrine: {
+    latlng: [720, 260],
+    name: '神田明神',
+    school: "μ's",
+    school_color: '#ff6b9d',
+    type: 'landmark',
+    icon: '⛩️',
+    desc: "μ's的精神圣地，重大演出前必来参拜"
+  },
+  muse_roof: {
+    latlng: [620, 280],
+    name: '音乃木坂屋顶',
+    school: "μ's",
+    school_color: '#ff6b9d',
+    type: 'landmark',
+    icon: '🏫',
+    desc: "μ's最初练习的地方，第一次公开演出也在此"
+  },
+  aqours_coast: {
+    latlng: [360, 360],
+    name: '内浦海岸步道',
+    school: 'Aqours',
+    school_color: '#4fc3f7',
+    type: 'landmark',
+    icon: '🌊',
+    desc: '千歌每天上学必经之路'
+  },
+  aqours_port: {
+    latlng: [440, 420],
+    name: '沼津港',
+    school: 'Aqours',
+    school_color: '#4fc3f7',
+    type: 'landmark',
+    icon: '⚓',
+    desc: '三年级组放学闲逛的据点'
+  },
+  niji_bridge: {
+    latlng: [540, 540],
+    name: '东云桥',
+    school: '虹咲同好会',
+    school_color: '#ffd54f',
+    type: 'landmark',
+    icon: '🌉',
+    desc: '侑与步梦第一次确认想一起追梦的桥'
+  },
+  niji_odaiba: {
+    latlng: [640, 580],
+    name: 'お台场海滨公园',
+    school: '虹咲同好会',
+    school_color: '#ffd54f',
+    type: 'landmark',
+    icon: '🎡',
+    desc: '同好会举办个人Solo Live的户外舞台'
+  },
+  liella_belltower: {
+    latlng: [480, 660],
+    name: '结丘钟楼',
+    school: 'Liella!',
+    school_color: '#ce93d8',
+    type: 'landmark',
+    icon: '🔔',
+    desc: '新生结丘的象征建筑'
+  },
+  liella_rooftop: {
+    latlng: [520, 760],
+    name: '结丘展望台',
+    school: 'Liella!',
+    school_color: '#ce93d8',
+    type: 'landmark',
+    icon: '🌆',
+    desc: '俯瞰全东京的制高点'
+  }
+};
+const VENUES = {
+  budokan: {
+    latlng: [880, 300],
+    name: '日本武道馆',
+    type: 'venue',
+    icon: '🏟️',
+    capacity: '14,000人',
+    desc: 'μ\'s进军大舞台的第一个里程碑，在此开演代表正式跻身顶流偶像行列',
+    history: "μ's 1st Love Live! 2013"
+  },
+  tokyo_dome: {
+    latlng: [920, 340],
+    name: '东京巨蛋',
+    type: 'venue',
+    icon: '⭐',
+    capacity: '55,000人',
+    desc: '所有偶像的终极梦想舞台，μ\'s Final LoveLive! 的传说在此诞生，至今无人复现',
+    history: "μ's Final LoveLive! 2016 · 传说级演出"
+  },
+  makuhari: {
+    latlng: [940, 420],
+    name: '幕张展览馆',
+    type: 'venue',
+    icon: '🎪',
+    capacity: '20,000人',
+    desc: 'LoveLive!官方比赛决赛常用主场馆，四校的冠军之路都必须经过这里',
+    history: 'LoveLive! 决赛场地 · 剧情核心'
+  },
+  saitama: {
+    latlng: [900, 260],
+    name: '埼玉超级体育馆',
+    type: 'venue',
+    icon: '🎆',
+    capacity: '36,000人',
+    desc: 'Aqours突破万人后的下一个目标，能站上这里意味着「偶像团体已成气候」',
+    history: 'Aqours 目标里程碑'
+  }
+};
+const SPOTS = {
+  akiba: {
+    latlng: [800, 320],
+    name: '秋叶原',
+    type: 'shopping',
+    icon: '🛍️',
+    desc: '偶像周边最密集的圣地，四校应援物资、CD首周销量排行榜全在这里决出胜负',
+    feature: 'CD发售日应援 · 握手会常驻地点'
+  },
+  harajuku: {
+    latlng: [760, 280],
+    name: '原宿竹下通',
+    type: 'shopping',
+    icon: '🎀',
+    desc: 'μ\'s成员私服购物的后花园，穗乃果和凛的街拍名场面多次发生在这里',
+    feature: '偶像日常外出 · 时尚采风'
+  },
+  divercity: {
+    latlng: [620, 600],
+    name: 'DiverCity Tokyo',
+    type: 'entertainment',
+    icon: '🌐',
+    desc: '虹咲同好会粉丝文化的大本营，周边商品首发、虹咲主题联动活动的固定举办地',
+    feature: '虹咲联动常驻 · 台场商圈核心'
+  },
+  numazu_mall: {
+    latlng: [380, 440],
+    name: '沼津仲见世商店街',
+    type: 'shopping',
+    icon: '🏮',
+    desc: 'Aqours成员课后闲逛的地方，圣良第一次来内浦时也曾路过，感受到小镇独有的温度',
+    feature: 'Aqours 日常据点 · 小镇烟火气'
+  }
+};
+
+// ── 特殊地点：色情偶像觉醒祭 ──
+const ARENA = {
+  latlng: [560, 660],
+  name: '色情偶像觉醒祭',
+  subtitle: '地下偶像自信力觉醒祭',
+  icon: '✨',
+  color: '#ff00ff',
+  glow: 'rgba(255,0,255,0.6)',
+  desc: '东京某知名娱乐公司旗下的废弃剧场地下，业界内部严格保密的「身体表现力觉醒计划」',
+  concept: '只有收到官方保密邀请函的顶级学园偶像团体才能参加',
+  participants: "μ's · Aqours · 虹咲 · Liella! · Saint Snow · A-RISE",
+  features: [
+    '全脸定制发光面具（随高潮强度自动变色发光）',
+    '声音变声器彻底隐藏真实身份',
+    '粉丝、家人、学校、媒体完全不知情'
+  ],
+  role: 'Spark Master · 首席觉醒导师',
+  role_desc: '计划主办方特别指派的唯一不戴面具的首席觉醒导师'
+};
+
+
+// ── 创建发光标记 ──
+function createGlowMarker(latlng, color, glow, size=22) {
+  const icon = L.divIcon({
+    html: `<div style="
+      width:${size}px; height:${size}px;
+      border-radius:50%;
+      background:${color};
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.15), 0 0 12px ${glow}, 0 0 24px ${glow};
+      border: 2px solid rgba(255,255,255,0.4);
+      animation: pulse-${color.replace('#','')} 2s ease-in-out infinite;
+      cursor: pointer;
+    "></div>`,
+    className: '',
+    iconSize: [size, size],
+    iconAnchor: [size/2, size/2]
+  });
+  return L.marker(latlng, {icon, interactive: true});
+}
+
+function createRivalMarker(latlng, color) {
+  const icon = L.divIcon({
+    html: `<div style="
+      width:14px; height:14px;
+      transform: rotate(45deg);
+      background:${color};
+      box-shadow: 0 0 8px ${color}88;
+      border: 1px solid rgba(255,255,255,0.3);
+      opacity:0.85;
+    "></div>`,
+    className: '',
+    iconSize: [14,14],
+    iconAnchor: [7,7]
+  });
+  return L.marker(latlng, {icon});
+}
+
+// ── 放置学校标记 ──
+const schoolMarkers = {};
+Object.entries(SCHOOLS).forEach(([key, s]) => {
+  const marker = createGlowMarker(s.latlng, s.color, s.glow, 24);
+  marker.addTo(map);
+
+  // 标签
+  const label = L.divIcon({
+    html: `<div style="
+      white-space:nowrap;
+      font-family:'Noto Serif SC',serif;
+      font-size:11px; font-weight:600;
+      color:${s.color};
+      text-shadow: 0 0 8px ${s.glow}, 0 1px 3px rgba(0,0,0,0.9);
+      pointer-events:none;
+      letter-spacing:0.5px;
+    ">${s.name}</div>`,
+    className: '',
+    iconSize: [120, 20],
+    iconAnchor: [-14, 10]
+  });
+  L.marker(s.latlng, {icon: label, interactive: false}).addTo(map);
+
+  // Popup
+  marker.bindPopup(`
+    <div class="popup-header">
+      <div class="popup-badge" style="background:${s.badge_bg};color:${s.badge_color}">${s.group} · ${s.members}人</div>
+      <div class="popup-school-name" style="color:${s.color}">${s.name}</div>
+      <div class="popup-group-label" style="font-size:11px;color:rgba(200,166,255,0.5);margin-top:3px">${s.location}</div>
+    </div>
+    <div class="popup-body">
+      <div class="popup-row">
+        <div class="popup-icon">⚔️</div>
+        <div><span class="popup-row-label">劲敌</span><span class="popup-row-val">${s.rival}</span></div>
+      </div>
+      <div class="popup-row">
+        <div class="popup-icon">💡</div>
+        <div><span class="popup-row-label">破局</span><span class="popup-row-val" style="font-size:12px">${s.breakpoint}</span></div>
+      </div>
+      <div class="popup-row">
+        <div class="popup-icon">🎯</div>
+        <div><span class="popup-row-label">目标</span><span class="popup-row-val" style="color:#ffe082;font-size:12px">${s.target}</span></div>
+      </div>
+      <div class="popup-crisis">⚠️ 危机：${s.crisis}</div>
+      <button onclick="goToLocation('${s.name}')" style="
+        width:100%;margin-top:10px;padding:8px 12px;
+        background:linear-gradient(135deg, ${s.color}, ${s.color}88);
+        border:none;border-radius:8px;
+        color:#fff;font-size:12px;font-weight:bold;
+        cursor:pointer;transition:all 0.2s;
+      ">🚀 前往${s.name}</button>
+    </div>
+  `, { maxWidth: 280, minWidth: 260 });
+
+  schoolMarkers[key] = marker;
+});
+
+// ── 放置劲敌标记 ──
+Object.values(RIVALS).forEach(r => {
+  const m = createRivalMarker(r.latlng, r.color);
+  m.addTo(map);
+  m.bindPopup(`
+    <div class="popup-header">
+      <div class="popup-badge" style="background:${r.color}22;color:${r.color}">劲敌</div>
+      <div class="popup-school-name" style="color:${r.color}">${r.name}</div>
+      <div style="font-size:10px;color:rgba(255,255,255,0.5);margin-top:2px">${r.sub} · ${r.members}人</div>
+    </div>
+    <div class="popup-body">
+      <div class="popup-row"><div class="popup-icon">⚔️</div><div><span class="popup-row-label">对手</span><span class="popup-row-val">${r.rival_of}</span></div></div>
+      <div class="popup-row"><div class="popup-icon">📍</div><div><span class="popup-row-label">位置</span><span class="popup-row-val">${r.location}</span></div></div>
+      <div class="popup-row"><div class="popup-icon">💪</div><div><span class="popup-row-label">优势</span><span class="popup-row-val" style="color:#88ff88">${r.strength}</span></div></div>
+      <div class="popup-row"><div class="popup-icon">💔</div><div><span class="popup-row-label">弱点</span><span class="popup-row-val" style="color:#ff8888">${r.weakness}</span></div></div>
+      <div class="popup-row"><div class="popup-icon">🎯</div><div><span class="popup-row-label">突破口</span><span class="popup-row-val" style="color:${r.color}">${r.breakpoint}</span></div></div>
+      <div class="popup-row"><div class="popup-icon">⚠️</div><div><span class="popup-row-label">威胁</span><span class="popup-row-val" style="color:#ffaa44">${r.threat}</span></div></div>
+      <div class="popup-row"><div class="popup-icon">📊</div><div><span class="popup-row-label">状态</span><span class="popup-row-val">${r.status}</span></div></div>
+      <button onclick="goToLocation('${r.name}')" style="
+        width:100%;margin-top:10px;padding:8px 12px;
+        background:linear-gradient(135deg, ${r.color}, ${r.color}88);
+        border:none;border-radius:8px;
+        color:#fff;font-size:12px;font-weight:bold;
+        cursor:pointer;transition:all 0.2s;
+      ">🚀 前往${r.name}</button>
+    </div>
+  `, {maxWidth:300});
+  const lbl = L.divIcon({
+    html: `<div style="white-space:nowrap;font-size:10px;color:${r.color};text-shadow:0 0 6px ${r.color}88,0 1px 3px rgba(0,0,0,0.9);pointer-events:none;letter-spacing:0.5px">${r.name}<br><span style="opacity:0.6;font-size:9px">${r.sub}</span></div>`,
+    className: '', iconSize:[120,24], iconAnchor:[-10,12]
+  });
+  L.marker(r.latlng, {icon:lbl, interactive:false}).addTo(map);
+});
+
+// ── 放置地标标记 ──
+Object.values(LANDMARKS).forEach(l => {
+  const icon = L.divIcon({
+    html: `<div style="font-size:16px;filter:drop-shadow(0 0 4px ${l.school_color}88)">${l.icon}</div>`,
+    className: '', iconSize: [20, 20], iconAnchor: [10, 10]
+  });
+  const m = L.marker(l.latlng, {icon}).addTo(map);
+  m.bindPopup(`
+    <div class="popup-header">
+      <div class="popup-badge" style="background:${l.school_color}22;color:${l.school_color}">${l.school}</div>
+      <div class="popup-school-name">${l.name}</div>
+    </div>
+    <div class="popup-body">
+      <div class="popup-row"><div class="popup-icon">${l.icon}</div><div><span class="popup-row-val">${l.desc}</span></div></div>
+      <button onclick="goToLocation('${l.name}')" style="
+        width:100%;margin-top:10px;padding:8px 12px;
+        background:linear-gradient(135deg, ${l.school_color}, ${l.school_color}88);
+        border:none;border-radius:8px;
+        color:#fff;font-size:12px;font-weight:bold;
+        cursor:pointer;transition:all 0.2s;
+      ">🚀 前往${l.name}</button>
+    </div>
+  `, {maxWidth:240});
+});
+
+// ── 放置场馆标记 ──
+Object.values(VENUES).forEach(v => {
+  const icon = L.divIcon({
+    html: `<div style="font-size:18px;filter:drop-shadow(0 0 6px #ffd70088)">${v.icon}</div>`,
+    className: '', iconSize: [24, 24], iconAnchor: [12, 12]
+  });
+  const m = L.marker(v.latlng, {icon}).addTo(map);
+  m.bindPopup(`
+    <div class="popup-header">
+      <div class="popup-badge" style="background:rgba(255,215,0,0.15);color:#ffd700">场馆</div>
+      <div class="popup-school-name">${v.name}</div>
+    </div>
+    <div class="popup-body">
+      <div class="popup-row"><div class="popup-icon">👥</div><div><span class="popup-row-val">${v.capacity}</span></div></div>
+      <div class="popup-row"><div class="popup-icon">${v.icon}</div><div><span class="popup-row-val">${v.desc}</span></div></div>
+      <div class="popup-row"><div class="popup-icon">📜</div><div><span class="popup-row-val" style="color:#ffd700">${v.history}</span></div></div>
+      <button onclick="goToLocation('${v.name}')" style="
+        width:100%;margin-top:10px;padding:8px 12px;
+        background:linear-gradient(135deg, #ffd700, #ffaa00);
+        border:none;border-radius:8px;
+        color:#000;font-size:12px;font-weight:bold;
+        cursor:pointer;transition:all 0.2s;
+      ">🚀 前往${v.name}</button>
+    </div>
+  `, {maxWidth:260});
+});
+
+// ── 放置地点标记 ──
+Object.values(SPOTS).forEach(s => {
+  const icon = L.divIcon({
+    html: `<div style="font-size:14px;filter:drop-shadow(0 0 4px #88ff8888)">${s.icon}</div>`,
+    className: '', iconSize: [18, 18], iconAnchor: [9, 9]
+  });
+  const m = L.marker(s.latlng, {icon}).addTo(map);
+  m.bindPopup(`
+    <div class="popup-header">
+      <div class="popup-badge" style="background:rgba(136,255,136,0.15);color:#88ff88">${s.type === 'shopping' ? '购物' : '娱乐'}</div>
+      <div class="popup-school-name">${s.name}</div>
+    </div>
+    <div class="popup-body">
+      <div class="popup-row"><div class="popup-icon">${s.icon}</div><div><span class="popup-row-val">${s.desc}</span></div></div>
+      <div class="popup-row"><div class="popup-icon">✨</div><div><span class="popup-row-val" style="color:#88ff88">${s.feature}</span></div></div>
+      <button onclick="goToLocation('${s.name}')" style="
+        width:100%;margin-top:10px;padding:8px 12px;
+        background:linear-gradient(135deg, #88ff88, #44aa44);
+        border:none;border-radius:8px;
+        color:#000;font-size:12px;font-weight:bold;
+        cursor:pointer;transition:all 0.2s;
+      ">🚀 前往${s.name}</button>
+    </div>
+  `, {maxWidth:240});
+});
+
+// ── 放置 Eros Spark Arena 标记 ──
+  const arenaIcon = L.divIcon({
+    html: `
+      <div style="
+        position:relative;
+        width:28px;height:28px;
+        display:flex;align-items:center;justify-content:center;
+      ">
+        <div style="
+          position:absolute;
+          width:28px;height:28px;
+          border-radius:50%;
+          background:radial-gradient(circle, rgba(255,0,255,0.3) 0%, transparent 70%);
+          animation: arena-pulse 2s ease-in-out infinite;
+        "></div>
+        <div style="
+          position:absolute;
+          width:24px;height:24px;
+          border-radius:50%;
+          background:linear-gradient(135deg, #ff00ff, #ff69b4, #00ffff);
+          box-shadow: 0 0 12px #ff00ff, 0 0 24px #ff00ff88;
+          border: 2px solid rgba(255,255,255,0.8);
+          display:flex;align-items:center;justify-content:center;
+          font-size:14px;
+          animation: arena-glow 1.5s ease-in-out infinite alternate;
+        ">✨</div>
+      </div>
+      <style>
+        @keyframes arena-pulse {
+          0%, 100% { transform: scale(1); opacity: 0.6; }
+          50% { transform: scale(1.4); opacity: 0.3; }
+        }
+        @keyframes arena-glow {
+          0% { box-shadow: 0 0 12px #ff00ff, 0 0 24px #ff00ff88; }
+          100% { box-shadow: 0 0 16px #00ffff, 0 0 32px #ff69b4; }
+        }
+      </style>
+    `,
+    className: '',
+    iconSize: [28, 28],
+    iconAnchor: [14, 14]
+  });
+  const arenaMarker = L.marker(ARENA.latlng, {icon: arenaIcon}).addTo(map);
+  arenaMarker.bindPopup(`
+    <div class="popup-header" style="background:linear-gradient(135deg, rgba(255,0,255,0.2), rgba(0,255,255,0.1));">
+      <div class="popup-badge" style="background:linear-gradient(90deg, #ff00ff, #00ffff);color:#fff;font-weight:bold;">✨ 秘密场所 ✨</div>
+      <div class="popup-school-name" style="background:linear-gradient(90deg, #ff00ff, #ff69b4, #00ffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:16px;">${ARENA.name}</div>
+      <div style="font-size:11px;color:#ff69b4;margin-top:4px;">${ARENA.subtitle}</div>
+    </div>
+    <div class="popup-body">
+      <div class="popup-row"><div class="popup-icon">📍</div><div><span class="popup-row-val">${ARENA.desc}</span></div></div>
+      <div class="popup-row"><div class="popup-icon">📩</div><div><span class="popup-row-val" style="color:#ff69b4">${ARENA.concept}</span></div></div>
+      <div class="popup-row"><div class="popup-icon">👥</div><div><span class="popup-row-label">参与者</span><span class="popup-row-val" style="color:#00ffff">${ARENA.participants}</span></div></div>
+      <div class="popup-row"><div class="popup-icon">🎭</div><div><span class="popup-row-label">特征</span><span class="popup-row-val" style="font-size:10px;line-height:1.4">
+        • ${ARENA.features[0]}<br>
+        • ${ARENA.features[1]}<br>
+        • ${ARENA.features[2]}
+      </span></div></div>
+      <div class="popup-row" style="background:linear-gradient(90deg, rgba(255,0,255,0.1), rgba(0,255,255,0.1));margin:8px -12px;padding:8px 12px;border-radius:8px;">
+        <div class="popup-icon" style="color:#ff00ff">👑</div>
+        <div>
+          <span class="popup-row-label" style="color:#ff69b4">你的身份</span>
+          <span class="popup-row-val" style="color:#ff00ff;font-weight:bold">${ARENA.role}</span>
+          <div style="font-size:10px;color:rgba(255,255,255,0.6);margin-top:2px;">${ARENA.role_desc}</div>
+        </div>
+      </div>
+      <button onclick="goToLocation('${ARENA.name}')" style="
+        width:100%;margin-top:10px;padding:10px 12px;
+        background:linear-gradient(135deg, #ff00ff, #ff69b4, #00ffff);
+        border:none;border-radius:8px;
+        color:#fff;font-size:13px;font-weight:bold;
+        cursor:pointer;transition:all 0.2s;
+        text-shadow:0 1px 2px rgba(0,0,0,0.3);
+      ">🚀 前往${ARENA.name}</button>
+    </div>
+  `, {maxWidth:300, className: 'arena-popup'});
+
+// ── Arena 标签 ──
+const arenaLabel = L.divIcon({
+  html: `<div style="
+    white-space:nowrap;
+    font-size:11px;
+    font-weight:bold;
+    background:linear-gradient(90deg, #ff00ff, #ff69b4, #00ffff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    text-shadow:none;
+    pointer-events:none;
+    letter-spacing:1px;
+    text-align:center;
+  ">✨ 色情偶像觉醒祭 ✨</div>`,
+  className: '',
+  iconSize: [140, 18],
+  iconAnchor: [70, -20]
+});
+L.marker(ARENA.latlng, {icon: arenaLabel, interactive: false}).addTo(map);
+
+// ── 连接线（Arena ↔ 四校） ──
+const CENTER = ARENA.latlng;
+Object.values(SCHOOLS).forEach(s => {
+  L.polyline([CENTER, s.latlng], {
+    color: s.color,
+    weight: 1,
+    opacity: 0.25,
+    dashArray: '4,6'
+  }).addTo(map);
+});
+
+// ── flyTo 函数（右侧卡片点击） ──
+function flyTo(key) {
+  const s = SCHOOLS[key];
+  if (!s) return;
+  map.flyTo(s.latlng, 1, { duration: 1.2, easeLinearity: 0.3 });
+  setTimeout(function() {
+    var marker = schoolMarkers[key];
+    if (marker) marker.openPopup();
+  }, 1300);
+}
+
+// ── flyToRival 函数（劲敌卡片点击） ──
+function flyToRival(key) {
+  const r = RIVALS[key];
+  if (!r) return;
+  map.flyTo(r.latlng, 1, { duration: 1.2, easeLinearity: 0.3 });
+}
+
+</script>
+</body>
+</html>
