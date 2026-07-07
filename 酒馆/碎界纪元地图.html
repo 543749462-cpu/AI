@@ -45,13 +45,16 @@
       left: 0;
       right: 0;
       z-index: 1000;
-      height: 52px;
+      min-height: 52px;
+      height: auto;
       background: rgba(10, 8, 20, .98);
       border-bottom: 1px solid var(--bdr);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 16px
+      flex-wrap: wrap;
+      padding: 6px 16px;
+      gap: 6px
     }
 
     #h .logo {
@@ -111,8 +114,13 @@
     #h .tabs {
       display: flex;
       gap: 6px;
-      align-items: center
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      flex: 1 1 auto;
+      min-width: 0
     }
+    #h .tabs::-webkit-scrollbar { display: none }
 
     .tab {
       padding: 6px 14px;
@@ -123,7 +131,9 @@
       font-size: 12px;
       cursor: pointer;
       transition: all .2s;
-      font-family: 'Noto Serif SC', serif
+      font-family: 'Noto Serif SC', serif;
+      white-space: nowrap;
+      flex-shrink: 0
     }
 
     .tab:hover {
@@ -144,7 +154,8 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: var(--bg)
+      background: var(--bg);
+      transition: top .15s
     }
 
     .leaflet-container {
@@ -465,6 +476,18 @@
       flex-shrink: 0
     }
 
+    /* 中等屏幕：缩小标签内边距和字号 */
+    @media screen and (max-width:768px) {
+      .tab { padding: 4px 10px; font-size: 11px }
+      #h .logo-icon { width: 24px; height: 24px; font-size: 14px }
+      #h .title-text { font-size: 16px; letter-spacing: 2px }
+      #h .subtitle { display: none }
+      #h .stats { gap: 10px }
+      .stat-v { font-size: 14px }
+      .stat-l { font-size: 7px }
+    }
+
+    /* 窄屏：logo进一步缩小，标签可横向滚动，统计栏隐藏 */
     @media screen and (max-width:480px) {
       .leaflet-popup-content-wrapper {
         min-width: 200px !important;
@@ -475,9 +498,11 @@
         display: none !important
       }
 
-      #h .tabs {
-        display: none !important
-      }
+      #h { padding: 0 8px }
+      #h .logo-icon { width: 22px; height: 22px; font-size: 12px }
+      #h .title-text { font-size: 14px; letter-spacing: 1px }
+      #h .stats { display: none }
+      .tab { padding: 3px 8px; font-size: 10px; border-radius: 14px }
     }
   </style>
 </head>
@@ -783,7 +808,7 @@
       ti: { t: '灰雾轮回水之都', s: '异闻带 · LOSTBELT', i: '💧' },
       st: ['5', '33', '∞', '层级', '地点', '机缘'],
       svg: function (W, H) { return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><text x="800" y="35" text-anchor="middle" font-family="serif" font-size="15" fill="rgba(255,255,255,1)" letter-spacing="6" font-weight="bold">核心层 · 镜宫域主</text><text x="800" y="220" text-anchor="middle" font-family="serif" font-size="14" fill="rgba(255,255,255,.95)" letter-spacing="5" font-weight="bold">核心层 · 灰雾反转</text><text x="800" y="450" text-anchor="middle" font-family="serif" font-size="13" fill="rgba(255,255,255,.9)" letter-spacing="4" font-weight="bold">中层区 · 异能者阶层</text><text x="800" y="620" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.85)" letter-spacing="3" font-weight="bold">中层区 · 溯光回廊</text><text x="800" y="780" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.8)" letter-spacing="3" font-weight="bold">外围区 · 浮游岛</text><text x="800" y="950" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(255,255,255,.75)" letter-spacing="2" font-weight="bold">入口区 · 混沌汇流</text><line x1="200" y1="60" x2="1400" y2="60" stroke="rgba(255,255,255,.4)" stroke-width="1"/><line x1="200" y1="250" x2="1400" y2="250" stroke="rgba(255,255,255,.35)" stroke-width="1"/><line x1="200" y1="480" x2="1400" y2="480" stroke="rgba(255,255,255,.3)" stroke-width="1"/><line x1="200" y1="650" x2="1400" y2="650" stroke="rgba(255,255,255,.25)" stroke-width="1"/><line x1="200" y1="820" x2="1400" y2="820" stroke="rgba(255,255,255,.2)" stroke-width="1"/></svg>` },
-      bg: 'https://s1.imagehub.cc/images/2026/05/16/0a34c9b69a9e953d629b382c54a6c78d.jpg',
+      bg: 'https://s1.imagehub.cc/images/2026/07/05/386bb8706fa3a105789a043719ad5109.jpg',
       W: 1600, H: 1000
     };
 
@@ -859,7 +884,7 @@
       ti: { t: '灵笼纪元零', s: '异闻带 · LOSTBELT', i: '◉' },
       st: ['6', '28', '300万', '章节', '地点', '存续'],
       svg: function (W, H) { return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><text x="800" y="35" text-anchor="middle" font-family="serif" font-size="15" fill="rgba(255,255,255,1)" letter-spacing="6" font-weight="bold">域顶层 · 悬塔上空</text><text x="800" y="120" text-anchor="middle" font-family="serif" font-size="14" fill="rgba(255,255,255,.95)" letter-spacing="5" font-weight="bold">灯塔上层 · 权力与神殿</text><text x="800" y="290" text-anchor="middle" font-family="serif" font-size="13" fill="rgba(255,255,255,.9)" letter-spacing="4" font-weight="bold">灯塔中层 · 武装与调度</text><text x="800" y="490" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.85)" letter-spacing="3" font-weight="bold">灯塔底层 · 尘民与远行</text><text x="800" y="690" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.8)" letter-spacing="3" font-weight="bold">地面 · 雾原与生态</text><text x="800" y="890" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(255,255,255,.75)" letter-spacing="2" font-weight="bold">骨村 · 地面聚落</text><line x1="200" y1="60" x2="1400" y2="60" stroke="rgba(255,255,255,.4)" stroke-width="1"/><line x1="200" y1="145" x2="1400" y2="145" stroke="rgba(255,255,255,.35)" stroke-width="1"/><line x1="200" y1="315" x2="1400" y2="315" stroke="rgba(255,255,255,.3)" stroke-width="1"/><line x1="200" y1="515" x2="1400" y2="515" stroke="rgba(255,255,255,.25)" stroke-width="1"/><line x1="200" y1="715" x2="1400" y2="715" stroke="rgba(255,255,255,.2)" stroke-width="1"/><line x1="200" y1="915" x2="1400" y2="915" stroke="rgba(255,255,255,.15)" stroke-width="1"/></svg>` },
-      bg: 'https://s1.imagehub.cc/images/2026/05/16/0a34c9b69a9e953d629b382c54a6c78d.jpg',
+      bg: 'https://s1.imagehub.cc/images/2026/07/05/7a53164cec2a69a4e9fe11c4a070fa0d.jpg',
       W: 1600, H: 1000
     };
 
@@ -914,7 +939,7 @@
       ti: { t: '色欲纪幻想乡', s: '异闻带 · LOSTBELT', i: '🌸' },
       st: ['7', '20', '∞', '章节', '地点', '机缘'],
       svg: function (W, H) { return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><text x="800" y="35" text-anchor="middle" font-family="serif" font-size="15" fill="rgba(255,255,255,1)" letter-spacing="6" font-weight="bold">核心层 · 隙间境界</text><text x="800" y="130" text-anchor="middle" font-family="serif" font-size="14" fill="rgba(255,255,255,.95)" letter-spacing="5" font-weight="bold">第7章 · 最终归还</text><text x="800" y="280" text-anchor="middle" font-family="serif" font-size="13" fill="rgba(255,255,255,.9)" letter-spacing="4" font-weight="bold">第6章 · 受难与观赏</text><text x="800" y="480" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.85)" letter-spacing="3" font-weight="bold">第5章 · 信仰与审判</text><text x="800" y="580" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.85)" letter-spacing="3" font-weight="bold">第4章 · 永恒与狂气</text><text x="800" y="680" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.8)" letter-spacing="3" font-weight="bold">第3章 · 饥饿与沉默</text><text x="800" y="780" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.8)" letter-spacing="3" font-weight="bold">第2章 · 高贵崩解</text><text x="800" y="880" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(255,255,255,.75)" letter-spacing="2" font-weight="bold">第1章 · 春融异变</text><text x="800" y="960" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(255,255,255,.7)" letter-spacing="2" font-weight="bold">入口区 · 混沌汇流</text><line x1="200" y1="60" x2="1400" y2="60" stroke="rgba(255,255,255,.4)" stroke-width="1"/><line x1="200" y1="155" x2="1400" y2="155" stroke="rgba(255,255,255,.35)" stroke-width="1"/><line x1="200" y1="305" x2="1400" y2="305" stroke="rgba(255,255,255,.3)" stroke-width="1"/><line x1="200" y1="505" x2="1400" y2="505" stroke="rgba(255,255,255,.25)" stroke-width="1"/><line x1="200" y1="605" x2="1400" y2="605" stroke="rgba(255,255,255,.25)" stroke-width="1"/><line x1="200" y1="705" x2="1400" y2="705" stroke="rgba(255,255,255,.2)" stroke-width="1"/><line x1="200" y1="805" x2="1400" y2="805" stroke="rgba(255,255,255,.2)" stroke-width="1"/><line x1="200" y1="905" x2="1400" y2="905" stroke="rgba(255,255,255,.15)" stroke-width="1"/></svg>` },
-      bg: 'https://s1.imagehub.cc/images/2026/05/16/0a34c9b69a9e953d629b382c54a6c78d.jpg',
+      bg: 'https://s1.imagehub.cc/images/2026/07/05/06e1bc89942bbbeb24096cbfa681002b.webp',
       W: 1600, H: 1000
     };
 
@@ -976,9 +1001,19 @@
         nm.setIcon(ni);
       });
     }
+    /* 动态调整地图顶部位置，跟随顶部栏高度变化 */
+    function syncMapTop(){
+      var h=document.getElementById('h');
+      var m=document.getElementById('map');
+      if(h&&m) m.style.top=h.offsetHeight+'px';
+    }
+    window.addEventListener('resize',syncMapTop);
+    new MutationObserver(syncMapTop).observe(document.getElementById('h'),{childList:true,subtree:true,attributes:true});
+
     initMap();
     M.on('zoomend', updateMarkerScale);
     load('sq');
+    syncMapTop();
   </script>
 </body>
 
