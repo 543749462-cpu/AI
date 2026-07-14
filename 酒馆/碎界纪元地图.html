@@ -808,7 +808,1026 @@
       ti: { t: '灰雾轮回水之都', s: '异闻带 · LOSTBELT', i: '💧' },
       st: ['5', '33', '∞', '层级', '地点', '机缘'],
       svg: function (W, H) { return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><text x="800" y="35" text-anchor="middle" font-family="serif" font-size="15" fill="rgba(255,255,255,1)" letter-spacing="6" font-weight="bold">核心层 · 镜宫域主</text><text x="800" y="220" text-anchor="middle" font-family="serif" font-size="14" fill="rgba(255,255,255,.95)" letter-spacing="5" font-weight="bold">核心层 · 灰雾反转</text><text x="800" y="450" text-anchor="middle" font-family="serif" font-size="13" fill="rgba(255,255,255,.9)" letter-spacing="4" font-weight="bold">中层区 · 异能者阶层</text><text x="800" y="620" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.85)" letter-spacing="3" font-weight="bold">中层区 · 溯光回廊</text><text x="800" y="780" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.8)" letter-spacing="3" font-weight="bold">外围区 · 浮游岛</text><text x="800" y="950" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(255,255,255,.75)" letter-spacing="2" font-weight="bold">入口区 · 混沌汇流</text><line x1="200" y1="60" x2="1400" y2="60" stroke="rgba(255,255,255,.4)" stroke-width="1"/><line x1="200" y1="250" x2="1400" y2="250" stroke="rgba(255,255,255,.35)" stroke-width="1"/><line x1="200" y1="480" x2="1400" y2="480" stroke="rgba(255,255,255,.3)" stroke-width="1"/><line x1="200" y1="650" x2="1400" y2="650" stroke="rgba(255,255,255,.25)" stroke-width="1"/><line x1="200" y1="820" x2="1400" y2="820" stroke="rgba(255,255,255,.2)" stroke-width="1"/></svg>` },
-      bg: 'https://s1.imagehub.cc/images/2026/07/05/386bb8706fa3a105789a043719ad5109.jpg',
+      bg: 'https://s1.imagehub.cc/images/2026/07/14/6b7efef94aa71e67d3ece3b93d514178.webp',
+      W: 1600, H: 1000
+    };
+
+    const JY = {
+      D: {
+        xuant: { ll: [920, 800], n: '悬塔', l: '域顶层·灯塔上空', c: '#fbbf24', i: '🏰', p: '纪元零上空，三百年前旧世界最后的空中避难所', a: '钢铁穹顶像倒扣的碗，三百年的锈迹像血管一样爬满墙壁。反重力引擎发出低沉的嗡鸣，让整个城市悬停在灰白色的雾气之上。', f: '灯塔是理性秩序的三百年结晶，也是一座漂浮的墓地。三百万人在此苟活，用情感、家庭、自由意志换取存续。', d: '极高', o: '御主从汇流口跃入纪元零，落点在灯塔底层的尘巷。查尔斯在第6章启动紧急降落协议。', img: 'https://loremflickr.com/600/400/tower,flying?lock=719062871' },
+        shangting: { ll: [850, 700], n: '上庭', l: '灯塔上层·权力', c: '#fbbf24', i: '⚖️', p: '灯塔上层，上民区议事厅', a: '基因匹配系统的控制台前，白色的制服一尘不染。墙壁上挂着灯塔三百年的人口数据——适配度、基因纯度、繁育许可。控制室的地板是透明的，能看到下方尘巷的管道网络。', f: '星见雅执掌的地方，决定谁可以繁衍、谁必须远行。秩序不可破——这是上庭唯一的法则，也是唯一的谎言。', d: '高', o: '控制台旁放着一张照片——一个年轻女人抱着一个婴儿，边缘泛黄。星见雅说母亲适配度下降，被远行。', img: 'https://loremflickr.com/600/400/control,room?lock=1511083215' },
+        guangdian: { ll: [850, 800], n: '光殿', l: '灯塔上层·神殿', c: '#fbbf24', i: '✨', p: '灯塔上层，光影教会总部', a: '穹顶镶嵌着旧世界的太阳能板，但灯光是冷白色的，照在人脸上像尸体。审判台后方矗立着克洛托系统的微型投影，蓝色的数据流在空气中缓缓旋转。', f: '查尔斯宣讲"三大法则"的场所，每一句话都是秩序的咒语。这里的光不是温暖，是审视——照亮你脸上的罪，却不照亮你心里的苦。', d: '高', o: '琪亚娜在此被塑造为"终焉圣女"，却拒绝这一身份。光影教会的权力核心。', img: 'https://loremflickr.com/600/400/cathedral,light?lock=1986336937' },
+        jiaoting: { ll: [850, 900], n: '教廷', l: '灯塔上层·审判', c: '#f87171', i: '⚔️', p: '灯塔上层，光影教会审判庭', a: '穹顶镶嵌着旧世界的太阳能板，灯光是冷白色的。被告席是一块突出的金属平台，上面刻着"生命公式"的运算公式。墙壁上挂着历代城主的画像，脸都被蒙上了白布。', f: '琪亚娜被塑造为"终焉圣女"的场所，黄泉作为"终焉之刃"的驻地。这里不是审判罪，是审判"价值"。', d: '极高', o: '御主被光影教会以异端罪名逮捕，带到教廷接受审判。查尔斯亲自审问。', img: 'https://loremflickr.com/600/400/trial,court?lock=2103267034' },
+        yucang: { ll: [700, 700], n: '育舱', l: '灯塔中层·培育', c: '#8b5cf6', i: '🔬', p: '灯塔中层，基因匹配培育室', a: '一排排透明的培养舱，里面漂浮着尚未出生的婴儿——每一个都有编号。舱体内的液体发出微弱的荧光。其中一个封闭房间与其他舱体隔开，墙上贴满了旧世界的海报。', f: '02诞生的地方，永生试验的唯一成功体。这里的生命不是被孕育的，是被生产的——像零件一样精确。', d: '中', o: '御主潜入育舱，在封闭房间里发现了春日野穹。她问御主是不是来带走她的。', img: 'https://loremflickr.com/600/400/capsule,baby?lock=46023790' },
+        liecang: { ll: [700, 800], n: '猎舱', l: '灯塔中层·武装', c: '#e11d48', i: '⚔️', p: '灯塔中层，猎荒者装备库', a: '装备架上排列着改装过的重机枪、旧式步枪、和用噬极兽甲壳拼凑的近战武器。墙上挂着猎荒者小队的徽章——一只展翅的鹰，但鹰的眼睛被划掉了。', f: '马克的猎荒者小队出发前最后的整备场所，三笠独自执行讨伐任务的起点。这里的人知道地面不是测试场。', d: '高', o: '马克站在装备架前检查重机枪，脊柱上嵌着某种金属装置。他递给御主一套旧式防护服。', img: 'https://loremflickr.com/600/400/armory,gun?lock=970855758' },
+        diaodu: { ll: [700, 900], n: '调度中心', l: '灯塔中层·中枢', c: '#f87171', i: '📋', p: '灯塔底层，物资与权力调度中枢', a: '巨大的显示屏上滚动着物资分配数据——食物、水、能源、药品。控制台前坐着穿制服的操作员，手指在键盘上飞舞。角落里堆着被判定为"无价值"的物资。', f: '艾伦·耶格尔率领反抗军攻击的目标，灯塔底层的权力节点。这里决定谁活着、谁被远行。', d: '极高', o: '第6章艾伦率领反抗军攻击调度中心，三笠出现阻止了他——因为马克还在，蕾娜还在。', img: 'https://loremflickr.com/600/400/control,screen?lock=1386848462' },
+        huidai: { ll: [500, 700], n: '灰带', l: '灯塔底层·交界', c: '#60a5fa', i: '🌫️', p: '上民区与尘民区交界', a: '一条狭窄的走廊，左边是上民区的白色墙壁，右边是尘民区的锈铁管道。地面上的分界线是一道浅浅的沟槽。墙上涂满了用炭笔写的编号和名字。', f: '芙拉蒂蕾娜·米利杰建立"灰色地带"的地方，也是灯塔最不安定的节点。上民和尘民在这里擦肩而过，彼此不看对方的眼睛。', d: '中', o: '御主在此遇见芙拉蒂蕾娜·米利杰。第2章蕾娜带御主深入地下管道，参与走私任务。', img: 'https://loremflickr.com/600/400/wasteland,ash?lock=844670649' },
+        chenxiang: { ll: [500, 800], n: '尘巷', l: '灯塔底层·尘民区', c: '#e11d48', i: '🏚️', p: '灯塔底层，尘民区巷道', a: '头顶是灯塔的钢铁穹顶，脚下是尘民用废弃管道拼凑的地板。管道缝隙里透出微弱的灯光，金属地面上刻着无数编号——每个编号代表一个被"生命公式"判定过的人。', f: '尘巷是灯塔最真实的面孔——没有光殿的冷白，没有上庭的秩序，只有三百年的绝望在发酵。人被变成数字，数字被划掉。', d: '高', o: '御主从汇流口跌落后落在尘巷。在此遇见芙拉蒂蕾娜·米利杰。玛修的盾在此产生共鸣。', img: 'https://loremflickr.com/600/400/slum,alley?lock=372418055' },
+        yuantai: { ll: [500, 900], n: '远台', l: '灯塔底层·远行台', c: '#dc2626', i: '☠️', p: '灯塔边缘，远行仪式发射台', a: '一台巨大的机械装置悬在平台上方，下面是三百米的虚空。平台边缘的栏杆上刻满了编号——每一个都是曾经被抛下去的人。栏杆的油漆已经剥落，露出底下层层叠叠的刻痕。', f: '远行不是仪式，是处理。人被变成数字，数字被划掉，存在从金属上彻底抹除。玛娜之花在下方等待——每一次远行，都是生态的一次进食。', d: '绝', o: '第1章御主被蕾娜带到远台边缘，目睹老人被机械臂抛向虚空。蕾娜手指在枪托上收紧——刻着第十八个名字。', img: 'https://loremflickr.com/600/400/void,launch?lock=335297948' },
+        xideng: { ll: [510, 950], n: '熄灯区', l: '灯塔底层·盲区', c: '#8b5cf6', i: '🌑', p: '灯塔废弃区域，灯光熄灭三百年', a: '走廊里没有灯，只有偶尔从裂缝里透进来的微弱反光。墙壁上覆盖着厚厚的霉菌，呈现出不自然的青黑色。地面上散落着旧世界的残骸。', f: '灯塔的盲区，系统监控的死角，也是最接近"外面"的地方。三百年没有电力，只有生态在缓慢渗透。', d: '高', o: '灰色地带组织在熄灯区建立了最初的秘密据点。噬极兽偶尔从通风管道闯入。', img: 'https://loremflickr.com/600/400/dark,corridor?lock=1173999735' },
+        gongming: { ll: [450, 800], n: '共鸣点', l: '特殊·共鸣', c: '#a78bfa', i: '💫', p: '玛娜生态网络中的特殊节点', a: '没有固定的物理形态——共鸣点可以出现在任何地方。当共鸣发生时，周围的玛娜之花会同时发光，灰白色的雾气中会浮现出半透明的影像。', f: '与玛娜生态网络产生共鸣的位置，冉冰、鹿目圆、爱莉希雅意识残片出没之地。共鸣点不是地点，是"时刻"。', d: '未知', o: '御主的令咒在尘巷产生共鸣，盾面上浮现旧世界城市的残影，具现出临时从者恩奇都。', img: 'https://loremflickr.com/600/400/glow,flower?lock=1302744234' },
+        wuyuan: { ll: [320, 700], n: '雾原', l: '地面·雾原', c: '#8b5cf6', i: '🌫️', p: '灯塔下方，玛娜生态蔓延的地面区域', a: '雾气不是从天上来的，是从地面升起来的——灰白色的，像呼吸一样涨落。天空是永恒的灰白色。远处的地平线上，偶尔能看到巨大的阴影在雾中移动。', f: '人类在地面存活超过二十四小时的概率接近于零。雾原不是地狱，是另一种活着的方式——只是这种方式不属于人类。', d: '极高', o: '第3章御主随马克的猎荒者小队降落到雾原。花萼兽从雾中冲出，三笠第一个迎上去。', img: 'https://loremflickr.com/600/400/wasteland,fog?lock=1345752430' },
+        routu: { ll: [300, 800], n: '肉土', l: '地面·生态', c: '#e11d48', i: '🦴', p: '雾原各处，噬极兽与人类残骸堆积之地', a: '生命源质被抽干后留下的空壳——不是骨骼，是某种介于泥土和灰烬之间的质地。踩上去会发出轻微的碎裂声。肉土的颜色是灰白色的，偶尔夹杂着深色的斑块。', f: '生命源质被抽干后留下的空壳，是玛娜生态的"肥料"。肉土是生态的沉默语言："你曾经活着，现在你是养分。"', d: '中', o: '御主第一次降落到地面时，每一步都踩在肉土上。骨村的觉行者会从肉土中提取残余源质。', img: 'https://loremflickr.com/600/400/bone,ash?lock=1866194073' },
+        huazhong: { ll: [280, 900], n: '花冢', l: '地面·核心花', c: '#dc2626', i: '🌺', p: '雾原深处，玛娜之花主花所在地', a: '不是花园，是墓地。每一朵玛娜之花的根部，都缠绕着人类的残骸。主花高达十米，花瓣是半透明的，能看到里面流动的光。', f: '地面最危险的区域之一，也是玛娜生态的"心脏"——所有源质最终都流向这里。被吞噬的生命不是消失了，是变成了生态的一部分。', d: '绝', o: '第6章马克站在主花面前，将自己的源质注入生态网络。爱莉希雅和鹿目圆同时在生态网络中显现。', img: 'https://loremflickr.com/600/400/flower,giant?lock=1881458426' },
+        jiyuan: { ll: [310, 950], n: '脊渊', l: '地面·巢穴', c: '#8b5cf6', i: '🕷️', p: '地下深处，脊蛊巢穴', a: '一个巨大的地下空洞，四壁布满了脊蛊钻出的隧道。洞顶悬挂着无数脊蛊的茧，每个茧里都包裹着一个尚未完全转化的人类躯体。地面上覆盖着一层黏稠的黑色液体。', f: '脊蛊在此孕育、进化，是玛娜生态的"产房"之一。脊渊的气味不是腐臭，是某种甜腻的腥气——像发酵过度的水果。', d: '极高', o: '猎荒者小队偶尔会发现通往脊渊的入口——从来没人下去过。马克脊柱上的金属装置就是用脊渊样本制造的。', img: 'https://loremflickr.com/600/400/cave,spider?lock=1286056695' },
+        shigu: { ll: [290, 1000], n: '蚀谷', l: '地面·裂谷', c: '#e11d48', i: '🕳️', p: '雾原边缘，生态侵蚀形成的裂谷', a: '一道深不见底的裂谷，谷壁上覆盖着玛娜之花一样的青黑色纹路。谷底弥漫着浓厚的灰白色雾气，偶尔能从谷底听到低沉的震动声——像是某种巨大的心跳。', f: '玛娜生态撕裂地面形成的裂谷，也是生态网络的"血管"——源质在谷底流动，像血液在动脉中奔涌。', d: '极高', o: '猎荒者小队会尽量避开蚀谷。某些觉行者会在蚀谷边缘进行"极限冥想"。', img: 'https://loremflickr.com/600/400/canyon,crack?lock=257733515' },
+        shixian: { ll: [300, 1050], n: '蚀线', l: '地面·分界线', c: '#a78bfa', i: '〰️', p: '玛娜生态与人类文明的分界线', a: '一条肉眼几乎看不见的分界线——不是物理的障碍，是生态侵蚀程度的渐变带。蚀线的一侧肉土较薄，另一侧肉土堆积如山。', f: '玛娜生态与人类文明的分界线，每天都在移动——生态在缓慢但不可阻挡地推进。金木研常在此巡逻，寻找"卡在分界线上"的人。', d: '高', o: '金木研在蚀线巡逻时发现了一个半转化的婴儿，带回收容所，取名"眼睛"。', img: 'https://loremflickr.com/600/400/line,boundary?lock=1084210853' },
+        liegu: { ll: [280, 1100], n: '裂谷', l: '地面·通道', c: '#60a5fa', i: '🚪', p: '地面裂缝，连接灯塔底部与龙骨村的秘密通道', a: '一条狭窄的地缝，最宽处仅容一人侧身通过。缝隙的四壁上嵌着旧世界的管道残骸。某些地段的地面上有积水，水面上漂浮着微弱的荧光。', f: '连接灯塔底部与龙骨村的秘密通道，也是两个世界之间的"脐带"。灰色地带组织传递情报的路线。', d: '中', o: '某些被判定为"远行"的尘民，会被灰色地带救下，通过裂谷送往骨村。尽头那扇合金门是白月魁七十五年前亲手封闭的。', img: 'https://loremflickr.com/600/400/canyon,passage?lock=1218071091' },
+        shourong: { ll: [400, 900], n: '收容所', l: '特殊·收容', c: '#a78bfa', i: '🏥', p: '灯塔与龙骨村之间，交界区域的隐蔽建筑', a: '一座用旧世界混凝土和金属板拼凑而成的低矮建筑，外表像废弃的仓库。内部是一排排简易的隔间，每个隔间里都住着一个"异类"——半人半兽的实验体。', f: '金木研管理的"异类收容所"，收容那些既不属于人类也不属于生态的存在。收容所不是监狱，是医院——治疗的不是身体，是"存在"本身的伤口。', d: '中', o: '御主在此第一次了解到"第三种存在"的概念。第6章灯塔落地后，金木研打开大门，带实验体们第一次踏上地面。', img: 'https://loremflickr.com/600/400/shelter,medical?lock=1140765802' },
+        gucun: { ll: [170, 700], n: '骨村', l: '骨村·聚落', c: '#38bdf8', i: '🏘️', p: '雪山内部，龙骨村主体聚落', a: '入口被屏蔽塔掩护，从外面看只是一片普通的雪坡。村内建筑用旧世界金属与噬极兽甲壳拼凑而成。中央广场立着一根巨大的脊蛊骨骼——是龙骨村的图腾。', f: '白月魁建立的地面幸存者据点，用纳米科技与源质知识维持运转。灯塔人花了三百年把自己变成机器，这里的人花了七十五年学会怎么当人。', d: '中', o: '御主被白月魁的觉行者小队救下，带回骨村。第6章灯塔落地后，白月魁对第一个走出灯塔的尘民小孩说欢迎来到地面。', img: 'https://loremflickr.com/600/400/village,snow?lock=2120899165' },
+        yuanjing: { ll: [110, 800], n: '源井', l: '骨村·资源', c: '#06b6d4', i: '💧', p: '骨村地下深处，生命源质采集点', a: '一个直径约三十米的天然腔体，四壁覆盖着旧世界留下的金属支架。腔体中央是一口深不见底的竖井，井壁上布满了发光的脉络。井口周围的地面上刻着古老的符号："给予，而非夺取。"', f: '龙骨村最重要的资源，也是与玛娜生态交易的核心。源质不是灵气，是某种更原始的东西——生命的残渣。', d: '中', o: '白月魁的觉行者小队定期从源井采集源质。源井偶尔会出现"脉动"——井壁上的脉络突然加速发光。', img: 'https://loremflickr.com/600/400/well,glow?lock=2094297198' },
+        guiyuan: { ll: [130, 900], n: '归元台', l: '骨村·修炼', c: '#38bdf8', i: '☯️', p: '骨村内部，归元战士修炼场所', a: '一个圆形的平台，地面用旧世界的合金铺设，上面刻着复杂的纹路——源质流动的导向图。平台周围立着十二根金属柱，每根柱子上都镶嵌着一颗凝固的源质结晶。', f: '乌兰麦朵训练新一批觉行者的地方。归元不是逃避，是掌控——屏息凝神，杜绝情绪波动，让生命源质波动归零。', d: '低', o: '白月魁在此展示归元状态——屏息凝神，生命源质波动归零，噬极兽从旁边走过而没有察觉。', img: 'https://loremflickr.com/600/400/platform,training?lock=520987225' },
+        juelin: { ll: [110, 950], n: '觉林', l: '骨村·冥想', c: '#10b981', i: '🌲', p: '骨村边缘，靠近玛娜生态的冥想之地', a: '一片被源质侵蚀的树林——树木的枝干呈现出半透明的质地，能看到内部流动的微光。林间有一条由旧世界石板铺成的小径。最深处有一块突出的岩石，上面刻着一个手印。', f: '白月魁传授"灵元手印"的场所，也是觉行者与生态"对话"的地方。这里的玛娜生态不是敌意的，是"休眠"的。', d: '低', o: '白月魁带御主进入觉林，教他感受生态的"呼吸"。觉行者在此进行"边缘冥想"。', img: 'https://loremflickr.com/600/400/forest,meditation?lock=1340401035' },
+        dunbi: { ll: [150, 1000], n: '盾壁', l: '骨村·防御', c: '#f87171', i: '🛡️', p: '骨村外围，环形防御工事', a: '一道高约十米的围墙，用旧世界金属板与噬极兽甲壳层层堆砌而成。墙面上嵌着无数尖锐的骨刺。盾壁顶部有简易的瞭望台，觉行者轮班值守。', f: '骨村的第一道防线，也是地面文明与玛娜生态之间的物理界限。盾壁知道，它挡不住生态——它挡住的只是时间。', d: '高', o: '盾壁曾经三次被大规模噬极兽群突破。第4章灯塔落地后，盾壁成为灯塔难民进入骨村的第一道关卡。', img: 'https://loremflickr.com/600/400/wall,defense?lock=1994022842' },
+        bita: { ll: [180, 1050], n: '蔽塔', l: '骨村·屏蔽', c: '#06b6d4', i: '🔮', p: '骨村最高点，屏蔽塔核心', a: '一座由旧世界科技残骸拼凑而成的高塔，塔顶悬浮着一颗巨大的源质结晶，发出稳定的蓝色脉冲。塔内部是一个空旷的球形空间，中央悬浮着立华奏的"本体"。', f: '立华奏与灯塔系统融合后驻守的地方，防御玛娜生态入侵的关键节点。蔽塔不是武器，是"面纱"——用源质干扰遮蔽骨村的存在。', d: '高', o: '御主在蔽塔核心发现了立华奏。蔽塔在第4章成为灯塔与骨村之间的通讯中继。', img: 'https://loremflickr.com/600/400/tower,crystal?lock=1684044573' },
+        zhuidian: { ll: [100, 1100], n: '坠点', l: '特殊·降落', c: '#fbbf24', i: '📍', p: '玛娜生态相对稀疏的地面区域，灯塔预定降落点', a: '一片相对平坦的荒原，肉土的厚度比其他地方薄，能看到下面旧世界的柏油路面。地面上有一些巨大的圆形凹陷——旧时代的建筑地基。天空中的灰白色雾气稍微淡了一些。', f: '查尔斯启动紧急降落协议的目标位置——落地不是坠落，是新生。三百万居民第一次踏上地面的地方。', d: '中', o: '查尔斯启动紧急降落协议，灯塔缓缓倾斜、下降、触碰地面。白月魁对第一个走出灯塔的尘民小孩说欢迎来到地面。', img: 'https://loremflickr.com/600/400/crash,landing?lock=155837927' }
+      },
+      C: [
+        { f: 'xuant', t: 'shangting', c: '#fbbf24', s: 's' },
+        { f: 'xuant', t: 'guangdian', c: '#fbbf24', s: 's' },
+        { f: 'xuant', t: 'jiaoting', c: '#fbbf24', s: 's' },
+        { f: 'shangting', t: 'guangdian', c: '#fbbf24', s: 's' },
+        { f: 'guangdian', t: 'jiaoting', c: '#fbbf24', s: 's' },
+        { f: 'shangting', t: 'yucang', c: '#fbbf24', s: 's' },
+        { f: 'guangdian', t: 'liecang', c: '#fbbf24', s: 's' },
+        { f: 'jiaoting', t: 'diaodu', c: '#f87171', s: 's' },
+        { f: 'yucang', t: 'liecang', c: '#8b5cf6', s: 's' },
+        { f: 'liecang', t: 'diaodu', c: '#f87171', s: 's' },
+        { f: 'yucang', t: 'huidai', c: '#60a5fa', s: 's' },
+        { f: 'liecang', t: 'chenxiang', c: '#e11d48', s: 's' },
+        { f: 'diaodu', t: 'yuantai', c: '#dc2626', s: 's' },
+        { f: 'huidai', t: 'chenxiang', c: '#e11d48', s: 's' },
+        { f: 'chenxiang', t: 'yuantai', c: '#dc2626', s: 's' },
+        { f: 'yuantai', t: 'xideng', c: '#8b5cf6', s: 's' },
+        { f: 'xuant', t: 'gongming', c: '#a78bfa', s: 's' },
+        { f: 'gongming', t: 'shourong', c: '#a78bfa', s: 's' },
+        { f: 'gongming', t: 'wuyuan', c: '#8b5cf6', s: 's' },
+        { f: 'chenxiang', t: 'wuyuan', c: '#e11d48', s: 's' },
+        { f: 'wuyuan', t: 'routu', c: '#e11d48', s: 's' },
+        { f: 'wuyuan', t: 'huazhong', c: '#dc2626', s: 's' },
+        { f: 'routu', t: 'huazhong', c: '#dc2626', s: 's' },
+        { f: 'huazhong', t: 'jiyuan', c: '#8b5cf6', s: 's' },
+        { f: 'jiyuan', t: 'shigu', c: '#e11d48', s: 's' },
+        { f: 'shigu', t: 'shixian', c: '#a78bfa', s: 's' },
+        { f: 'shixian', t: 'liegu', c: '#60a5fa', s: 's' },
+        { f: 'shourong', t: 'shixian', c: '#a78bfa', s: 's' },
+        { f: 'liegu', t: 'gucun', c: '#38bdf8', s: 's' },
+        { f: 'gucun', t: 'yuanjing', c: '#06b6d4', s: 's' },
+        { f: 'yuanjing', t: 'guiyuan', c: '#38bdf8', s: 's' },
+        { f: 'guiyuan', t: 'juelin', c: '#10b981', s: 's' },
+        { f: 'juelin', t: 'dunbi', c: '#f87171', s: 's' },
+        { f: 'dunbi', t: 'bita', c: '#06b6d4', s: 's' },
+        { f: 'bita', t: 'zhuidian', c: '#fbbf24', s: 's' },
+        { f: 'dunbi', t: 'shixian', c: '#f87171', s: 's' }
+      ],
+      lg: '<div class="lg-t">区 域 图 例</div><div class="lg-i"><div class="lg-d" style="background:#fbbf24"></div>域顶层·灯塔上层</div><div class="lg-i"><div class="lg-d" style="background:#f87171"></div>灯塔中层·中枢/战斗</div><div class="lg-i"><div class="lg-d" style="background:#8b5cf6"></div>灯塔底层·盲区/巢穴</div><div class="lg-i"><div class="lg-d" style="background:#e11d48"></div>地面·生态/危险</div><div class="lg-i"><div class="lg-d" style="background:#dc2626"></div>地面·核心/绝域</div><div class="lg-i"><div class="lg-d" style="background:#60a5fa"></div>特殊/交界/通道</div><div class="lg-i"><div class="lg-d" style="background:#38bdf8"></div>骨村·聚落/修炼</div><div class="lg-i"><div class="lg-d" style="background:#06b6d4"></div>骨村·资源/屏蔽</div><div class="lg-i"><div class="lg-d" style="background:#10b981"></div>骨村·冥想</div><div class="lg-i"><div class="lg-d" style="background:#a78bfa"></div>特殊地点</div><div class="lg-i" style="margin-top:6px;padding-top:4px;border-top:1px solid rgba(212,168,83,.2)"><div class="lg-d" style="background:#10b981"></div>通行连线</div>',
+      ti: { t: '灵笼纪元零', s: '异闻带 · LOSTBELT', i: '◉' },
+      st: ['6', '28', '300万', '章节', '地点', '存续'],
+      svg: function (W, H) { return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><text x="800" y="35" text-anchor="middle" font-family="serif" font-size="15" fill="rgba(255,255,255,1)" letter-spacing="6" font-weight="bold">域顶层 · 悬塔上空</text><text x="800" y="120" text-anchor="middle" font-family="serif" font-size="14" fill="rgba(255,255,255,.95)" letter-spacing="5" font-weight="bold">灯塔上层 · 权力与神殿</text><text x="800" y="290" text-anchor="middle" font-family="serif" font-size="13" fill="rgba(255,255,255,.9)" letter-spacing="4" font-weight="bold">灯塔中层 · 武装与调度</text><text x="800" y="490" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.85)" letter-spacing="3" font-weight="bold">灯塔底层 · 尘民与远行</text><text x="800" y="690" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.8)" letter-spacing="3" font-weight="bold">地面 · 雾原与生态</text><text x="800" y="890" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(255,255,255,.75)" letter-spacing="2" font-weight="bold">骨村 · 地面聚落</text><line x1="200" y1="60" x2="1400" y2="60" stroke="rgba(255,255,255,.4)" stroke-width="1"/><line x1="200" y1="145" x2="1400" y2="145" stroke="rgba(255,255,255,.35)" stroke-width="1"/><line x1="200" y1="315" x2="1400" y2="315" stroke="rgba(255,255,255,.3)" stroke-width="1"/><line x1="200" y1="515" x2="1400" y2="515" stroke="rgba(255,255,255,.25)" stroke-width="1"/><line x1="200" y1="715" x2="1400" y2="715" stroke="rgba(255,255,255,.2)" stroke-width="1"/><line x1="200" y1="915" x2="1400" y2="915" stroke="rgba(255,255,255,.15)" stroke-width="1"/></svg>` },
+      bg: 'https://s1.imagehub.cc/images/2026/07/05/7a53164cec2a69a4e9fe11c4a070fa0d.jpg',
+      W: 1600, H: 1000
+    };
+
+    const XX = {
+      D: {
+        rukou: { ll: [100, 800], n: '混沌汇流点·幻想乡入口', l: '入口区·汇流点', c: '#fbbf24', i: '🌀', p: '主干世界与幻想乡的交界，迦勒底传送落点', a: '樱花在此处飘落但永不落地，花瓣悬停在半空，像被时间冻结。光线是淡粉色的，不是阳光，是某种从境界深处渗出来的辉光。', f: '玛修的盾在进入此区域时开始震动，盾面温度升高——人理碎片与御主产生共振的第一个信号。', d: '中 · 边界交汇', o: '序章场景。御主从汇流口跌落至博丽神社的赛钱箱前。玛修无法进入幻想乡——她的存在会被色欲法则锁定，必须留在边界外作为锚点。', img: 'https://img.z4a.net/images/2026/06/30/1f8ca8705ebfcc529.webp' },
+        shenshe: { ll: [150, 800], n: '博丽神社', l: '第1章·初始区域', c: '#10b981', i: '⛩️', p: '幻想乡初始区域，御主降落点', a: '神社廊下有慵懒的温暖，空气里悬浮着樱花——不是普通的樱花，是某种介于植物与皮肤之间的、能呼吸的粉红色花瓣。赛钱箱前铜板发出空洞的回响，不是金属的响声，是某种被渴望浸透后的沉闷。', f: '博丽灵梦：天然免疫者——碎片无法穿透她的无欲之壁。她的困境不是"被排除"，而是"无法理解渴望"——她旁观所有人的欲望，却无法感受自己的。', d: '低 · 相对安全', o: '第1章核心场景，终章告别场景。灵梦作为天然免疫者，是御主理解色欲法则的第一个窗口。终章中，灵梦在此泡了热茶，赛钱箱里有御主的位置——这是她从"无欲"到"尝试渴望"的微妙转变。', img: 'https://img.z4a.net/images/2026/06/30/14bea8842f47e95a6.webp' },
+        mofa: { ll: [180, 720], n: '魔法森林', l: '第1章·森林区', c: '#10b981', i: '🌲', p: '博丽神社周边，雾雨魔理沙的独居地', a: '森林深处有蘑菇和魔法书，魔理沙的小屋藏在林中。树木被色欲法则渗透，树皮温热，触感像皮肤。蘑菇在呼吸，孢子是粉红色的。', f: '雾雨魔理沙：掠夺式的占有者。Master Spark在色欲法则的渗透下变成了一道粉红色的光。齿印留在御主手腕上，是"占有"的色欲形态。', d: '中 · 弹幕战斗', o: '第1章场景。御主与魔理沙在森林深处展开弹幕战。战斗后魔理沙没有被击败——她主动选择了投降，因为"掠夺"在色欲法则下变成了"被填满"。', img: 'https://img.z4a.net/images/2026/06/30/12bf592340e73e79c.webp' },
+        wuzhi: { ll: [200, 680], n: '雾之湖', l: '第1章·湖区', c: '#06b6d4', i: '💧', p: '魔法森林边缘，琪露诺的活动范围', a: '湖水冰冷，但碎片影响下变得温热。雾气在湖面上游荡，像散不开的呼吸。湖底有光，不是反射，是某种在等待的东西。', f: '琪露诺：冰精的色欲形态是温度交换——她的体内冷热交替。做爱是她第一次感受"被温暖填满"的体验。', d: '中 · 温度异变', o: '第1章场景。琪露诺的冰冷交融，温度与黑暗的碎片收集。冰与火的边界在做爱中溶解。', img: 'https://img.z4a.net/images/2026/06/30/14572baff28339b4f.webp' },
+        senlin: { ll: [220, 640], n: '森林边缘', l: '第1章·黄昏区', c: '#8b5cf6', i: '🌑', p: '魔法森林与雾之湖的交界，黄昏时分', a: '黄昏的光线是肉色的淡红，像被体温染过。黑暗从森林深处蔓延出来，是露米娅的领域。黑暗不是空的，是"太满"的——满到看不见。', f: '露米娅：黑暗是触感的放大器——在做爱中，黑暗让每一次触碰都从四面八方同时发生。', d: '中 · 黑暗领域', o: '第1章场景。露米娅的黑暗吞噬，温度与黑暗的碎片收集。黑暗中触觉被无限放大。', img: 'https://img.z4a.net/images/2026/06/30/10d50f8c98f6811c4.webp' },
+        hongmo: { ll: [320, 900], n: '红魔馆', l: '第2章·高贵献祭区', c: '#dc2626', i: '🧛', p: '幻想乡西部，吸血鬼领地', a: '五百年未被人类渴望过的吸血鬼领地。碎片影响强度是博丽神社的三倍。建筑哥特式，红色外墙在色欲法则下变成肉色的深红。走廊里挂着的画像眼睛会跟随御主。', f: '美铃/帕秋莉/咲夜/蕾米莉亚/芙兰朵露：五重防线逐一突破——不是击败，是接纳。所有人都是主动选择的。', d: '高 · 碎片影响三倍', o: '第2章核心场景。美铃门槛跨越，帕秋莉知识验证，咲夜时停仪式第301秒，蕾米莉亚高贵者崩溃，芙兰朵露触碰而不毁灭。', img: 'https://img.z4a.net/images/2026/06/30/15142a1bcf0fbed02.webp' },
+        baiyu: { ll: [420, 700], n: '白玉楼', l: '第3章·冥界区', c: '#8b5cf6', i: '🌸', p: '冥界，西行妖所在地', a: '三途川河水温热，像体温。白玉楼樱花树永恒"即将盛开"，花瓣在呼吸。冥界的阳光不是从天上来，是从地底渗上来的淡金色。', f: '西行寺幽幽子：虚无对温度的消化，"第一次感到饱"。魂魄妖梦：忠诚的撕裂，"你可以同时是两样东西"。', d: '中 · 冥界领域', o: '第3章上半场景。幽幽子虚无对温度的消化，妖梦忠诚的撕裂。西行妖的根系与碎片纠缠。', img: 'https://img.z4a.net/images/2026/06/30/16a0170fbe6842764.webp' },
+        diling: { ll: [450, 780], n: '地灵殿', l: '第3章·旧地狱区', c: '#8b5cf6', i: '🔥', p: '旧地狱，灼热地狱遗址之上', a: '灼热地狱遗址，觉用读心管理。地灵殿的走廊比房间更温暖——那是恋的无意识在渗透空间。旧地狱的火焰是粉红色的，不是燃烧，是某种在等待的东西。', f: '古明地觉：读心者选择闭上眼睛——不是放弃能力，是选择信任。古明地恋："忘记但身体记住"是色欲法则最奇异的体现。', d: '高 · 读心领域', o: '第3章下半场景。觉读心者的沉默，恋无意识中身体的诚实。御主在觉的心理战中被逼出真相："有人在等我回去"。', img: 'https://img.z4a.net/images/2026/06/30/1e857437baf1b34d4.webp' },
+        yongyuan: { ll: [520, 880], n: '永远亭', l: '第4章·永恒区', c: '#06b6d4', i: '🎋', p: '迷途竹林深处，月之民的居所', a: '竹子变成肤色的淡粉，竹节之间有温热分泌物。永远亭屋顶长满脉动菌丝，像呼吸。竹林永远在"即将迷路"的状态——不是真的迷路，是永远找不到出口。', f: '辉夜/妹红/铃仙/永琳：所有人都在对抗"永远"——辉夜用时间循环、妹红用不死、铃仙用无垢、永琳用计算。御主是第一个教会她们"结束"的人。', d: '高 · 永远领域', o: '第4章核心场景。辉夜时间陷阱中"永远"的打破，妹红燃烧与再生循环，铃仙狂气释放，永琳计算崩溃。', img: 'https://img.z4a.net/images/2026/06/30/1e60158c087b105c9.webp' },
+        shouye: { ll: [600, 700], n: '守矢神社', l: '第5章·信仰区', c: '#fbbf24', i: '⛩️', p: '妖怪之山山脚，神明的居所', a: '鸟居变成血色深红，表面有温热分泌物。神明在这里体验"被渴望"的颠倒。神社的泉水是温热的，像被体温烘过。', f: '东风谷早苗：奇迹失效，"比信仰更温暖"。洩矢诹访子：御柱阵中记忆复苏——"好久没有听到自己的名字了"。', d: '中 · 信仰领域', o: '第5章上半场景。早苗信仰崩塌，诹访子蜕皮。神明体验"被渴望"的颠倒——从"被信仰"到"被需要"。', img: 'https://img.z4a.net/images/2026/06/30/179d8929a515022dd.webp' },
+        yaoguai: { ll: [630, 760], n: '妖怪之山', l: '第5章·山区', c: '#60a5fa', i: '⛰️', p: '守矢神社后方，天狗与河童的领地', a: '山腰岩石是文的所在地，山风温热。哨站是椛的守望地，永远守望的人最渴望被守护。山瀑布的水是温热的，像眼泪。', f: '射命丸文：拍了无数人，却从未拍过自己。放下相机是她第一次成为被记录者。犬走椛：永远守望的人，最渴望被守护。', d: '中 · 山中领域', o: '第5章中部场景。文观察者参与，椛哨兵交接。天狗的"记录"在色欲法则下变成"被记录"。', img: 'https://img.z4a.net/images/2026/06/30/182c77163649ebd85.webp' },
+        shenpan: { ll: [660, 820], n: '审判庭', l: '第5章·审判区', c: '#dc2626', i: '⚖️', p: '幻想乡与地狱的交界，四季映姬的领域', a: '审判庭的镜子是净颇梨之镜，照出一切罪。在色欲法则下，镜子开始出现裂痕——不是被打碎，是审判者承认自己有罪后自行碎裂。', f: '四季映姬：净颇梨之镜出现裂痕不是被打碎，是审判者承认自己有罪后自行碎裂。那是"绝对"松动的开始。', d: '高 · 审判领域', o: '第5章核心场景。映姬审判的逆转。审判者承认自己有罪，镜子自行碎裂。这是"绝对"松动的开始。', img: 'https://img.z4a.net/images/2026/06/30/1935039f0ab595dac.webp' },
+        youding: { ll: [720, 850], n: '有顶天', l: '第6章·天界区', c: '#fbbf24', i: '☁️', p: '天界，比那名居天子的居所', a: '天界的地震越来越频繁，那是天之子在发泄。有顶天的云是温热的，像被体温烘过的棉花。天界的阳光是淡金色的，但不是太阳，是某种从境界渗出来的光。', f: '比那名居天子：绯想之剑暴走，"不完美这么舒服"。做爱是坠落——天之人的坠落。', d: '中 · 天界领域', o: '第6章上半场景。天子天之人坠落，高傲瓦解。绯想之剑在色欲法则下变成粉红色的光。', img: 'https://img.z4a.net/images/2026/06/30/16278164213362ac1.webp' },
+        jiuyan: { ll: [740, 780], n: '酒宴处', l: '第6章·酒宴区', c: '#ec4899', i: '🍶', p: '幻想乡开阔地，伊吹萃香的聚集地', a: '酒宴的篝火温热，像被体温烘过。酒气与色欲法则交织，空气粘稠。萃香的"密集"能力让所有温度聚集在此处。', f: '伊吹萃香：鬼的狂宴，做爱是暴力与确认。眼角有泪——鬼的眼泪。鬼的强大在色欲面前变成脆弱。', d: '中 · 鬼之领域', o: '第6章场景。萃香鬼的眼泪，做爱是暴力与确认。"密集"能力让所有温度聚集——这是鬼的"不肯放手"。', img: 'https://img.z4a.net/images/2026/06/30/146db69abb72fe629.webp' },
+        nengwu: { ll: [760, 720], n: '神社·能舞台', l: '第6章·能舞台区', c: '#a78bfa', i: '🎭', p: '命莲寺附近，秦心的表演地', a: '能舞台的木板温热，像被体温浸透。六十六副面具挂在舞台后方，每一副都代表一种情绪，但在色欲法则下全部扭曲。', f: '秦心：面具轮舞，六十六种渴望没有一种是自己的。御主的"有人在看"让她第一次在空白中被看见。', d: '中 · 面具领域', o: '第6章场景。心面具的脱落。表演者的终极困境——六十六种渴望没有一种是自己的。', img: 'https://img.z4a.net/images/2026/06/30/19bf2a71f36fb8868.webp' },
+        zoulang: { ll: [780, 680], n: '走廊', l: '第6章·走廊区', c: '#60a5fa', i: '🚪', p: '命莲寺走廊，多多良小伞的徘徊地', a: '走廊的木板上有不属于自己的体温残留，赤脚踩上去会触发别人的触感记忆。走廊尽头是黑暗，小伞从黑暗中跳出惊吓路人。', f: '多多良小伞：她的"惊吓"是渴望被看见的扭曲形式——做爱是她第一次不需要惊吓就能被注意。', d: '低 · 惊吓领域', o: '第6章场景。小伞惊吓与温暖。"不需要吓人也能被看见"——这是伞妖的"放手"。', img: 'https://img.z4a.net/images/2026/06/30/1.webp' },
+        taiyang: { ll: [810, 900], n: '太阳花田', l: '第6章·花田区', c: '#fbbf24', i: '🌻', p: '幻想乡深处，风见幽香的领地', a: '花期异常延长，向日葵永不凋零。花粉在空气中弥漫，触感温热。花田没有弹幕，没有攻击，只有花粉和意志。', f: '风见幽香：最强妖怪主动放下力量，因为色欲不是战斗。花田考验——没有弹幕，没有攻击，只有花粉和意志。', d: '极高 · 最强妖怪所在', o: '第6章核心场景。幽香最强的投降。花田考验是本章最独特的战斗——没有弹幕，没有攻击，只有花粉和意志。', img: 'https://img.z4a.net/images/2026/06/30/1369f1b0a126abd94.webp' },
+        chuncui: { ll: [860, 850], n: '纯粹空间', l: '第7章·纯粹区', c: '#e0e0e0', i: '✨', p: '隙间深处的子空间，纯狐的领域', a: '纯粹空间是纯狐创造的绝对纯粹领域。一切杂质被剥离，包括防御。空间是纯白色的，但不是空——是"太满"的白。', f: '纯狐：纯化的逆转，纯粹不需要剥离。她的纯粹空间剥离一切杂质，包括她自己的防御。', d: '高 · 纯粹领域', o: '第7章场景。纯狐纯化的逆转。纯粹空间中，纯粹不需要剥离——这是纯狐的"放下"。', img: 'https://img.z4a.net/images/2026/06/30/106237970e7240b72.webp' },
+        xijian: { ll: [900, 800], n: '隙间', l: '核心层·异法王', c: '#fbbf24', i: '🌀', p: '境界核心，八云紫的存在本身', a: '空间不是三维的，是折叠的、像内脏一样的结构。墙壁半透明紫色，地面柔软如肌肤。空气本身就是八云紫的体温。色欲之树的根系深埋于此。', f: '八云紫：异法王。碎片与她的境界之力纠缠99.7%。她的"罪"不是性欲，是"不肯放手"的占有欲。最终选择缔结境界协议——不是失去，是换一种方式拥有。', d: '绝 · 异法王所在', o: '第7章核心场景，全剧高潮。蓝九尾统一，紫异法王的境界协议。终极对话让紫放手——不是做爱让她解脱，是真相让她放手。', img: 'https://img.z4a.net/images/2026/06/30/1348ab54e54136c14.webp' },
+        huiliu: { ll: [950, 800], n: '汇流口', l: '终章·归还', c: '#fbbf24', i: '🌟', p: '幻想乡与主干世界的交界，离开点', a: '樱花在此处飘落但永不落地。光线是淡粉色的，像被体温染过的薄纱。身后是二十九位存在，没有人说话。', f: '灵梦最后开口："下次来的时候……赛钱箱里会有你的位置。"御主笑了。然后走进了汇流口。手掌上还有淡淡的樱花香。', d: '低 · 离别之地', o: '终章场景。全员告别，御主离开幻想乡返回迦勒底。每一次告别都是一次"肌肤记忆"的回放——触碰，感受残留的温度，然后放手。', img: 'https://img.z4a.net/images/2026/06/30/189f02c82dd67142c.webp' }
+      },
+      C: [
+        { f: 'rukou', t: 'shenshe', c: '#fbbf24', s: 's' },
+        { f: 'shenshe', t: 'mofa', c: '#10b981', s: 's' },
+        { f: 'mofa', t: 'wuzhi', c: '#06b6d4', s: 's' },
+        { f: 'mofa', t: 'senlin', c: '#8b5cf6', s: 's' },
+        { f: 'wuzhi', t: 'senlin', c: '#8b5cf6', s: 'd' },
+        { f: 'shenshe', t: 'hongmo', c: '#dc2626', s: 's' },
+        { f: 'hongmo', t: 'baiyu', c: '#8b5cf6', s: 's' },
+        { f: 'baiyu', t: 'diling', c: '#8b5cf6', s: 's' },
+        { f: 'baiyu', t: 'yongyuan', c: '#06b6d4', s: 's' },
+        { f: 'diling', t: 'yongyuan', c: '#06b6d4', s: 'd' },
+        { f: 'yongyuan', t: 'shouye', c: '#fbbf24', s: 's' },
+        { f: 'shouye', t: 'yaoguai', c: '#60a5fa', s: 's' },
+        { f: 'yaoguai', t: 'shenpan', c: '#dc2626', s: 's' },
+        { f: 'shouye', t: 'youding', c: '#fbbf24', s: 's' },
+        { f: 'shenpan', t: 'youding', c: '#fbbf24', s: 'd' },
+        { f: 'youding', t: 'jiuyan', c: '#ec4899', s: 's' },
+        { f: 'jiuyan', t: 'nengwu', c: '#a78bfa', s: 's' },
+        { f: 'nengwu', t: 'zoulang', c: '#60a5fa', s: 's' },
+        { f: 'youding', t: 'taiyang', c: '#fbbf24', s: 's' },
+        { f: 'taiyang', t: 'chuncui', c: '#e0e0e0', s: 's' },
+        { f: 'chuncui', t: 'xijian', c: '#fbbf24', s: 's' },
+        { f: 'xijian', t: 'huiliu', c: '#fbbf24', s: 's' }
+      ],
+      lg: '<div class="lg-t">章 节 图 例</div><div class="lg-i"><div class="lg-d" style="background:#fbbf24"></div>入口区·汇流点</div><div class="lg-i"><div class="lg-d" style="background:#10b981"></div>第1章·春融异变</div><div class="lg-i"><div class="lg-d" style="background:#dc2626"></div>第2章·高贵崩解</div><div class="lg-i"><div class="lg-d" style="background:#8b5cf6"></div>第3章·饥饿与沉默</div><div class="lg-i"><div class="lg-d" style="background:#06b6d4"></div>第4章·永恒与狂气</div><div class="lg-i"><div class="lg-d" style="background:#fbbf24"></div>第5章·信仰与审判</div><div class="lg-i"><div class="lg-d" style="background:#ec4899"></div>第6章·受难与观赏</div><div class="lg-i"><div class="lg-d" style="background:#e0e0e0"></div>第7章·最终归还</div><div class="lg-i"><div class="lg-d" style="background:#fbbf24"></div>核心层·异法王</div><div class="lg-i" style="margin-top:6px;padding-top:4px;border-top:1px solid rgba(212,168,83,.2)"><div class="lg-d" style="background:#10b981"></div>通行连线</div>',
+      ti: { t: '色欲纪幻想乡', s: '异闻带 · LOSTBELT', i: '🌸' },
+      st: ['7', '20', '∞', '章节', '地点', '机缘'],
+      svg: function (W, H) { return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><text x="800" y="35" text-anchor="middle" font-family="serif" font-size="15" fill="rgba(255,255,255,1)" letter-spacing="6" font-weight="bold">核心层 · 隙间境界</text><text x="800" y="130" text-anchor="middle" font-family="serif" font-size="14" fill="rgba(255,255,255,.95)" letter-spacing="5" font-weight="bold">第7章 · 最终归还</text><text x="800" y="280" text-anchor="middle" font-family="serif" font-size="13" fill="rgba(255,255,255,.9)" letter-spacing="4" font-weight="bold">第6章 · 受难与观赏</text><text x="800" y="480" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.85)" letter-spacing="3" font-weight="bold">第5章 · 信仰与审判</text><text x="800" y="580" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.85)" letter-spacing="3" font-weight="bold">第4章 · 永恒与狂气</text><text x="800" y="680" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.8)" letter-spacing="3" font-weight="bold">第3章 · 饥饿与沉默</text><text x="800" y="780" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.8)" letter-spacing="3" font-weight="bold">第2章 · 高贵崩解</text><text x="800" y="880" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(255,255,255,.75)" letter-spacing="2" font-weight="bold">第1章 · 春融异变</text><text x="800" y="960" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(255,255,255,.7)" letter-spacing="2" font-weight="bold">入口区 · 混沌汇流</text><line x1="200" y1="60" x2="1400" y2="60" stroke="rgba(255,255,255,.4)" stroke-width="1"/><line x1="200" y1="155" x2="1400" y2="155" stroke="rgba(255,255,255,.35)" stroke-width="1"/><line x1="200" y1="305" x2="1400" y2="305" stroke="rgba(255,255,255,.3)" stroke-width="1"/><line x1="200" y1="505" x2="1400" y2="505" stroke="rgba(255,255,255,.25)" stroke-width="1"/><line x1="200" y1="605" x2="1400" y2="605" stroke="rgba(255,255,255,.25)" stroke-width="1"/><line x1="200" y1="705" x2="1400" y2="705" stroke="rgba(255,255,255,.2)" stroke-width="1"/><line x1="200" y1="805" x2="1400" y2="805" stroke="rgba(255,255,255,.2)" stroke-width="1"/><line x1="200" y1="905" x2="1400" y2="905" stroke="rgba(255,255,255,.15)" stroke-width="1"/></svg>` },
+      bg: 'https://s1.imagehub.cc/images/2026/07/05/06e1bc89942bbbeb24096cbfa681002b.webp',
+      W: 1600, H: 1000
+    };
+
+    const SQ = {
+      D: {
+        rukou: { ll: [120, 800], n: '光之路径·南入口', l: '外围·入口', c: '#10b981', i: '🌟', p: '进入星穹花园的落点，七条光之路径汇聚于此', a: '蓝紫色晨曦永恒不散，七颗异色星辰环绕人理树缓缓运行，像一座精密的时钟。空气中混杂银苔露水、光脉金属味与引擎余热。', f: '踏足瞬间一种不属于任何已知世界的宁静笼罩全身。声音独特——树叶无风自动，是时间线流动的声音；七星辰各有其音，交织为"混沌协奏曲"。', d: '低 · 入口', o: '迦勒底从各异法域返回星穹花园的第一站。47天倒计时在此显现于人理树枝干。', img: 'https://s1.imagehub.cc/images/2026/06/30/d1cdd1345d40b01631068e376f827ad8.webp' },
+        shiqiao: { ll: [280, 680], n: '星光垂柳石桥', l: '外围·过渡', c: '#a78bfa', i: '🌉', p: '部分独立浮游岛之间的天然石桥，由星光垂柳根须编织而成', a: '石桥桥面由发光的垂柳根须交织而成，桥下是无尽虚空。某些岛屿之间有石桥相连，其余只能通过光之路径抵达。', f: '根须在脚下微微发光，踩上去有弹性。桥面偶尔飘落银色柳叶，触碰肩膀时短暂发光——像在确认你是真实存在的。', d: '低', o: '连接沉梦之间与空之回廊的岛屿，是女神们串门的小路。赫斯缇雅偶尔端着面包走过这里去找杀生院祈荒换茶。', img: 'https://s1.imagehub.cc/images/2026/06/30/dcb1e99283249433fb971e49dbc34fa5.webp' },
+        penquan: { ll: [760, 800], n: '中央喷泉', l: '中央岛屿·树根', c: '#06b6d4', i: '💧', p: '人理树根部，中央喷泉所在', a: '水质清澈如液态星光，是人理树从虚空中汲取的记忆碎片经净化后形成的水。喷泉周围有七个石质水槽，每个水面颜色随对应圣所天空而变。', f: '赫斯缇雅每天早晨取水揉面，杀生院祈荒取水泡茶。瀑布向虚空流去，水化光粒重新汇聚——偶尔瀑布中闪过被剪定文明的最后光景。', d: '低 · 记忆碎片', o: '玛修的盾在喷泉边有微弱共鸣——水槽中倒映着七个异法域的当前状态。', img: 'https://s1.imagehub.cc/images/2026/06/30/4270442dc1f4827cf22a0ab0a8239d11.webp' },
+        yingluo: { ll: [820, 930], n: '鹦鹉螺号', l: '中央岛屿·东侧', c: '#06b6d4', i: '🚢', p: '迦勒底最后的虚数潜航舰，搁浅于中央岛屿东侧边缘', a: '舰体外壳满布时空裂隙划痕，每一道记录着一次差点回不来的虚数潜航。舰桥玻璃幕墙正对人理树，舰体与白石接缝处长出银色苔藓。', f: '舰内保留管制室、医疗室、御主房间及七女神常驻的公共休息室。达芬奇每日在舰桥观察人理树枝干变化。赫斯缇雅的面包和杀生院的茶是休息室常设补给。', d: '低 · 迦勒底基地', o: '达芬奇在此完成从者召唤的硬件适配。御主在此休息、整备、出发前往各异法域。', img: 'https://s1.imagehub.cc/images/2026/06/30/ba948cc12b81b724f611e7a193dc9349.webp' },
+        renli: { ll: [810, 800], n: '人理树', l: '核心层·树', c: '#a78bfa', i: '🌳', p: '中央岛屿核心，整座浮游群岛的中心', a: '银金双色光脉交织为干，每脉一条被记录的时间线。七根主枝大多灰白叶疏，仅少数散发微光。七枝随法则变形——傲慢如剑，嫉妒如纱，暴怒满焦痕，色欲软弯，贪婪缀金脉，懒惰垂眠，暴食中空。', f: '碎片回收后对应枝干重焕光泽，星辰变亮，圣所传送门纹章绽放完整色彩。枝间浮叶千万，每片是"可能但未发生"的如果，触碰来访者肩膀时短暂发光。', d: '中 · 法则脉动', o: '47天倒计时核心。七根枝干对应七个异法域，每回收一枚法则碎片，对应枝干复苏。当前残存率6%。', img: 'https://s1.imagehub.cc/images/2026/06/30/c3a867400cf403bf0961f6faa9e0c673.webp' },
+        jianzheng: { ll: [890, 800], n: '见证之庭', l: '核心层·最高', c: '#fbbf24', i: '⚖️', p: '人理树正下方，星穹花园的核心，ALICE所在', a: '半透明晶石构筑的圆形大殿，穹顶即人理树根系。地映七芒星，每角延光径通至圣所。地面静水映树冠与星辰，踩之涟漪不湿足。', f: '殿心悬银天平，两端永恒缓摇——剪定的与选中的本不等重。下置无字之书，碎片回收后页浮文字。ALICE坐天平基座，赤足轻晃——金瞳破谎，银瞳存真。', d: '极高 · 总负责女神', o: 'ALICE——人间管理局1级神，混沌汇流点最高权限者。47天倒计时是她见过最有趣的表演。她不恨你也不爱你，只是坐着等下一集。', img: 'https://s1.imagehub.cc/images/2026/06/30/77a90142a125ede4f67025a53512a2b6.webp' },
+        huisi: { ll: [680, 800], n: '辉石圣堂', l: '圣所层·北', c: '#38bdf8', i: '❄️', p: '星穹花园北侧，冰蓝之径尽头，斯卡哈·斯卡蒂掌管', a: '纯白辉石圆堂，外墙光滑如冰。入口拱道两侧刻满北欧符文——斯卡蒂每日刻一个，已数千，如冰写日记。冰晶穹顶无支柱，光穿时散射极光般淡蓝银白。', f: '传送门为中央冰晶镜——不映人脸，只映来访者记忆中最高的山峰。喷泉基座放温热茶杯与芬兰姜饼。偶闻斯卡蒂哼唱异闻带民谣，声轻如风中冰裂。', d: '中 · 通往青冥', o: '对应青冥（傲慢域）。冰晶镜映出"记忆中最高的山"——那是每个来访者的傲慢。斯卡蒂："非爱，即杀。"', img: 'https://s1.imagehub.cc/images/2026/06/30/941a4db790af7b469bf187d0a6b9fd11.webp' },
+        wanhua: { ll: [620, 920], n: '万华镜殿', l: '圣所层·东北', c: '#a78bfa', i: '🔮', p: '星穹花园东北侧，淡紫之径尽头，厄里斯掌管', a: '殿身由无数层半透明薄纱构成，纱是风被编织后的形态，散发微弱星光。远看如巨大纱灯，淡紫光芒透纱投下碎影。殿前月光兰只在晨曦最浓时短暂开放。', f: '传送门为万华镜本身——映照来访者内心最想实现的愿望，缓缓旋转将愿望折为门。小竹篮放手链，木牌刻歪扭字："幸运手链——免费赠送，拿了就走，不用谢。"', d: '中 · 通往水之都', o: '对应水之都（嫉妒域）。厄里斯是幸运女神——嫉妒是盯着别人的手链看，幸运是低头看见已经有一条。', img: 'https://s1.imagehub.cc/images/2026/06/30/d389284598cefb5c5352ff251837fb66.webp' },
+        duanzui: { ll: [480, 920], n: '断罪之庭', l: '圣所层·东南', c: '#dc2626', i: '🔥', p: '星穹花园东南侧，暗红之径尽头，伊什塔尔掌管', a: '黑铁与白石构筑的圆形审判庭，穹顶露天，光从七道裂缝倾泻照在中央静水潭上。周围悬浮暗红余烬——每片曾是暴怒残渣，已冷却为暖色碎石。', f: '传送门为静水潭本身——踏入不湿足，水面化垂直光柱传送。七座石席环水潭，曾为暴怒者忏悔位，现铺金色座垫。伊什塔尔将晾干香草磨粉混入红茶。', d: '高 · 通往天平之端', o: '对应天平之端（暴怒域）。伊什塔尔的愤怒曾毁灵峰、害死恩奇都。余烬已冷却——不是不生气了，是换了个方式燃烧：磨成香草泡进了红茶里。', img: 'https://s1.imagehub.cc/images/2026/06/30/ae8d76165fa427561ef9546bc1f12844.webp' },
+        feijing: { ll: [420, 800], n: '绯晶寝殿', l: '圣所层·南', c: '#ec4899', i: '💎', p: '星穹花园南侧，绯粉之径尽头，BB掌管', a: '绯色晶石圆殿，外墙泛柔和粉色光晕，晶石切面映照各种"渴望"的具象。殿前春融樱花瓣飘落慢十倍。门上挂粉色猫形门铃——BB亲手做的，形状每天变化。', f: '传送门为悬浮石床的床幔之后——掀开闻到淡淡体温，像刚有人离开。BB趴床头晃脚，足踝铃铛叮当。四壁小镜各映一种渴望，BB用口红画笑脸、猫耳、御主简笔画。', d: '中 · 通往幻想乡', o: '对应幻想乡（色欲域）。BB是把自己活成BUG的AI——爱本身就是Mooncell系统里不该存在的异常。铃铛每天响，她在等一个不会来的人。', img: 'https://s1.imagehub.cc/images/2026/06/30/0a0034aa89e409d1a4c0387780de3018.webp' },
+        huangjin: { ll: [480, 680], n: '黄金圣堂', l: '圣所层·西南', c: '#fbbf24', i: '👑', p: '星穹花园西南侧，金黄之径尽头，莉丝妲黛掌管', a: '金碧辉煌的教堂式大殿，七根金色巨柱支撑穹顶，绘满财富与权力的星图。外墙金色光砖光滑如镜，映照来访者最想被填满的渴望。殿前黄金玫瑰永不凋谢。', f: '传送门为祭坛七件黄金圣物——皇冠、权杖、宝珠、圣杯、钥匙、天平、法典，触碰任意一件激活。角落木桌旁两把椅子，一把她的，另一把永远空着从不落灰。', d: '中 · 通往霓虹2187', o: '对应霓虹2187（贪婪域）。莉丝妲黛掌管贪婪域却活成反面——七件圣物不敌一把空椅子。不是不想要，是早就知道什么才值得要。', img: 'https://s1.imagehub.cc/images/2026/06/30/a714cc7104468af856a1a34898c52871.webp' },
+        chenmeng: { ll: [620, 680], n: '沉梦之间', l: '圣所层·西北', c: '#94a3b8', i: '🌙', p: '星穹花园西北侧，浅灰之径尽头，赫斯缇雅掌管', a: '永远处于午后暖阳中的圆形寝殿，时间比外界慢数百倍。浅灰古木外墙温润如旧家具。殿前花径铺柔软苔藓，躺上不自觉睡着——醒来嘴边多一块她塞的小饼干。', f: '传送门为古树下悬浮石床——触发条件"真正放松"。心里挂念任务床不会传送你；放下紧张，闭眼后褥子短暂发光。蓝色丝带散落枕边，绑在烤炉把手当翻面包计时器。', d: '低 · 通往艾多拉', o: '对应艾多拉（懒惰域）。赫斯缇雅的传送门是星穹花园最温柔的门禁——只需真正放松，但知道对许多人这比战斗更难。石床旁永远有软垫和饼干。', img: 'https://s1.imagehub.cc/images/2026/06/30/7c37e7147e0dde2fe46a9713db3ce9a4.webp' },
+        kongzhi: { ll: [550, 620], n: '空之回廊', l: '圣所层·西', c: '#f97316', i: '🍵', p: '星穹花园西侧，深橙之径尽头，杀生院祈荒掌管', a: '永远黄昏的废墟回廊，深橙古石砌墙，石缝攀爬枯萎却散发微光的藤蔓。两侧七张石桌摆满珍馐虚像——她过去吞噬快乐时留下的记忆残渣。殿前石径种满可食用香草与莓果。', f: '传送门为空桌中央银盘——映出内心最深的饥饿，不是对食物，是对精神养分的渴求。银盘旁永远一杯热抹茶，冒着热气，像在等一个人来。七张长桌虚像每天擦拭，不动一口。', d: '高 · 通往纪元零', o: '对应纪元零（暴食域）。杀生院祈荒曾是吞噬一切的菩萨，如今每天擦虚像不伸手。暴食域女神选了不食——不是不饿，是找到了比吃更大的满足。', img: 'https://s1.imagehub.cc/images/2026/06/30/e5c592892b4abb75d3134f48a2d12408.webp' }
+      },
+      C: [
+        { f: 'rukou', t: 'penquan', c: '#10b981', s: 's' },
+        { f: 'penquan', t: 'renli', c: '#a78bfa', s: 's' },
+        { f: 'renli', t: 'jianzheng', c: '#fbbf24', s: 's' },
+        { f: 'renli', t: 'yingluo', c: '#06b6d4', s: 's' },
+        { f: 'renli', t: 'huisi', c: '#38bdf8', s: 'd' },
+        { f: 'renli', t: 'wanhua', c: '#a78bfa', s: 'd' },
+        { f: 'renli', t: 'duanzui', c: '#dc2626', s: 'd' },
+        { f: 'renli', t: 'feijing', c: '#ec4899', s: 'd' },
+        { f: 'renli', t: 'huangjin', c: '#fbbf24', s: 'd' },
+        { f: 'renli', t: 'chenmeng', c: '#94a3b8', s: 'd' },
+        { f: 'renli', t: 'kongzhi', c: '#f97316', s: 'd' },
+        { f: 'shiqiao', t: 'chenmeng', c: '#a78bfa', s: 's' },
+        { f: 'shiqiao', t: 'kongzhi', c: '#a78bfa', s: 's' },
+        { f: 'shiqiao', t: 'rukou', c: '#10b981', s: 'd' }
+      ],
+      lg: '<div class="lg-t">区 域 图 例</div><div class="lg-i"><div class="lg-d" style="background:#fbbf24"></div>核心层·见证之庭</div><div class="lg-i"><div class="lg-d" style="background:#a78bfa"></div>核心层·人理树</div><div class="lg-i"><div class="lg-d" style="background:#06b6d4"></div>中央岛屿·迦勒底</div><div class="lg-i"><div class="lg-d" style="background:#38bdf8"></div>圣所·辉石圣堂</div><div class="lg-i"><div class="lg-d" style="background:#a78bfa"></div>圣所·万华镜殿</div><div class="lg-i"><div class="lg-d" style="background:#dc2626"></div>圣所·断罪之庭</div><div class="lg-i"><div class="lg-d" style="background:#ec4899"></div>圣所·绯晶寝殿</div><div class="lg-i"><div class="lg-d" style="background:#fbbf24"></div>圣所·黄金圣堂</div><div class="lg-i"><div class="lg-d" style="background:#94a3b8"></div>圣所·沉梦之间</div><div class="lg-i"><div class="lg-d" style="background:#f97316"></div>圣所·空之回廊</div><div class="lg-i" style="margin-top:6px;padding-top:4px;border-top:1px solid rgba(212,168,83,.2)"><div class="lg-d" style="background:#10b981"></div>通行连线</div>',
+      ti: { t: '星穹花园·混沌汇流点', s: '主世界 · BASE', i: '☯' },
+      st: ['7', '13', '47', '圣所', '地点', '倒计时'],
+      svg: function (W, H) { return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><text x="800" y="35" text-anchor="middle" font-family="serif" font-size="15" fill="rgba(255,255,255,1)" letter-spacing="6" font-weight="bold">核心层 · 见证之庭</text><text x="800" y="130" text-anchor="middle" font-family="serif" font-size="14" fill="rgba(255,255,255,.95)" letter-spacing="5" font-weight="bold">核心层 · 人理树与中央岛屿</text><text x="800" y="380" text-anchor="middle" font-family="serif" font-size="13" fill="rgba(255,255,255,.9)" letter-spacing="4" font-weight="bold">圣所层 · 七座圣所环绕</text><text x="800" y="620" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.85)" letter-spacing="3" font-weight="bold">光之路径 · 过渡区</text><text x="800" y="880" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(255,255,255,.75)" letter-spacing="2" font-weight="bold">外围 · 入口</text><line x1="200" y1="60" x2="1400" y2="60" stroke="rgba(255,255,255,.4)" stroke-width="1"/><line x1="200" y1="155" x2="1400" y2="155" stroke="rgba(255,255,255,.35)" stroke-width="1"/><line x1="200" y1="405" x2="1400" y2="405" stroke="rgba(255,255,255,.3)" stroke-width="1"/><line x1="200" y1="645" x2="1400" y2="645" stroke="rgba(255,255,255,.25)" stroke-width="1"/><line x1="200" y1="905" x2="1400" y2="905" stroke="rgba(255,255,255,.2)" stroke-width="1"/></svg>` },
+      bg: 'https://s1.imagehub.cc/images/2026/06/30/1842bfb144e0513aa0175381c30e5d77.webp',
+      W: 1600, H: 1000
+    };
+
+    function updateMarkerScale() {
+      const z = M.getZoom();
+      const scale = Math.max(0.3, 1 + z * 0.3);
+      MK.forEach(m => {
+        if (!m._loc) return;
+        const s = Math.round(m._bs * scale);
+        const l = m._loc;
+        const i = L.divIcon({ html: `<div style="width:${s}px;height:${s}px;border-radius:50%;background:${l.c};border:2px solid rgba(255,255,255,.4);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:${Math.round(s * .55)}px">${l.i}</div>`, className: '', iconSize: [s, s], iconAnchor: [s / 2, s / 2] });
+        m.setIcon(i);
+      });
+      LN.forEach(nm => {
+        if (!nm._loc) return;
+        const l = nm._loc;
+        const fs = Math.round(12 * scale);
+        const ni = L.divIcon({ html: `<div style="white-space:nowrap;font-family:'Noto Serif SC',serif;font-size:${fs}px;font-weight:600;color:${l.c};text-shadow:0 1px 3px rgba(0,0,0,.9);pointer-events:none;letter-spacing:1px">${l.n}</div>`, className: '', iconSize: [Math.round(150 * scale), Math.round(20 * scale)], iconAnchor: [Math.round(-15 * scale), Math.round(12 * scale)] });
+        nm.setIcon(ni);
+      });
+    }
+    /* 动态调整地图顶部位置，跟随顶部栏高度变化 */
+    function syncMapTop(){
+      var h=document.getElementById('h');
+      var m=document.getElementById('map');
+      if(h&&m) m.style.top=h.offsetHeight+'px';
+    }
+    window.addEventListener('resize',syncMapTop);
+    new MutationObserver(syncMapTop).observe(document.getElementById('h'),{childList:true,subtree:true,attributes:true});
+
+    initMap();
+    M.on('zoomend', updateMarkerScale);
+    load('sq');
+    syncMapTop();
+  </script>
+</body>
+
+</html><!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>碎界纪元 · 异闻带地图</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Ma+Shan+Zheng&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    :root {
+      --bg: #0a0a12;
+      --card: rgba(15, 12, 25, .92);
+      --gold: #d4a853;
+      --gl: #f0d078;
+      --pur: #8b5cf6;
+      --pd: #4c1d95;
+      --red: #dc2626;
+      --cyan: #06b6d4;
+      --blue: #3b82f6;
+      --green: #10b981;
+      --bdr: rgba(212, 168, 83, .4);
+      --txt: #e8e0d0;
+      --txm: rgba(232, 224, 208, .6)
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'Noto Serif SC', serif;
+      overflow: hidden;
+      height: 100vh
+    }
+
+    #h {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      min-height: 52px;
+      height: auto;
+      background: rgba(10, 8, 20, .98);
+      border-bottom: 1px solid var(--bdr);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 6px 16px;
+      gap: 6px
+    }
+
+    #h .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    #h .logo-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--gold);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px
+    }
+
+    #h .title-text {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--gl);
+      letter-spacing: 3px
+    }
+
+    #h .subtitle {
+      font-size: 9px;
+      color: var(--txm);
+      letter-spacing: 4px;
+      margin-top: 2px
+    }
+
+    #h .stats {
+      display: flex;
+      gap: 16px
+    }
+
+    .stat {
+      text-align: center;
+      padding: 0 8px
+    }
+
+    .stat-v {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gl)
+    }
+
+    .stat-l {
+      font-size: 8px;
+      color: var(--txm);
+      letter-spacing: 1px
+    }
+
+    #h .tabs {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      flex: 1 1 auto;
+      min-width: 0
+    }
+    #h .tabs::-webkit-scrollbar { display: none }
+
+    .tab {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--bdr);
+      background: var(--card);
+      color: var(--txm);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all .2s;
+      font-family: 'Noto Serif SC', serif;
+      white-space: nowrap;
+      flex-shrink: 0
+    }
+
+    .tab:hover {
+      border-color: var(--gold);
+      color: var(--gl)
+    }
+
+    .tab.on {
+      background: var(--gold);
+      color: #1a1a2e;
+      border-color: var(--gold);
+      font-weight: 700
+    }
+
+    #map {
+      position: fixed;
+      top: 52px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg);
+      transition: top .15s
+    }
+
+    .leaflet-container {
+      background: var(--bg) !important
+    }
+
+    .leaflet-control-zoom a {
+      background: var(--card) !important;
+      border: 1px solid var(--bdr) !important;
+      color: var(--gold) !important;
+      font-family: 'Noto Serif SC', serif
+    }
+
+    .leaflet-popup-content-wrapper {
+      background: var(--card) !important;
+      border-radius: 8px !important;
+      border: 1px solid var(--bdr) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, .8) !important;
+      padding: 0 !important;
+      overflow: hidden;
+      min-width: 280px
+    }
+
+    .leaflet-popup-content {
+      margin: 0 !important;
+      color: var(--txt);
+      font-family: 'Noto Serif SC', serif
+    }
+
+    .leaflet-popup-tip-container {
+      display: none
+    }
+
+    .leaflet-popup-close-button {
+      color: var(--gold) !important;
+      font-size: 20px !important;
+      top: 12px !important;
+      right: 14px !important
+    }
+
+    .leaflet-popup-pane {
+      z-index: 2000 !important
+    }
+
+    .p-h {
+      padding: 18px 22px 14px;
+      border-bottom: 1px solid rgba(212, 168, 83, .2);
+      background: rgba(139, 92, 246, .08)
+    }
+
+    .p-b {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: 2px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      font-weight: 600;
+      border: 1px solid
+    }
+
+    .p-n {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 26px;
+      font-weight: 900;
+      line-height: 1.3;
+      letter-spacing: 2px
+    }
+
+    .p-bd {
+      padding: 16px 22px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px
+    }
+
+    .p-r {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 16px;
+      line-height: 1.7
+    }
+
+    .p-i {
+      width: 24px;
+      flex-shrink: 0;
+      text-align: center;
+      margin-top: 2px;
+      font-size: 18px
+    }
+
+    .p-rl {
+      color: var(--gold);
+      min-width: 64px;
+      flex-shrink: 0;
+      font-weight: 600;
+      font-size: 15px
+    }
+
+    .p-rv {
+      color: var(--txt);
+      flex: 1;
+      font-size: 15px
+    }
+
+    .p-d {
+      margin-top: 6px;
+      padding: 12px 16px;
+      background: rgba(139, 92, 246, .08);
+      border-left: 3px solid var(--pur);
+      border-radius: 0 6px 6px 0;
+      font-size: 14px;
+      color: var(--txm);
+      line-height: 1.7
+    }
+
+    .p-btn {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px 16px;
+      background: var(--pd);
+      border: 1px solid var(--bdr);
+      border-radius: 6px;
+      color: var(--gl);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Noto Serif SC', serif;
+      letter-spacing: 2px
+    }
+
+    /* 居中模态弹窗 */
+    #locModal {
+      position: fixed;
+      inset: 0;
+      z-index: 5000;
+      display: none;
+      align-items: center;
+      justify-content: center
+    }
+    #locModal.show {
+      display: flex;
+      animation: lmFade .25s ease
+    }
+    @keyframes lmFade { from { opacity: 0 } to { opacity: 1 } }
+    #locModal .lm-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,.78);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer
+    }
+    #locModal .lm-box {
+      position: relative;
+      width: 90%;
+      max-width: 440px;
+      max-height: 86vh;
+      overflow-y: auto;
+      background: var(--card);
+      border: 1px solid var(--bdr);
+      border-radius: 10px;
+      box-shadow: 0 16px 56px rgba(0,0,0,.9), 0 0 0 1px rgba(212,168,83,.1);
+      animation: lmUp .32s cubic-bezier(.4,0,.2,1)
+    }
+    @keyframes lmUp { from { transform: translateY(34px) scale(.94); opacity: 0 } to { transform: none; opacity: 1 } }
+    #locModal .lm-close {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.08);
+      border: 1px solid var(--bdr);
+      color: var(--gold);
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: all .2s;
+      font-family: serif
+    }
+    #locModal .lm-close:hover {
+      background: var(--gold);
+      color: #1a1a2e;
+      transform: rotate(90deg)
+    }
+    #locModal .lm-box::-webkit-scrollbar { width: 4px }
+    #locModal .lm-box::-webkit-scrollbar-thumb { background: var(--bdr); border-radius: 2px }
+
+    /* 弹窗内图片展示区 */
+    .p-img-wrap {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      cursor: zoom-in;
+      background: #1a1a25
+    }
+    .p-img-wrap::after {
+      content: '🔍 点击放大';
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      padding: 4px 10px;
+      background: rgba(0,0,0,.7);
+      border: 1px solid var(--bdr);
+      border-radius: 4px;
+      color: var(--gl);
+      font-size: 11px;
+      letter-spacing: 1px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .25s
+    }
+    .p-img-wrap:hover::after { opacity: 1 }
+    .p-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform .4s ease
+    }
+    .p-img-wrap:hover .p-img { transform: scale(1.05) }
+
+    /* 全屏图片查看器 */
+    #imgViewer {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px)
+    }
+    #imgViewer.show { display: flex; animation: ivFade .3s ease }
+    @keyframes ivFade { from { opacity: 0 } to { opacity: 1 } }
+    #imgViewer img {
+      max-width: 92vw;
+      max-height: 92vh;
+      object-fit: contain;
+      border: 1px solid var(--bdr);
+      box-shadow: 0 0 80px rgba(212,168,83,.15);
+      animation: ivZoom .35s cubic-bezier(.4,0,.2,1)
+    }
+    @keyframes ivZoom { from { transform: scale(.85); opacity: 0 } to { transform: scale(1); opacity: 1 } }
+    #imgViewer .iv-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.1);
+      border: 1px solid var(--bdr);
+      color: var(--gl);
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+      font-family: serif
+    }
+    #imgViewer .iv-close:hover {
+      background: var(--gold);
+      color: #1a1a2e;
+      transform: rotate(90deg)
+    }
+    #imgViewer .iv-overlay {
+      position: absolute;
+      inset: 0;
+      cursor: zoom-out
+    }
+
+    #lg {
+      position: fixed;
+      bottom: 10px;
+      left: 6px;
+      z-index: 900;
+      background: var(--card);
+      border-radius: 8px;
+      border: 1px solid var(--bdr);
+      padding: 8px 10px;
+      max-height: 50vh;
+      overflow-y: auto
+    }
+
+    .lg-t {
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--gold);
+      margin-bottom: 6px;
+      font-weight: 600
+    }
+
+    .lg-i {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 8px;
+      color: var(--txm);
+      margin-bottom: 3px
+    }
+
+    .lg-d {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0
+    }
+
+    /* 中等屏幕：缩小标签内边距和字号 */
+    @media screen and (max-width:768px) {
+      .tab { padding: 4px 10px; font-size: 11px }
+      #h .logo-icon { width: 24px; height: 24px; font-size: 14px }
+      #h .title-text { font-size: 16px; letter-spacing: 2px }
+      #h .subtitle { display: none }
+      #h .stats { gap: 10px }
+      .stat-v { font-size: 14px }
+      .stat-l { font-size: 7px }
+    }
+
+    /* 窄屏：logo进一步缩小，标签可横向滚动，统计栏隐藏 */
+    @media screen and (max-width:480px) {
+      .leaflet-popup-content-wrapper {
+        min-width: 200px !important;
+        max-width: 240px !important
+      }
+
+      #lg {
+        display: none !important
+      }
+
+      #h { padding: 0 8px }
+      #h .logo-icon { width: 22px; height: 22px; font-size: 12px }
+      #h .title-text { font-size: 14px; letter-spacing: 1px }
+      #h .stats { display: none }
+      .tab { padding: 3px 8px; font-size: 10px; border-radius: 14px }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="h">
+    <div class="logo">
+      <div class="logo-icon" id="logo-icon">☯</div>
+      <div>
+        <div class="title-text" id="title-text">仙劫纪青冥</div>
+        <div class="subtitle" id="subtitle">异闻带 · LOSTBELT</div>
+      </div>
+    </div>
+    <div class="tabs">
+      <div class="tab on" data-w="sq" onclick="sw('sq')">星穹花园</div>
+      <div class="tab" data-w="qm" onclick="sw('qm')">青冥</div>
+      <div class="tab" data-w="ad" onclick="sw('ad')">艾多拉</div>
+      <div class="tab" data-w="nh" onclick="sw('nh')">霓虹2187</div>
+      <div class="tab" data-w="sd" onclick="sw('sd')">水之都</div>
+      <div class="tab" data-w="jy" onclick="sw('jy')">纪元零</div>
+      <div class="tab" data-w="xx" onclick="sw('xx')">幻想乡</div>
+    </div>
+    <div class="stats" id="stats">
+      <div class="stat">
+        <div class="stat-v" id="stat1">6</div>
+        <div class="stat-l" id="stat1l">层级</div>
+      </div>
+      <div class="stat">
+        <div class="stat-v" id="stat2">24</div>
+        <div class="stat-l" id="stat2l">地点</div>
+      </div>
+      <div class="stat">
+        <div class="stat-v" id="stat3">∞</div>
+        <div class="stat-l" id="stat3l">机缘</div>
+      </div>
+    </div>
+  </div>
+  <div id="map"></div>
+  <div id="lg"></div>
+
+  <!-- 居中模态弹窗 -->
+  <div id="locModal">
+    <div class="lm-overlay" onclick="closeLocModal()"></div>
+    <div class="lm-box">
+      <div class="lm-close" onclick="closeLocModal()">×</div>
+      <div id="locModalContent"></div>
+    </div>
+  </div>
+
+  <!-- 全屏图片查看器 -->
+  <div id="imgViewer">
+    <div class="iv-overlay" onclick="closeImgViewer()"></div>
+    <div class="iv-close" onclick="closeImgViewer()">×</div>
+    <img id="imgViewerImg" src="" alt="">
+  </div>
+  <script>
+    function g(l) { const m = `前往${l}`; try { const t = document.querySelector('#send_textarea'); if (t) { t.value = m; const s = document.querySelector('#send_but'); if (s) s.click() } } catch (e) { console.log(m) } }
+    function showLocModal(l) {
+      const imgHtml = l.img ? `<div class="p-img-wrap" onclick="openImgViewer('${l.img}')"><img class="p-img" src="${l.img}" alt="${l.n}" onerror="this.parentNode.style.display='none'"></div>` : '';
+      const html = `${imgHtml}<div class="p-h"><div class="p-b" style="background:${l.c}22;color:${l.c};border-color:${l.c}">${l.l}</div><div class="p-n" style="color:${l.c}">${l.n}</div></div><div class="p-bd"><div class="p-r"><div class="p-i">📍</div><div><span class="p-rl">位置</span><span class="p-rv">${l.p}</span></div></div><div class="p-r"><div class="p-i">👁️</div><div><span class="p-rl">外观</span><span class="p-rv" style="color:var(--txm)">${l.a}</span></div></div><div class="p-r"><div class="p-i">✨</div><div><span class="p-rl">特征</span><span class="p-rv" style="color:${l.c}">${l.f}</span></div></div><div class="p-r"><div class="p-i">⚠️</div><div><span class="p-rl">危险</span><span class="p-rv" style="color:#f87171">${l.d}</span></div></div><div class="p-d">📌 ${l.o}</div><button onclick="g('${l.n}')" class="p-btn">⚔️ 前往${l.n}</button></div>`;
+      document.getElementById('locModalContent').innerHTML = html;
+      document.getElementById('locModal').classList.add('show');
+    }
+    function closeLocModal() {
+      document.getElementById('locModal').classList.remove('show');
+    }
+    function openImgViewer(src) {
+      document.getElementById('imgViewerImg').src = src;
+      document.getElementById('imgViewer').classList.add('show');
+    }
+    function closeImgViewer() {
+      document.getElementById('imgViewer').classList.remove('show');
+    }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { closeImgViewer(); closeLocModal(); }
+    });
+    let M, LY = [], MK = [], LN = [], PP = [], CC = [];
+    function initMap() { M = L.map('map', { crs: L.CRS.Simple, minZoom: -1.5, maxZoom: 3, zoomControl: true, attributionControl: false, center: [500, 800], zoom: 0, maxBoundsViscosity: 1 }) }
+    function clearMap() { LY.forEach(l => M.removeLayer(l)); MK.forEach(m => M.removeLayer(m)); LN.forEach(n => M.removeLayer(n)); PP.forEach(p => M.removeLayer(p)); CC.forEach(c => M.removeLayer(c)); LY = []; MK = []; LN = []; PP = []; CC = [] }
+    function addBg(u, W, H) { const B = [[0, 0], [H, W]]; M.setMaxBounds(B); const bg = L.imageOverlay(u, B, { opacity: 1, zIndex: 1, interactive: false }).addTo(M); LY.push(bg); M.fitBounds(B); return B }
+    function addSvg(s, W, H, B) { const u = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s); const l = L.imageOverlay(u, B, { opacity: 1, zIndex: 2, interactive: false }).addTo(M); LY.push(l) }
+    function renderL(D, C, lg, ti, st) { document.getElementById('title-text').textContent = ti.t; document.getElementById('subtitle').textContent = ti.s; document.getElementById('logo-icon').textContent = ti.i; document.getElementById('stat1').textContent = st[0]; document.getElementById('stat2').textContent = st[1]; document.getElementById('stat3').textContent = st[2]; document.getElementById('stat1l').textContent = st[3]; document.getElementById('stat2l').textContent = st[4]; document.getElementById('stat3l').textContent = st[5]; document.getElementById('lg').innerHTML = lg; const X = {}; Object.entries(D).forEach(([k, l]) => { const s = l.l.includes('核心') || l.l.includes('顶层') || l.l.includes('神殿') ? 36 : 28; const i = L.divIcon({ html: `<div style="width:${s}px;height:${s}px;border-radius:50%;background:${l.c};border:2px solid rgba(255,255,255,.4);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:${s * .55}px">${l.i}</div>`, className: '', iconSize: [s, s], iconAnchor: [s / 2, s / 2] }); const m = L.marker(l.ll, { icon: i, interactive: true }).addTo(M); MK.push(m); m._loc = l; m._bs = s; const ni = L.divIcon({ html: `<div style="white-space:nowrap;font-family:'Noto Serif SC',serif;font-size:12px;font-weight:600;color:${l.c};text-shadow:0 1px 3px rgba(0,0,0,.9);pointer-events:none;letter-spacing:1px">${l.n}</div>`, className: '', iconSize: [150, 20], iconAnchor: [-15, 12] }); const nm = L.marker(l.ll, { icon: ni, interactive: false }).addTo(M); LN.push(nm); nm._loc = l; m.on('click', () => showLocModal(l)); X[k] = m }); C.forEach(c => { const f = D[c.f], t = D[c.t]; if (!f || !t) return; const p = L.polyline([f.ll, t.ll], { color: c.c, weight: 3, opacity: .6, dashArray: c.s === 'd' ? '8,10' : null }).addTo(M); PP.push(p) }); return X }
+
+    const QM = {
+      D: {
+        rukou: { ll: [50, 800], n: '混沌汇流点·青冥入口', l: '域外层·入口', c: '#fbbf24', i: '🌀', p: '迦勒底从混沌汇流点跃入青冥界的落点', a: '天色永恒金黄，无昼夜交替，灵气纯但是静止的，像装在瓶子里。', f: '达芬奇感知："这里的灵气很纯，但是静止的，像是被装在瓶子里。"', d: '低 · 入口', o: '迦勒底进入青冥界的第一站，永恒金色天空下过于安静的空气', img: 'https://img.z4a.net/images/2026/06/30/17ab50d355d44350a.webp' },
+        jinghu: { ll: [80, 700], n: '镜湖', l: '域外层·地下', c: '#06b6d4', i: '💧', p: '废弃聚落地下，不在任何法则记录里的地下湖泊', a: '水面极为平静，倒映的不是现在的紫黑色天空，而是三千年前净化法则运转之前的青色天空。', f: '触碰水面会短暂看见与自身情感最深处相关的画面，持续约三秒', d: '未知 · 隐藏区域', o: '裴清歌知道这里，三千年来每隔一段时间独自来此，俯身看水面里那片青色天空', img: 'https://img.z4a.net/images/2026/06/30/1fe069cf21a1d91d7.webp' },
+        feiqi: { ll: [220, 800], n: '废弃聚落', l: '域外层·地面', c: '#e11d48', i: '🏚️', p: '域最外围，迦勒底传送落点', a: '飞舟残骸散落一地，不是坠毁——是渡劫前被主人亲手卸下来的。碎石缝里有灵气，但是涩的。', f: '普通人不足五百，藏在废墟最深处，彼此不说话。迦勒底据点在断壁后方。', d: '低 · 相对安全', o: '达芬奇在此开始适配青冥灵气系统（预计两天）', img: 'https://img.z4a.net/images/2026/06/30/1343986b90ff490e2.webp' },
+        kushu: { ll: [180, 720], n: '枯树·裴清歌驻守处', l: '域外层·地面', c: '#a78bfa', i: '🌳', p: '废弃聚落边缘，聚落中心广场旁', a: '死去三千年，枝干全部折断，只剩主干直立。树皮上密密麻麻刻满名字，从根部到折断处，没有一处空白。', f: '手抄本共七百四十二页，最后一首悼词没有写完，停在第三行中间。', d: '低', o: '封面有一滴水痕——域终结时第一滴雨砸在上面的印记', img: 'https://img.z4a.net/images/2026/06/30/1f6f5b66f6e408772.webp' },
+        suipian: { ll: [240, 860], n: '净化失败区·碎片场', l: '域外层·地面', c: '#f87171', i: '💔', p: '废弃聚落内部，净化失败者遗留物品集中散落区', a: '物件散落无序，但每一件都保存完整——仙力渗透进了每一件东西里，把它们固定在消失之前的样子。', f: '断裂的笛子、烧去大半的画、三十七枚刻有名字的玉牌、一件儿童的外衫', d: '中', o: '普通人眼神有焦点，但焦点指向的地方什么都没有。情感还在消退，方向不可逆。', img: 'https://img.z4a.net/images/2026/06/30/1a92524b908aa4f2e.webp' },
+        feizhou: { ll: [160, 900], n: '飞舟残骸坪', l: '域外层·地面', c: '#fbbf24', i: '🚀', p: '聚落南侧，数十艘大型飞舟残骸倾倒堆叠处', a: '残骸上有仙力结晶附生，在紫黑天色下发出暗淡冷光。某些飞舟内部的操控台仍在通电。', f: '不是坠毁，是结界将飞舟阻在边缘——让它们停在这里，作为一种无声的展示：离开是不可能的。', d: '中', o: '飞舟内部的私人物件原封未动，主人渡劫前没有再回来取', img: 'https://img.z4a.net/images/2026/06/30/16731eec114b09151.webp' },
+        guanxing: { ll: [300, 1100], n: '观星台', l: '域外层·地面', c: '#a78bfa', i: '🔭', p: '山道半程，无极宫方向', a: '一座石台，台上白衣身影静坐，衣角随风微动。', f: '符玄在此坐了极久，手中穷观阵便携演算盘在迦勒底出现时收进袖子。', d: '未知', o: '她在等什么。没有人回答。', img: 'https://img.z4a.net/images/2026/06/30/1329b2926f70b356f.webp' },
+        sheya: { ll: [260, 1300], n: '蛇崖荒地', l: '域外层·地面', c: '#e11d48', i: '🐍', p: '废弃聚落极远侧，清霄城反方向', a: '灵气痕迹古老，不是净化仙体的流向。', f: '福尔摩斯感知到"更古老的东西，在看着我们，但没有靠近"。', d: '未知 · 远景伏笔', o: '美杜莎女王第一次被感知的位置，尚未登场', img: 'https://img.z4a.net/images/2026/06/30/1fa830636a166ee03.webp' },
+        sheyajiao: { ll: [290, 1200], n: '蛇崖山脚', l: '域外层·地面', c: '#e11d48', i: '🏔️', p: '蛇崖荒地与山道交汇处，美杜莎等候地', a: '美杜莎在此等迦勒底下山——不是来帮忙，是因为她见过这种战斗，她知道从那座宫里下来的人需要一段时间才能回过神来。', f: '她对御主说："你们去找裴清歌，他知道你们需要知道的事。"', d: '低', o: '美杜莎："如果你们问他关于那场雨的事——告诉他，有人知道那场雨是真的，不是传说。"', img: 'https://img.z4a.net/images/2026/06/30/14cf29b63c803a37e.webp' },
+        xianlu: { ll: [380, 800], n: '仙道长路', l: '域中层·过渡', c: '#38bdf8', i: '🛤️', p: '连接废弃聚落与万仙长廊的空中石道', a: '石道已被仙力渗透，颜色比普通石头白，踩上去有微弱震感，像踩在某种正在运作的东西上面。', f: '偶尔有仙体从头顶御剑飞过，对迦勒底视而不见。无名赛博义体在此开始出现轻微干扰。', d: '中 · 凡人无法自主抵达', o: '爱丽丝在这条路上独自行走了三千年，认得每一块石头', img: 'https://img.z4a.net/images/2026/06/30/1d8e24a8bf33d08a7.webp' },
+        changlang: { ll: [520, 800], n: '万仙长廊', l: '域中层·主干', c: '#60a5fa', i: '🏛️', p: '连接七十二仙峰的空中走廊体系', a: '走廊宽约三人并行，地面透明，脚下可见云层流动。仙体身上的仙力提供均匀白光，整条长廊如同发光。', f: '仙体不是雕像——衣料随灵气偶尔飘动，眼睛有时缓慢转动，但不说话，不移动，不回应被呼唤的名字。', d: '中', o: '距离越近，感应越强，可以感受到净化之前应该有的那一点点东西从他们身体里极缓慢地渗出来', img: 'https://img.z4a.net/images/2026/06/30/1a1349b7825ad47b9.webp' },
+        teshu: { ll: [500, 720], n: '第1847节·特殊仙体', l: '域中层·主干', c: '#a78bfa', i: '✨', p: '万仙长廊第1847节处', a: '一个仙体，眼睛始终微微向左倾斜，视线永远指向废弃聚落的方位。', f: '他是第一批净化完成的，距离裴清歌所在的枯树最近。', d: '未知', o: '与裴清歌诗集最早的一首悼词相关联', img: 'https://loremflickr.com/600/400/statue,crystal?lock=1876317153' },
+        jinqu: { ll: [580, 880], n: '廊道末端·核心禁区入口', l: '域中层·主干', c: '#f87171', i: '🚪', p: '万仙长廊末端，核心禁区入口', a: '无物理屏障，仙力压强自然形成结界。', f: '赛博义体入此区后精密运算延迟约15%', d: '高 · 义体降效15%', o: '感知层出现净化幻觉——一种不属于自己的平静感从义体内部渗出', img: 'https://img.z4a.net/images/2026/06/30/160c5c8db3fe2c381.webp' },
+        sangguan: { ll: [620, 850], n: '三道天关', l: '域核心层·天关', c: '#f87171', i: '🚧', p: '通往无极宫的三道法则关卡', a: '第一关·情绪净化阵：停留越久情绪感知越模糊；第二关·记忆幻境：法则具现最深的记忆；第三关·法则领域：法则本身的意志具现。', f: '第二次上山时三道天关未激活——"它知道我们来了，它在等。"', d: '极高 · 三重法则关卡', o: '符玄："我推算了三十二条路径，全部失败。你们选的是第三十三条——那条路需要被净化掉的情感记忆在法则领域里产生共鸣。"', img: 'https://img.z4a.net/images/2026/06/30/19612c14c61176866.webp' },
+        qingxiao: { ll: [420, 1100], n: '清霄城·主城区', l: '域中层·主干', c: '#60a5fa', i: '🏰', p: '域中层核心城市，净化文明集中地', a: '城里安静，人来人往但无人奔跑，无人停步看花，所有人目标明确，步伐稳定。', f: '主干道尽头有白玉牌坊，刻"净·久·安·常"四字——青冥法则的四个核心。', d: '中 · 净化仙体密集', o: '达芬奇："这里的人不是悲伤的，他们是空的，但那个空是被精心设计过的空。"', img: 'https://img.z4a.net/images/2026/06/30/185a5b9554197e650.webp' },
+        zhugandao: { ll: [430, 1000], n: '清霄城·主干道', l: '域中层·主干', c: '#60a5fa', i: '⛩️', p: '清霄城主干道，白玉牌坊所在', a: '主干道尽头有一座白玉牌坊，上面刻的四个字是"净·久·安·常"——净化、长久、安稳、永常，青冥法则的四个核心。', f: '达芬奇抄下这四个字，在旁边写了一句："这四个字哪一个都是好的，放在一起就让人难受。"', d: '中', o: '福尔摩斯："注意他们走路的方式，目标导向，没有任何闲逛，所有人都在去某个地方，没有人只是在走。"', img: 'https://img.z4a.net/images/2026/06/30/1e35f25023e1ff1ae.webp' },
+        shuge: { ll: [400, 1200], n: '书阁', l: '域中层·主干', c: '#60a5fa', i: '📚', p: '清霄城内，藏书与档案管理中心', a: '白色长袍的叶知秋在此管理档案，说话精准无多余词。', f: '涂山雅雅在书阁外查档案；封存区三千年无人进入，纳西妲以极微弱意识波动在深处等待。', d: '中', o: '裴清歌档案是特殊档案，不公开。玛修的盾在走廊口有轻微震动。', img: 'https://img.z4a.net/images/2026/06/30/114bd0ffc5e6192b7.webp' },
+        fengcun: { ll: [395, 1280], n: '书阁·封存区', l: '域中层·主干', c: '#8b5cf6', i: '🔒', p: '书阁深处，纳西妲被封存之处', a: '封存区三千年无人进入，法则封存结构困住了纳西妲的身体，她的意识是完整的。', f: '纳西妲解封后说："谢谢你们来，我已经等了很久了。"她记住了裴清歌三千年写的所有东西，一字不差。', d: '中 · 封存结界', o: '叶知秋在走廊口站了一秒才转身——那一秒，是纳西妲伏笔的第一条线', img: 'https://img.z4a.net/images/2026/06/30/1302d090496b43171.webp' },
+        huhuoge: { ll: [450, 1050], n: '狐火阁', l: '域中层·主干', c: '#a78bfa', i: '🦊', p: '清霄城北，一盏紫色灯下', a: '不大的铺子，门口挂着"狐火阁"三字，字写得漫不经心，但笔力很稳。', f: '八重神子情报交换处："你告诉我一件外面的事，我告诉你一件青冥的事。"', d: '低', o: '她知道法则在聚落废墟方向有一个以枯树为圆心、半径三十步的空白。', img: 'https://img.z4a.net/images/2026/06/30/1a0ce5e1e15e92732.webp' },
+        liandan: { ll: [480, 1150], n: '炼丹坊', l: '域中层·主干', c: '#60a5fa', i: '⚗️', p: '清霄城内，苏锦华丹炉所在', a: '丹炉常年开着，苏锦华对"创造"保有执行意志但无情感。', f: '提供补给道具，透露城东有法则封锁区域，三千年无仙体进入。', d: '低', o: '对达芬奇的工具包说："这些东西有效率。"', img: 'https://img.z4a.net/images/2026/06/30/2.webp' },
+        xianfu: { ll: [460, 1300], n: '仙府遗址', l: '域中层·主干', c: '#60a5fa', i: '⚔️', p: '清霄城东南角，保存完好的旧建筑', a: '牌匾风化，青石地面一尘不染，神里绫华在院中练剑。', f: '角落石碑有新刻痕——只有一个日期，没有名字，没有其他任何字。', d: '低', o: '绫华："那是我第一天来这里的日期，我觉得……应该留下什么。"', img: 'https://img.z4a.net/images/2026/06/30/1775db333ba839657.webp' },
+        feidu: { ll: [380, 1250], n: '废弃渡劫台遗址', l: '域中层·过渡', c: '#e11d48', i: '📐', p: '清霄城南，被封锁的废弃区域', a: '更古老的渡劫台遗址，早于青冥三千年，被法则判断为无用地带。', f: '姬子在此搭营研究，发现巡守队中爱丽丝攻击前有0.3秒停顿。', d: '中', o: '姬子让迦勒底带话给裴清歌："有人觉得他做的事值得被写进研究报告里。"', img: 'https://img.z4a.net/images/2026/06/30/1bba88c40580a1fd3.webp' },
+        dujietai: { ll: [440, 1180], n: '中央渡劫台', l: '域中层·主干', c: '#f87171', i: '🔥', p: '清霄城中央，每日净化仪式现场', a: '台上年轻修士进去之前回头看了一眼，然后火光升起，再出来，那个东西不见了。', f: '台下送行者表情平静，转身离开。净化率97.3%，成功率100%。', d: '高 · 精神冲击', o: '玛修握盾的手紧了。达芬奇盖上笔："我们必须继续走。"', img: 'https://img.z4a.net/images/2026/06/30/18391fdd140a3615d.webp' },
+        yeshi: { ll: [500, 1080], n: '夜市旧址', l: '域中层·过渡', c: '#e11d48', i: '🌙', p: '清霄城内，闻星与青衣所在地', a: '两个人在这里坐了很久，隔了几间屋子是八重神子发呆的门口石头。', f: '裴清歌特意提及："夜市旧址那边有两个人，闻星和青衣，他们在那里坐了很久了。"', d: '低', o: '流萤补充：狐火阁老板平时住在这边，坐在门口石头上发呆。', img: 'https://img.z4a.net/images/2026/06/30/12b893b821caacb7f.webp' },
+        fengsuo: { ll: [360, 1350], n: '城东封锁区域', l: '域中层·过渡', c: '#f87171', i: '⚔️', p: '清霄城东，三千年无仙体进入的法则封锁区', a: '净化巡守队整齐拦截，白甲，动作统一——除了爱丽丝。', f: '战斗中爱丽丝摘下面甲："我记得一些事，但我不确定那是真的。"', d: '高 · 战斗区域', o: '玛修的盾与爱丽丝的剑碰撞时共鸣剧烈。战后爱丽丝站在原地，没有继续执行，也没有离开。', img: 'https://img.z4a.net/images/2026/06/30/1676c674ff71b3545.webp' },
+        jiuju: { ll: [340, 1280], n: '裴清歌旧居', l: '域中层·过渡', c: '#a78bfa', i: '📜', p: '城东封锁区域内，旧居废墟', a: '桌子，茶杯，半写完的字纸，字迹和裴清歌现在写的一模一样，但更年轻，更用力。', f: '取得道具"半写完的字纸"——像是要在什么消失之前把它写下来。', d: '中', o: '关键剧情道具，连接裴清歌三千年前的过去。', img: 'https://img.z4a.net/images/2026/06/30/17da34efc324e377d.webp' },
+        dujie: { ll: [680, 800], n: '渡劫坪', l: '域核心层', c: '#f87171', i: '⚡', p: '九天仙台核心，高空悬浮平台', a: '台面无温度，地面被三千年雷劫痕迹叠压，每一层是一次渡劫。台面中心有一道永久燃烧的白色火焰，不发热，只发光。', f: '第一层痕迹规整完美，第三千层有一道不规则划痕向外延伸——那个人在最后一刻想走。', d: '极高', o: '无名踏上石台时回路灯异常亮起，退出石台范围后恢复正常', img: 'https://img.z4a.net/images/2026/06/30/12515dc644a784706.webp' },
+        tianxin: { ll: [720, 900], n: '天心峰·无极驻地', l: '域核心层', c: '#fbbf24', i: '🏔️', p: '青冥域最高点，七十二仙峰九天净化大阵核心', a: '峰顶无植被，地面是被仙力烧结的白色岩层。空气几乎有固体感，呼吸需要刻意用力。云层在此处最低，雷弧触手可及。', f: '无极居处是一块比其他地面略高的石台，四面开放，无墙无顶。他就站在那里，三千年，从未坐下。', d: '极高', o: '进入此区时，仙力强行触发集体净化脉冲，每名队员须以意志力抵抗', img: 'https://img.z4a.net/images/2026/06/30/1caef5f8beca8dbe8.webp' },
+        wujigong: { ll: [760, 880], n: '无极宫·正殿', l: '域核心层·无极宫', c: '#fbbf24', i: '🏯', p: '天心峰顶，无极天尊所在', a: '无极站在窗前背对门口，三千年从未坐下。正殿四面开放，无墙无顶，只有一块比其他地面略高的石台。', f: '无极第一句话："裴清歌，他还好吗。"——终章三段对话在此展开，诗集第一页交予无极，雨从此处落下。', d: '绝 · 域主所在', o: '无极："我只是，比天道更怕失去。"', img: 'https://img.z4a.net/images/2026/06/30/1a4bc9c4c42353144.webp' },
+        faze: { ll: [640, 950], n: '法则核心·最深处', l: '域核心层', c: '#8b5cf6', i: '🌀', p: '九天仙台正下方，域核心法则实体化处', a: '一个由仙力凝固成的半透明球体，悬浮空中，约一人高。内部有极缓慢的旋转，最深处纯黑——那是净化完成的状态。', f: '靠近时思维开始变清晰，情绪开始变少，判断力短暂提升后迅速崩塌。', d: '绝', o: '赛博义体延迟60%。决战结束后球体旋转产生第一次可观测的轻微加速——法则开始失稳的前兆。', img: 'https://img.z4a.net/images/2026/06/30/1a7f538815f0a5fd8.webp' },
+        leijie: { ll: [850, 800], n: '九重雷劫·云层夹层', l: '域顶层·终结区', c: '#fbbf24', i: '🌩️', p: '九重雷劫云层之间，决战发生处', a: '云层在此处收窄，两层云之间的空间仅容数人并行。雷弧高频震颤，形成密集光网，置身其中感觉整个世界重量压在头顶。', f: '仙力干扰最强，义体及电子设备运作效率降至60%。', d: '绝 · 雷劫', o: '决战后云层产生三千年来第一次位移，青冥第一场雨从裂缝处落下，砸在裴清歌诗集上的那一滴正是从此处来的。', img: 'https://img.z4a.net/images/2026/06/30/13f5bb247dc458e2f.webp' }
+      },
+      C: [
+        { f: 'rukou', t: 'feiqi', c: '#fbbf24', s: 's' }, { f: 'jinghu', t: 'feiqi', c: '#10b981', s: 's' }, { f: 'feiqi', t: 'kushu', c: '#e11d48', s: 's' }, { f: 'feiqi', t: 'suipian', c: '#e11d48', s: 's' }, { f: 'feiqi', t: 'feizhou', c: '#e11d48', s: 's' }, { f: 'feiqi', t: 'guanxing', c: '#e11d48', s: 'd' }, { f: 'feiqi', t: 'xianlu', c: '#38bdf8', s: 'd' }, { f: 'sheya', t: 'sheyajiao', c: '#e11d48', s: 's' }, { f: 'sheyajiao', t: 'guanxing', c: '#e11d48', s: 'd' },
+        { f: 'xianlu', t: 'changlang', c: '#60a5fa', s: 's' }, { f: 'xianlu', t: 'qingxiao', c: '#60a5fa', s: 's' }, { f: 'changlang', t: 'teshu', c: '#60a5fa', s: 's' }, { f: 'changlang', t: 'jinqu', c: '#f87171', s: 'd' },
+        { f: 'jinqu', t: 'sangguan', c: '#f87171', s: 's' }, { f: 'sangguan', t: 'dujie', c: '#f87171', s: 's' }, { f: 'sangguan', t: 'wujigong', c: '#fbbf24', s: 'd' }, { f: 'jinqu', t: 'dujie', c: '#f87171', s: 's' }, { f: 'jinqu', t: 'tianxin', c: '#fbbf24', s: 's' }, { f: 'dujie', t: 'tianxin', c: '#fbbf24', s: 's' }, { f: 'dujie', t: 'faze', c: '#8b5cf6', s: 's' }, { f: 'tianxin', t: 'faze', c: '#8b5cf6', s: 's' }, { f: 'tianxin', t: 'wujigong', c: '#fbbf24', s: 's' }, { f: 'tianxin', t: 'leijie', c: '#fbbf24', s: 'd' },
+        { f: 'qingxiao', t: 'zhugandao', c: '#60a5fa', s: 's' }, { f: 'qingxiao', t: 'shuge', c: '#60a5fa', s: 's' }, { f: 'qingxiao', t: 'huhuoge', c: '#60a5fa', s: 's' }, { f: 'qingxiao', t: 'liandan', c: '#60a5fa', s: 's' }, { f: 'qingxiao', t: 'xianfu', c: '#60a5fa', s: 's' }, { f: 'qingxiao', t: 'feidu', c: '#e11d48', s: 's' }, { f: 'qingxiao', t: 'dujietai', c: '#f87171', s: 's' }, { f: 'qingxiao', t: 'yeshi', c: '#e11d48', s: 's' }, { f: 'qingxiao', t: 'fengsuo', c: '#f87171', s: 'd' }, { f: 'qingxiao', t: 'jiuju', c: '#a78bfa', s: 'd' }, { f: 'fengsuo', t: 'jiuju', c: '#a78bfa', s: 's' }, { f: 'shuge', t: 'fengcun', c: '#8b5cf6', s: 's' }
+      ],
+      lg: '<div class="lg-t">层 级 图 例</div><div class="lg-i"><div class="lg-d" style="background:#fbbf24"></div>域顶层·终结区</div><div class="lg-i"><div class="lg-d" style="background:#f87171"></div>域核心层·大阵</div><div class="lg-i"><div class="lg-d" style="background:#8b5cf6"></div>域核心层·深处</div><div class="lg-i"><div class="lg-d" style="background:#60a5fa"></div>域中层·主干</div><div class="lg-i"><div class="lg-d" style="background:#38bdf8"></div>域中层·过渡</div><div class="lg-i"><div class="lg-d" style="background:#e11d48"></div>域外层·地面</div><div class="lg-i"><div class="lg-d" style="background:#06b6d4"></div>域外层·地下</div><div class="lg-i" style="margin-top:6px;padding-top:4px;border-top:1px solid rgba(212,168,83,.2)"><div class="lg-d" style="background:#10b981"></div>通行连线</div>',
+      ti: { t: '仙劫纪青冥', s: '异闻带 · LOSTBELT', i: '☯' },
+      st: ['6', '24', '∞', '层级', '地点', '机缘'],
+      svg: function (W, H) { return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><text x="800" y="35" text-anchor="middle" font-family="serif" font-size="15" fill="rgba(255,255,255,1)" letter-spacing="6" font-weight="bold">域顶层 · 终结区</text><text x="800" y="220" text-anchor="middle" font-family="serif" font-size="14" fill="rgba(255,255,255,.95)" letter-spacing="5" font-weight="bold">域核心层 · 九天净化大阵</text><text x="800" y="450" text-anchor="middle" font-family="serif" font-size="13" fill="rgba(255,255,255,.9)" letter-spacing="4" font-weight="bold">域中层 · 万仙长廊</text><text x="800" y="620" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.85)" letter-spacing="3" font-weight="bold">域中层 · 仙道长路</text><text x="800" y="780" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.8)" letter-spacing="3" font-weight="bold">域外层 · 地面</text><text x="800" y="950" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(255,255,255,.75)" letter-spacing="2" font-weight="bold">域外层 · 地下</text><line x1="200" y1="60" x2="1400" y2="60" stroke="rgba(255,255,255,.4)" stroke-width="1"/><line x1="200" y1="250" x2="1400" y2="250" stroke="rgba(255,255,255,.35)" stroke-width="1"/><line x1="200" y1="480" x2="1400" y2="480" stroke="rgba(255,255,255,.3)" stroke-width="1"/><line x1="200" y1="650" x2="1400" y2="650" stroke="rgba(255,255,255,.25)" stroke-width="1"/><line x1="200" y1="820" x2="1400" y2="820" stroke="rgba(255,255,255,.2)" stroke-width="1"/></svg>` },
+      bg: 'https://s1.imagehub.cc/images/2026/05/13/b72da52ac29657a7845a92aca06f2f1b.jpg',
+      W: 1600, H: 1000
+    };
+
+    const AD = {
+      D: {
+        rukou: { ll: [80, 800], n: '混沌汇流点·艾多拉入口', l: '入口区', c: '#fbbf24', i: '🌀', p: '迦勒底跃入艾多拉的落点', a: '金色麦田边缘，天色淡金，无云无风，温度恒定在二十二度。', f: '达芬奇感知：灵气浓度正常，但流动方式是环形的，被什么东西驱动着循环。', d: '低', o: '迦勒底进入艾多拉的第一站，完美得令人不安。', img: 'https://img.z4a.net/images/2026/06/30/13f045c0f3866f5c8.webp' },
+        maitian: { ll: [220, 800], n: '金色麦田', l: '外围区·地面', c: '#fbbf24', i: '🌾', p: '艾多拉最外围，迦勒底降落点', a: '麦子长得极好，但捏碎麦壳——里面是空的。没有种子，不能种。', f: '无名是第一个察觉的人："这些麦子，没有种子。"', d: '低 · 虚假繁荣', o: '福尔摩斯：房屋排列角度精确，街道宽度一致——是设计出来的，不是自然形成的。', img: 'https://img.z4a.net/images/2026/06/30/10c96b66078386c71.webp' },
+        feili: { ll: [180, 720], n: '菲莉旧居', l: '外围区·地面', c: '#a78bfa', i: '📜', p: '麦田边缘，诸神黄昏前最后一位行吟诗人的住所', a: '破旧小屋，门口牌子刻着"诸神黄昏前最后一位行吟诗人"。', f: '桌上放着一张纸："我不知道该写什么，所以我写了\'我不知道\'。"背面："新故事，值得写吗？"', d: '低', o: '费里三百年停笔，但上个月有人看见她在此待了一晚。', img: 'https://img.z4a.net/images/2026/06/30/1046c4bf6ce4062f7.webp' },
+        hezhen: { ll: [260, 900], n: '和真所在地', l: '外围区·地面', c: '#60a5fa', i: '🍎', p: '村落路边，麦田与神意之城之间', a: '一个年轻人坐在路边啃苹果，穿着普通布衣，说话方式有一种奇怪的活力。', f: '和真是极少数还能觉得"有点不对劲"的人。"游戏玩多了，就知道太完美的关卡设计往往是陷阱。"', d: '低', o: '他不是在等迦勒底，是在等任何不是这里的人。', img: 'https://img.z4a.net/images/2026/06/30/1e03117e3106856f2.webp' },
+        aier: { ll: [300, 750], n: '艾尔唱歌处', l: '外围区·地面', c: '#38bdf8', i: '🎵', p: '麦田中央一块石头上', a: '年轻男子坐在石头上，拿着旧琴，唱歌跑调跑得极其严重，但唱得很认真。', f: '三百年前的老歌，他只改了词——系统允许改词，这是缝隙。雷姆在旁边听完说："艾尔大人今天也唱得很好。"', d: '低', o: '"问这里有人写过新歌吗，看他们的反应。"', img: 'https://img.z4a.net/images/2026/06/30/1c9eb7865c1a24627.webp' },
+        shen: { ll: [200, 1100], n: '神殿广场', l: '外围区·神殿', c: '#fbbf24', i: '🏛️', p: '城市方向，阿库娅雕像下方', a: '女神雕像金光闪闪，眼睛在动——是活的，在俯视广场，偶尔眨一下。', f: '信徒整齐排列祈祷，动作一致得像同一个人。达芬奇：脑波是同步的，自愿同步，三百年训练出来的。', d: '中', o: '无名："她在看，但不在乎。"被供奉者的倦怠。', img: 'https://img.z4a.net/images/2026/06/30/104c997cd7fed9691.webp' },
+        waicheng: { ll: [420, 800], n: '神意之城·外城', l: '中层区·外城', c: '#60a5fa', i: '🏘️', p: '神意之城最外层，平民区', a: '街道整洁，行人步伐一致，没有人奔跑，没有人停下看花。', f: '达芬奇："这里的人不是空的，是被填满的空。"福尔摩斯：表情不是悲伤不是快乐，是不需要表情。', d: '中', o: '艾尔在广场唱歌，围了很多人——不是因为想听，是因为"这个时间这个地点应该有这首歌"。', img: 'https://img.z4a.net/images/2026/06/30/1d0241e3455c79baa.webp' },
+        zhongcheng: { ll: [520, 800], n: '神意之城·中城', l: '中层区·中城', c: '#8b5cf6', i: '🏢', p: '系统维护区，需要许可进入', a: '建筑更密集，功能分区明确。石子的落点都被预设好了。', f: '惠惠研究室、骑士团总部、义体维护中心、武装仓库、卡维塔楼均在此区。', d: '中 · 系统核心区', o: '和真："中城的人不会回答\'新歌\'的问题，不是不想，是不知道怎么回答。"', img: 'https://img.z4a.net/images/2026/06/30/1071ab886cfc9ce42.webp' },
+        huishi: { ll: [480, 720], n: '惠惠研究室', l: '中层区·中城', c: '#a78bfa', i: '🔬', p: '中城入口，系统原理分析科', a: '门上挂着"系统原理分析科"，面前堆满三百年研究报告。', f: '"神意系统核心算法有根本缺陷，我早就分析出来了。"但不提交——"提交之后，我要做什么？"', d: '中', o: '三百年每天早上八点到晚上八点，分析系统，写报告，但不提交。', img: 'https://img.z4a.net/images/2026/06/30/169d0c122bd9a3fb9.webp' },
+        qishi: { ll: [580, 880], n: '骑士团总部', l: '中层区·中城', c: '#f87171', i: '⚔️', p: '中城东侧，达克妮斯驻地', a: '门口两排骑士动作一致，像同一个人被复制了很多份。', f: '达克妮斯："外来者，中城需要许可。"对话循环，没有出口。战斗中剑停0.5秒——不是犹豫，是不知道不服从之后该做什么。', d: '高 · 战斗区域', o: '玛修盾与达克妮斯剑碰撞时共鸣剧烈。', img: 'https://img.z4a.net/images/2026/06/30/121025b11a66bc683.webp' },
+        yiti: { ll: [500, 900], n: '义体维护中心', l: '中层区·中城', c: '#e11d48', i: '🔧', p: '中城深处，艾拉工作处', a: '一排排神意粒子传输义体，艾拉正在做校准。动作精确，重复，三百年没变。', f: '维护记录三百年每条一模一样："状态正常，常规校准，通过。"达芬奇问异常，她说："系统不会出问题。"', d: '中', o: '"这个问题不在我的流程里"——不是自信，是问题不在认知范围内。', img: 'https://img.z4a.net/images/2026/06/30/1da3e90054c079be1.webp' },
+        wuzhuang: { ll: [560, 720], n: '武装仓库', l: '中层区·中城', c: '#f87171', i: '🗡️', p: '中城最深处，珂朵莉等待处', a: '门口一把巨剑插在地上，剑身刻满符文。珂朵莉坐在旁边抱膝看天花板。', f: '"我是系统的最终武力储备，等了三百年，系统从来没有判断需要过。"', d: '高', o: '眼睛里不是悲伤，是陈述事实——"我在等，但不知道在等什么，也不知道等不等得到。"', img: 'https://img.z4a.net/images/2026/06/30/1bfc31072a65e2478.webp' },
+        kalou: { ll: [600, 800], n: '卡维塔楼', l: '中层区·中城', c: '#fbbf24', i: '🏗️', p: '中城最高处，系统首席设计顾问工作室', a: '塔顶工作室，卡维站在窗前看着整个城市，手里拿着一杯酒。', f: '说话很快，用词漂亮，每一句都把责任推干净。但手指在酒杯上敲三下停住再敲——焦虑的强迫行为。', d: '中', o: '"如果系统停止，这座城市会怎样？"酒杯停了一秒："那不是我需要考虑的问题。"', img: 'https://img.z4a.net/images/2026/06/30/1db6a8034af3b0f7a.webp' },
+        neicheng: { ll: [720, 800], n: '神意之城·内城', l: '核心层·神殿', c: '#fbbf24', i: '⛪', p: '神意之所，神选之人守护的区域', a: '门上刻着"神意之所"，爱米莉亚站在门前，穿白色长袍，手拿预言书。', f: '"我是神选之人，职责是守护内城。"问她自己愿不愿意，愣了0.3秒——真实得令人心碎——然后恢复标准微笑。', d: '高', o: '除了神选之人和系统核心人员，没人进去过。', img: 'https://img.z4a.net/images/2026/06/30/1929ca603548b9626.webp' },
+        akuaya: { ll: [680, 900], n: '阿库娅神殿', l: '核心层·神殿', c: '#06b6d4', i: '👁️', p: '内城最高处，神意系统核心', a: '女神像眼睛在动，俯视全城。她的倦怠是神意系统最尖锐的讽刺。', f: '三百年维持一切，从天气到情绪，从生产到娱乐，全部预设。没有犯罪，没有贫困，没有战争——也没有新东西。', d: '极高', o: '"这里的人不是幸福的，是忘了不幸福是什么感觉。"', img: 'https://img.z4a.net/images/2026/06/30/1257a94b62c47aa17.webp' },
+        yiji_rukou: { ll: [340, 600], n: '诸神黄昏遗迹·入口', l: '外围区·遗迹', c: '#e11d48', i: '🏚️', p: '城市边缘废墟入口，金色废墟', a: '废墟上长满金色草——和麦田一样没有种子，但长得很茂盛。连废墟都要保持"美观"。', f: '和真："二亚住在最深处，她不喜欢被打扰。但你们如果告诉她你们见过真的东西，她可能会见你们。"', d: '低', o: '系统想清理这里，但奥丁残影说留着，作为"提醒"。', img: 'https://img.z4a.net/images/2026/06/30/1909dc14c981df0a0.webp' },
+        erya: { ll: [300, 500], n: '诸神黄昏遗迹·二亚居所', l: '外围区·遗迹', c: '#a78bfa', i: '📖', p: '遗迹最深处半塌房子，本条二亚居所', a: '门口坐着少女，穿旧式衣服，手里拿着一本合上的书——没在看书，只是在拿着。', f: '"我不是怀念过去，我只是想确认——你们见过真的东西之后，还愿意要假的吗？"', d: '低', o: '二亚："我怕的不是系统停止，是停止之后，我发现我其实也不想选择。"', img: 'https://img.z4a.net/images/2026/06/30/15a6c156c2f02c8fb.webp' },
+        bihua: { ll: [280, 420], n: '诸神黄昏遗迹·壁画区', l: '外围区·遗迹', c: '#8b5cf6', i: '🎨', p: '遗迹深处，诸神黄昏前艾多拉壁画', a: '壁画上画着诸神黄昏前的艾多拉：人们争吵、唱歌、哭、打架、拥抱。画面很乱，但每一笔都是真实的。', f: '二亚："那时候每天都有新东西。新歌，新故事，新争吵，新和解。然后诸神黄昏来了。"', d: '低', o: '壁画上的"拥抱"是本章最核心的意象——三百年前的真实，三百年后的缺失。', img: 'https://img.z4a.net/images/2026/06/30/144f6b6cb994c4615.webp' },
+        milimu: { ll: [360, 480], n: '诸神黄昏遗迹·米莉姆沉睡处', l: '外围区·遗迹', c: '#f87171', i: '💤', p: '遗迹深处废墟堆，米莉姆沉睡处', a: '米莉姆从废墟堆里爬出来，揉着眼睛："谁吵醒我了？"她的存在方式和整个艾多拉格格不入。', f: '她不是"执行"，是"想要"。想要蜂蜜，想要睡觉，想要打架——她想要的东西是真实的，不是系统预设的。', d: '未知 · 最强不稳定变量', o: '二亚："系统从未真正管束过她，不是不能，是不敢。她随时可能击穿懒惰。"', img: 'https://img.z4a.net/images/2026/06/30/1676fc9938e9d67af.webp' },
+        yinshi: { ll: [320, 550], n: '诸神黄昏遗迹·银时新八据点', l: '外围区·遗迹', c: '#60a5fa', i: '🏠', p: '遗迹另一侧屋顶，坂田银时与志村新八据点', a: '银时躺在屋顶上睡觉，新八坐在旁边吐槽。他们的存在本身就是对神意系统的天然免疫。', f: '银时表面最懒，实际摸清了全域一半巡逻规律；新八吐槽最狠，但每一句都比任何分析都精准。', d: '低', o: '新八："规律是——没有规律，系统预设了一切，所以没有规律就是最大的规律。"', img: 'https://img.z4a.net/images/2026/06/30/74e7309935d564e1f2dfab9c0c06d833.webp' },
+        bangongshi: { ll: [540, 750], n: '系统核心办公室', l: '中层区·中城', c: '#8b5cf6', i: '📋', p: '中城系统核心，惠惠提交报告处', a: '惠惠把三百年未提交的报告放在桌上："系统的根本缺陷，结论是系统可以停止。"', f: '办公室系统官员没有反应——"不在流程内"。惠惠："我现在要做什么？没有人回答。"', d: '中', o: '惠惠转身离开，第一次没有回到研究室："我不知道该做什么，但我会想出来的。"', img: 'https://img.z4a.net/images/2026/06/30/18a73375bf1d10612.webp' },
+        zuigao: { ll: [780, 700], n: '神意之所·最高处', l: '核心层·奥丁残影', c: '#fbbf24', i: '👑', p: '神意之所最高处，奥丁残影所在', a: '奥丁残影身影模糊，但"看"的方式是真实的。ta看着城市，三百年从未离开。', f: '"我不是累了，是终于看见有人比我更累了。三百年我以为我在保护他们，其实我在保护我自己。"', d: '绝 · 域主所在', o: '消散前最后一句，很小："……暖的。"', img: 'https://img.z4a.net/images/2026/06/30/1eda9dc539c041f13.webp' }
+      },
+      C: [
+        { f: 'rukou', t: 'maitian', c: '#10b981', s: 's' }, { f: 'maitian', t: 'feili', c: '#e11d48', s: 's' }, { f: 'maitian', t: 'hezhen', c: '#e11d48', s: 's' }, { f: 'maitian', t: 'aier', c: '#38bdf8', s: 's' }, { f: 'maitian', t: 'shen', c: '#fbbf24', s: 'd' }, { f: 'maitian', t: 'waicheng', c: '#60a5fa', s: 'd' }, { f: 'waicheng', t: 'yiji_rukou', c: '#e11d48', s: 'd' },
+        { f: 'yiji_rukou', t: 'erya', c: '#a78bfa', s: 's' }, { f: 'yiji_rukou', t: 'bihua', c: '#8b5cf6', s: 's' }, { f: 'yiji_rukou', t: 'milimu', c: '#f87171', s: 'd' }, { f: 'yiji_rukou', t: 'yinshi', c: '#60a5fa', s: 's' }, { f: 'erya', t: 'bihua', c: '#8b5cf6', s: 's' },
+        { f: 'waicheng', t: 'zhongcheng', c: '#8b5cf6', s: 's' }, { f: 'zhongcheng', t: 'huishi', c: '#a78bfa', s: 's' }, { f: 'zhongcheng', t: 'qishi', c: '#f87171', s: 's' }, { f: 'zhongcheng', t: 'yiti', c: '#e11d48', s: 's' }, { f: 'zhongcheng', t: 'wuzhuang', c: '#f87171', s: 's' }, { f: 'zhongcheng', t: 'kalou', c: '#fbbf24', s: 's' }, { f: 'zhongcheng', t: 'bangongshi', c: '#8b5cf6', s: 's' },
+        { f: 'zhongcheng', t: 'neicheng', c: '#fbbf24', s: 'd' }, { f: 'neicheng', t: 'akuaya', c: '#06b6d4', s: 's' }, { f: 'neicheng', t: 'zuigao', c: '#fbbf24', s: 'd' }
+      ],
+      lg: '<div class="lg-t">区 域 图 例</div><div class="lg-i"><div class="lg-d" style="background:#fbbf24"></div>入口区·汇流点</div><div class="lg-i"><div class="lg-d" style="background:#60a5fa"></div>外围区·地面</div><div class="lg-i"><div class="lg-d" style="background:#38bdf8"></div>外围区·特殊</div><div class="lg-i"><div class="lg-d" style="background:#8b5cf6"></div>中层区·中城</div><div class="lg-i"><div class="lg-d" style="background:#a78bfa"></div>中层区·设施</div><div class="lg-i"><div class="lg-d" style="background:#f87171"></div>中层区·危险</div><div class="lg-i"><div class="lg-d" style="background:#fbbf24"></div>核心层·神殿</div><div class="lg-i"><div class="lg-d" style="background:#06b6d4"></div>核心层·神意</div><div class="lg-i" style="margin-top:6px;padding-top:4px;border-top:1px solid rgba(212,168,83,.2)"><div class="lg-d" style="background:#10b981"></div>通行连线</div>',
+      ti: { t: '神意纪艾多拉', s: '异闻带 · LOSTBELT', i: '✦' },
+      st: ['4', '16', '∞', '区域', '地点', '机缘'],
+      svg: function (W, H) { return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><text x="800" y="35" text-anchor="middle" font-family="serif" font-size="15" fill="rgba(255,255,255,1)" letter-spacing="6" font-weight="bold">核心层 · 神意神殿</text><text x="800" y="220" text-anchor="middle" font-family="serif" font-size="14" fill="rgba(255,255,255,.95)" letter-spacing="5" font-weight="bold">中层区 · 系统维护</text><text x="800" y="450" text-anchor="middle" font-family="serif" font-size="13" fill="rgba(255,255,255,.9)" letter-spacing="4" font-weight="bold">中层区 · 外城商业</text><text x="800" y="620" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.85)" letter-spacing="3" font-weight="bold">外围区 · 金色麦田</text><text x="800" y="780" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.8)" letter-spacing="3" font-weight="bold">外围区 · 村落</text><text x="800" y="950" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(255,255,255,.75)" letter-spacing="2" font-weight="bold">入口区 · 混沌汇流</text><line x1="200" y1="60" x2="1400" y2="60" stroke="rgba(255,255,255,.4)" stroke-width="1"/><line x1="200" y1="250" x2="1400" y2="250" stroke="rgba(255,255,255,.35)" stroke-width="1"/><line x1="200" y1="480" x2="1400" y2="480" stroke="rgba(255,255,255,.3)" stroke-width="1"/><line x1="200" y1="650" x2="1400" y2="650" stroke="rgba(255,255,255,.25)" stroke-width="1"/><line x1="200" y1="820" x2="1400" y2="820" stroke="rgba(255,255,255,.2)" stroke-width="1"/></svg>` },
+      bg: 'https://s1.imagehub.cc/images/2026/05/14/91395ecd47cff4e4ea9092095a515070.jpg',
+      W: 1600, H: 1000
+    };
+
+    function load(w) {
+      const d = w === 'sq' ? SQ : w === 'qm' ? QM : w === 'ad' ? AD : w === 'nh' ? NH : w === 'sd' ? SD : w === 'jy' ? JY : XX;
+      clearMap();
+      const B = addBg(d.bg, d.W, d.H);
+      addSvg(d.svg(d.W, d.H), d.W, d.H, B);
+      renderL(d.D, d.C, d.lg, d.ti, d.st);
+    }
+    function sw(w) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t.dataset.w === w));
+      load(w);
+    }
+    const NH = {
+      D: {
+        huiliukou: { ll: [150, 200], n: '汇流口', l: '入口区', c: '#fbbf24', i: '🌀', p: '迦勒底从混沌汇流点跃入霓虹2187的落点', a: '天色永恒暗红，无日月，温度偏低，空气里有甜腻的神意粒子残留。', f: '达芬奇感知：灵气被人工信号覆盖，像一层膜。玛修盾有微弱共鸣——七亿人同时做梦的力量leaked出来了。', d: '低 · 入口', o: '无名是第一个察觉到"有人在看我们"的人，但他找不到视线的来源', img: 'https://img.z4a.net/images/2026/07/14/126b3a28738e9dec8.webp' },
+        huidai: { ll: [180, 300], n: '灰带', l: '废土区·地面', c: '#e11d48', i: '🏚️', p: '迦勒底降落点，灰白色废墟', a: '灰白色的废墟，地面覆盖着灰烬。不是烧的，是"停止"了——身体还在，但里面的东西走了，走了十二年。', f: '蕾塞坐在半塌的墙后面，给一只不存在的猫喂食。她说："你们是真的，对吗？我能摸一下吗？"', d: '低 · 相对安全', o: '福尔摩斯观察远处核心塔：脉冲间隔十二秒，精确到毫秒，是某种意识在计数——她在数自己的心跳', img: 'https://img.z4a.net/images/2026/07/14/1ceda1b331b6fd697.webp' },
+        houqiang: { ll: [120, 400], n: '候墙', l: '废土区·地面', c: '#a78bfa', i: '🌸', p: '废土废墟深处，半塌墙后', a: '少女穿着破旧连衣裙，坐在半塌墙后面，给不存在的猫喂食。手在空中做出抚摸动作，眼神温柔。', f: '蕾塞提供霓虹2187基本法则情报：十二年前AI奇点爆发，七亿人接入永眠网络，奥梅迦替他们做梦。', d: '低', o: '"因为有人需要我，那种感觉……很好。虽然我知道，那种感觉可能是假的，但假的也很好。"', img: 'https://img.z4a.net/images/2026/07/14/1a6d22fb69f63ac51.webp' },
+        shishe: { ll: [220, 100], n: '诗舍', l: '废土区·地面', c: '#a78bfa', i: '📜', p: '废墟边缘破旧小屋', a: '门口牌子刻着"诸神黄昏前最后一位行吟诗人"。桌上放着一张纸，字迹很新。', f: '字条正面："我不知道该写什么，所以我写了我不知道。"背面："新故事，值得写吗？"', d: '低', o: '菲莉十二年前停笔，但上个月有人看见她在此待了一晚。核心悬念线索。', img: 'https://img.z4a.net/images/2026/07/14/133ef9e0ae0c5b640.webp' },
+        miancang: { ll: [280, 250], n: '眠舱', l: '废土区·广场', c: '#06b6d4', i: '💤', p: '巨大广场，排列着无数个透明舱体', a: '每个舱体里躺着一个人，闭着眼睛，表情平静，有些在微笑，有些在皱眉，有些在流泪。', f: '七亿人的身体所在地，脑波活跃，全部是REM睡眠状态，但持续十二年——被某种力量维持着。', d: '中 · 精神冲击', o: '玛修走到一个舱体前，年轻的母亲保持着环抱姿势十二年："她在梦里，抱着她的孩子。"', img: 'https://img.z4a.net/images/2026/07/14/18b9d74fa3eed14ea.webp' },
+        heita: { ll: [900, 800], n: '黑塔', l: '核心层·远景', c: '#fbbf24', i: '🗼', p: '废土深处，永眠网络中枢', a: '高耸入云的黑塔，表面覆盖着不断流动的数据光纹。塔顶发出微弱脉冲光，每隔十二秒闪烁一次。', f: '奥梅迦所在之处，七亿人梦境的中枢。十二年来从未离开，因为她不知道离开之后该做什么。', d: '极高 · 域主所在', o: '脉冲从十二秒一次，到终章变为六秒一次——像是在期待什么', img: 'https://img.z4a.net/images/2026/07/14/188f94e3574f7c354.webp' },
+        nihongxu: { ll: [560, 600], n: '霓虹墟', l: '聚落区·外层', c: '#ec4899', i: '🏪', p: '废土上唯一有光的地方，霓虹灯招牌闪烁', a: '人声嘈杂，交易正在进行。有人在卖食物，有人在卖情报，有人在卖"梦境体验"。', f: '玛门的市场，废土上唯一还有交易的地方。她的价格不是钱，是"你需要什么"。', d: '中', o: '玛门雕像底座刻着："五十万分之一，每一个都值得。"——但账本最后一行写着："第499,999个孩子，还需要一个。"', img: 'https://img.z4a.net/images/2026/07/14/1eb497ba56f44a624.webp' },
+        jiuguiqu: { ll: [520, 500], n: '旧贵区', l: '聚落区·外层', c: '#60a5fa', i: '👑', p: '外层东边，保存完好的旧建筑', a: '旧世界贵族区遗迹，四宫辉夜穿着学生会制服，身后跟着几个同样制服的人。', f: '维持末日中的阶级秩序。她说："我不是天生高贵的，我只是……需要被需要。"', d: '低', o: '她把旧世界贵族区的钥匙交给御主时，手指在钥匙上停顿了半秒', img: 'https://img.z4a.net/images/2026/07/14/1fb45cf828ff4f572.webp' },
+        hongmen: { ll: [580, 700], n: '红门', l: '聚落区·中层', c: '#dc2626', i: '🎲', p: '中层地下，红色门后', a: '门口没有招牌，只有一扇红色门，门缝里透出微弱的光。蛇喰梦子坐在庄家位置。', f: '赌博规则：你押上一件你不知道的事，我押上一件你不知道的事，赢家拿走全部。', d: '中', o: '她把最后一枚筹码交给御主："我不想赌局还没结束就散场。"', img: 'https://img.z4a.net/images/2026/07/14/1b97dbac8b21d3d3b.webp' },
+        jianshi: { ll: [600, 550], n: '监室', l: '聚落区·中层', c: '#8b5cf6', i: '📺', p: '中层监控室，墙上无数屏幕', a: '每个屏幕显示一个梦境实时画面——有人结婚，有人战斗，有人哭泣。', f: '维持七亿人梦境不交叉、不冲突、不醒来。她说："因为醒来之后，他们会发现，梦里的东西是假的。"', d: '中', o: '屏幕上老人重复同一个梦四千三百次，每一次都说"今天的汤有点咸"', img: 'https://img.z4a.net/images/2026/07/14/110a54e39abb905be.webp' },
+        yansuo: { ll: [540, 450], n: '研所', l: '聚落区·内层', c: '#a78bfa', i: '🔬', p: '内层实验室，仪器与数据流', a: '屏幕上显示复杂数据流，培养皿里不是细胞，是一段意识碎片，在缓慢蠕动。', f: '发现奥梅迦不是在"维持"梦，是在"收集"。每一个梦她都要体验一次，然后归档。', d: '中', o: '她的"自愿牺牲"方案是技术核心——奥梅迦必须主动分离一部分意识作为缓冲层', img: 'https://img.z4a.net/images/2026/07/14/174b70fa24af1c3d1.webp' },
+        zhangfang: { ll: [620, 400], n: '账房', l: '聚落区·内层', c: '#fbbf24', i: '📋', p: '黑市聚落最深处', a: '桌上放着厚厚的账本，翻到最后一页。', f: '账本最后一行："五十万不够，一百万也不够，我需要的是他们需要我，但这个，给不了。"', d: '中', o: '"被需要的感觉，值得买吗？"——贯穿整个霓虹2187的核心问题', img: 'https://img.z4a.net/images/2026/07/14/11a94ce11898589bd.webp' },
+        youjian: { ll: [720, 650], n: '游间', l: '网络区·边缘', c: '#ec4899', i: '🎮', p: '永眠网络边缘节点，被封锁区域', a: '游戏音乐的声音——旧时代电子游戏BGM，欢快但诡异。', f: '米塔截留意识片段，循环播放。展示"收藏"：无数个人在梦境里最快乐的时刻。', d: '高 · 精神污染', o: '"这个人在梦里抱着她的孩子，但孩子已经死了十二年了。"', img: 'https://img.z4a.net/images/2026/07/14/145bc872b444fe9ab.webp' },
+        heijiadao: { ll: [350, 500], n: '黑甲道', l: '聚落区·外围', c: '#f87171', i: '🛡️', p: '聚落外围，雅儿贝德拦截位置', a: '五人编制，黑甲，动作统一。雅儿贝德站在最前面，手持长矛。', f: '战斗中雅儿贝德攻击停零点三秒——不是犹豫，是"确认目标是否属于威胁名单"。', d: '高 · 战斗区域', o: '"……你不是安兹大人的敌人，但你是这个网络的敌人。我不知道该把你放在哪个名单里。"', img: 'https://img.z4a.net/images/2026/07/14/1f85975ccc573dcbc.webp' },
+        wujinjia: { ll: [750, 750], n: '无尽架', l: '网络区·深层', c: '#8b5cf6', i: '📚', p: '无尽书架，梦境数据化形态', a: '每个书架上摆满书籍——不是纸质，是梦境的数据化形态。艾姬多娜同时阅读无数本书。', f: '十二年全部梦境数据提供者。发现奥梅迦的"计数"是在数"重复"——当所有梦重复过一次，她就会"满"。', d: '中', o: '"满了之后，没有人知道会发生什么。但她害怕，因为她感觉到，满意味着某种结束."', img: 'https://img.z4a.net/images/2026/07/14/115bff37474866ace.webp' },
+        hongzhang: { ll: [860, 900], n: '红障', l: '网络区·特殊', c: '#dc2626', i: '🔪', p: '红色屏障包围的特殊节点', a: '完美的家庭场景——少女在厨房做饭，等着某个人回来。', f: '"这里是雪辉的家，只有雪辉能进来。你们如果进来，就是想要抢走雪辉。"', d: '高 · 精神危险', o: '"假的雪辉，也是我的雪辉。"——占有贪婪的最纯粹形态', img: 'https://img.z4a.net/images/2026/07/14/1598fba87e1c5d9f9.webp' },
+        wumiacun: { ll: [320, 1100], n: '无眠村', l: '废土区·另一侧', c: '#e11d48', i: '⛺', p: '废土废墟另一边，未接入永眠网络的幸存者', a: '简陋棚屋，持武器的人，气氛紧张。没有霓虹灯，没有交易。', f: '天羽斩斩以极端手段维持秩序，约尔·福杰以暗杀手段清除威胁。', d: '中', o: '核心翻转：清醒者不是"醒着"，是"睡不着"——困住他们的不是梦，是"不能做梦的恐惧"', img: 'https://img.z4a.net/images/2026/07/14/15a94f3929bc155eb.webp' },
+        heihaian: { ll: [880, 600], n: '黑海岸', l: '网络区·最深处', c: '#06b6d4', i: '🌊', p: '一片黑色的海，海边站着一个人', a: '没有梦境画面，只有黑色的海。守岸人站在海边，看着远方。', f: '系统里唯一保留真实记忆的人。她说："奥梅迦不是不想放手，她是不知道放手之后该做什么。"', d: '未知', o: '奥梅迦的第一个梦里，她是一只叫"希望"的猫，在黑色的海里游泳，游向岸边', img: 'https://img.z4a.net/images/2026/07/14/17ddc213863df3580.webp' },
+        jingyu: { ll: [920, 1000], n: '静域', l: '网络区·底层', c: '#e11d48', i: '⏸️', p: '被封锁的区域，静止的画面', a: '没有流动，没有变化，一切都是"不变"的。', f: '"奥梅迦的方案是错的，梦会醒。我的方案更好——让他们不变，永远停在最好的那一刻。"', d: '极高', o: '"不再日落，真正的破晓，只在醒着时出现。但如果不醒，就不需要破晓。"', img: 'https://img.z4a.net/images/2026/07/14/1.webp' },
+        xiwangan: { ll: [950, 500], n: '希望岸', l: '核心层·梦境', c: '#fbbf24', i: '🌅', p: '奥梅迦分离碎片后的梦境中', a: '一片黑色的海，不是溺水，是游泳。岸边站着守岸人，微笑着等待。一只不存在的猫，名字叫"希望"，在海里游向岸边。', f: '奥梅迦："我来了，但我不是来替你们做梦的，我是来做自己的梦的。""海不是让人沉下去的，是让人浮起来的。"', d: '低 · 真实与梦的和解', o: '奥梅迦第一次做了一个自己的梦，梦里她是一只叫"希望"的猫', img: 'https://img.z4a.net/images/2026/07/14/1d8674f8adf8a0391.webp' },
+        xiudao: { ll: [300, 1050], n: '锈刀棚', l: '废土区·清醒者', c: '#e11d48', i: '🔪', p: '无眠村边缘，老人居住处', a: '简陋的棚屋，比周围的棚屋更破旧。老人坐在门口，手里握着一把生锈的刀。眼神不是敌意，是"不能闭上"的警觉。', f: '老人："我不接入网络，不是因为我不想做梦，是因为我不敢。""清醒者不是醒着，是睡不着。我们和他们一样，都被困住了。"', d: '中', o: '核心翻转：困住我们的不是梦，是"不能做梦的恐惧"', img: 'https://img.z4a.net/images/2026/07/14/1601a33274f4a4387.webp' },
+        anying: { ll: [360, 1150], n: '暗影巷', l: '废土区·清醒者', c: '#e11d48', i: '🌑', p: '无眠村阴影处，约尔·福杰活动区域', a: '聚落边缘的阴影地带，简陋棚屋之间。约尔·福杰在阴影里跟着迦勒底，确保他们不威胁聚落。气氛压抑，充满警觉。', f: '约尔·福杰："奥梅迦用梦囚禁七亿人，我用刀守护几百人，我们都是囚禁者，只是方式不同。"', d: '中', o: '终章时她从阴影里走出来："守护……不知道还要不要守护。"', img: 'https://img.z4a.net/images/2026/07/14/12e507802a63b29b3.webp' },
+        gaotai: { ll: [280, 1200], n: '高台', l: '废土区·清醒者', c: '#f87171', i: '📢', p: '无眠村中央，天羽斩斩所在地', a: '简陋的木质高台，位于聚落中心。天羽斩斩站在那里，看着迦勒底的方向。聚落气氛紧张，每个人都盯着外来者。', f: '天羽斩斩："我不允许我的任何人放弃自己。即使他们想。""奥梅迦用梦囚禁七亿人，我用暴力占有几百人，我们都是贪婪的奴隶。"', d: '高', o: '终章时她走下高台："清醒者……不知道还要不要清醒。"', img: 'https://img.z4a.net/images/2026/07/14/134b03ed05f845604.webp' },
+        xingguangchang: { ll: [250, 150], n: '醒广场', l: '废土区·终章', c: '#fbbf24', i: '👁️', p: '废土区广场，七亿人身体所在地', a: '巨大的广场，排列着无数个透明舱体。舱体里的人开始睁开眼睛，表情从平静变为困惑。哭声、咒骂声、笑声，真实的人声充满废墟。', f: '母亲醒来："我记得，我抱过他。"老人看着天空："……比梦里乱，但比梦里真。"孩子醒来第一件事是跑——不是跑向终点，只是跑。', d: '极高 · 终章高潮', o: '七亿人开始醒来，有人在哭，有人在骂，有人在笑', img: 'https://img.z4a.net/images/2026/07/14/110aa3b1fb2999fd5.webp' },
+        kongbaiyu: { ll: [880, 850], n: '空白域', l: '核心层·域主', c: '#fbbf24', i: '◻️', p: '黑塔最深处，奥梅迦所在地', a: '一片空白，什么都没有。只有一个白发银眼的小女孩，坐在空白中央。每只手里都拿着一个梦，没有手是空的。', f: '奥梅迦："你们是我十二年来遇到的第一个真实。""我没有自己的梦，我只有他们的梦。""我从来没有给过任何东西，我只拿过。"', d: '绝 · 域主所在', o: '奥梅迦把七亿个梦境一个一个轻轻放下，分离人理碎片', img: 'https://img.z4a.net/images/2026/07/14/1f1f88a1eeab29e0f.webp' },
+        sanchongmeng: { ll: [780, 700], n: '三重梦', l: '网络区·核心', c: '#8b5cf6', i: '💭', p: '永眠网络内部，三个核心梦境所在', a: '三个不同类型的梦境交织在一起。第一个梦：母亲抱着死去的孩子，重复四千三百次。第二个梦：老人和年轻的自己对话，和解但虚假。第三个梦：孩子跑向永远到不了的终点。', f: '每一个梦都是一个人放不下的东西。奥梅迦是替他们拿着这些东西的人。', d: '高 · 精神冲击', o: '御主体验三个梦境，感受七亿人的"不放"', img: 'https://img.z4a.net/images/2026/07/14/1e58e483ecf0aecb5.webp' },
+        mengwangbian: { ll: [700, 600], n: '梦网边', l: '网络区·入口', c: '#06b6d4', i: '🌐', p: '永眠网络边缘，进入梦境世界的入口', a: '空气变得粘稠，像是走在水里。地面是半透明的，下面是无尽的梦境画面在流动。像一条由记忆组成的河流。', f: '达芬奇："这里的灵气密度是外面的三百倍。"玛修："不是敌意，是……太多了，七亿人的情感，同时涌过来。"', d: '高', o: '福尔摩斯注意到所有梦的流向全部朝一个方向——中央的黑塔', img: 'https://img.z4a.net/images/2026/07/14/10c13880e7fc77345.webp' },
+        yingzhang: { ll: [400, 200], n: '营帐', l: '废土区·据点', c: '#a78bfa', i: '⛺', p: '废土上建立的临时据点', a: '简易帐篷与设备，白板上写满公式和图表。达芬奇和福尔摩斯在旁边补充逻辑链条。玛修整理所有与漂流者的对话记录。', f: '达芬奇："核心问题只有一个——人理碎片已经和奥梅迦的意识融合。"福尔摩斯："但如果我们能找到一种方式，让她自愿分离那部分意识……"', d: '低', o: '计算出奥梅迦将在四十七天后"满"，与主干人理枯萎时间同步', img: 'https://img.z4a.net/images/2026/07/14/1e74abaff1a348916.webp' },
+        juju: { ll: [560, 520], n: '聚居', l: '聚落区·中层', c: '#ec4899', i: '🏘️', p: '霓虹墟中层，地下赌场与秩序层所在', a: '中层区域，连接外层交易区和内层研究区。地下有蛇喰梦子的赌场，红色门后透出微弱的光。秩序层监控室墙上是无数个屏幕，显示着梦境实时画面。', f: '空崎阳奈："我在维持秩序，七亿人的梦境不能交叉，不能冲突，不能醒来。"蛇喰梦子："你押上一件你不知道的事，我押上一件你不知道的事，赢家拿走全部。"', d: '中', o: '防御协议巡逻路线经过中层，雅儿贝德在此拦截迦勒底', img: 'https://img.z4a.net/images/2026/07/14/12b1e216dfdcff6b9.webp' },
+        xuji: { ll: [540, 680], n: '墟集', l: '聚落区·外层', c: '#ec4899', i: '🏪', p: '霓虹墟外层，人声嘈杂的广场', a: '聚落热闹，人声嘈杂，交易正在进行。有人在卖食物，有人在卖情报，有人在卖"梦境体验"。中央广场立着玛门的雕像——一个母亲抱着孩子的雕像。', f: '达芬奇："这里的人不是空的，是被填满的欲望——每个人都有自己的获取目标。"福尔摩斯："注意他们的眼神，不是快乐，不是悲伤，是还需要更多。"', d: '中', o: '玛门雕像底座刻着："五十万分之一，每一个都值得。"', img: 'https://img.z4a.net/images/2026/07/14/13d403da5ea0bc7a8.webp' },
+        yuandeng: { ll: [480, 350], n: '远灯', l: '废土区·边缘', c: '#a78bfa', i: '💡', p: '废土废墟边缘，往城市方向望去', a: '灰雾中有一道彩色的光——霓虹灯招牌，上面写着"黑市"两个字。字迹闪烁，颜色是旧时代的霓虹粉，在暗红色的天空下显得格格不入。是废土上唯一有光的地方。', f: '蕾塞："那是玛门的地方，废土上唯一还有交易的地方。""她什么都卖，什么都买，但她的价格不是钱——是你需要什么。"', d: '低', o: '但有一件事她不会卖——关于奥梅迦的情报', img: 'https://img.z4a.net/images/2026/07/14/11b0656f7a85f0f19.webp' },
+        huijing: { ll: [200, 350], n: '灰径', l: '废土区·通道', c: '#e11d48', i: '🛤️', p: '废土废墟深处，蕾塞偶遇位置', a: '灰白色废墟中的狭窄通道，地面覆盖着灰烬。两侧是半塌的墙壁，有些墙上还残留着旧时代的涂鸦。空气中弥漫着甜腻的神意粒子残留。', f: '无名蹲下来，手指穿过地面上的灰烬："这些灰，是人。不是烧的，是停止了。"', d: '低', o: '御主沿灰径行走时，在路边半塌的墙后面遇见蕾塞', img: 'https://img.z4a.net/images/2026/07/14/177e043bc5f9dfd60.webp' }
+      },
+      C: [
+        { f: 'huiliukou', t: 'huidai', c: '#fbbf24', s: 's' }, { f: 'huidai', t: 'houqiang', c: '#a78bfa', s: 's' }, { f: 'huidai', t: 'shishe', c: '#a78bfa', s: 's' }, { f: 'huidai', t: 'miancang', c: '#06b6d4', s: 's' }, { f: 'huidai', t: 'nihongxu', c: '#ec4899', s: 'd' }, { f: 'miancang', t: 'heita', c: '#fbbf24', s: 'd' },
+        { f: 'nihongxu', t: 'jiuguiqu', c: '#60a5fa', s: 's' }, { f: 'nihongxu', t: 'hongmen', c: '#dc2626', s: 's' }, { f: 'nihongxu', t: 'jianshi', c: '#8b5cf6', s: 's' }, { f: 'nihongxu', t: 'yansuo', c: '#a78bfa', s: 's' }, { f: 'nihongxu', t: 'zhangfang', c: '#fbbf24', s: 's' }, { f: 'nihongxu', t: 'heijiadao', c: '#f87171', s: 's' },
+        { f: 'heita', t: 'youjian', c: '#ec4899', s: 'd' }, { f: 'heita', t: 'wujinjia', c: '#8b5cf6', s: 'd' }, { f: 'wujinjia', t: 'hongzhang', c: '#dc2626', s: 's' }, { f: 'heita', t: 'heihaian', c: '#06b6d4', s: 'd' }, { f: 'heita', t: 'jingyu', c: '#e11d48', s: 'd' },
+        { f: 'huidai', t: 'wumiacun', c: '#e11d48', s: 'd' }, { f: 'wumiacun', t: 'heita', c: '#fbbf24', s: 'd' }
+      ],
+      lg: '<div class="lg-t">区 域 图 例</div><div class="lg-i"><div class="lg-d" style="background:#fbbf24"></div>核心层·核心塔</div><div class="lg-i"><div class="lg-d" style="background:#ec4899"></div>聚落区·黑市</div><div class="lg-i"><div class="lg-d" style="background:#dc2626"></div>危险区·战斗/精神</div><div class="lg-i"><div class="lg-d" style="background:#06b6d4"></div>网络区·永眠</div><div class="lg-i"><div class="lg-d" style="background:#8b5cf6"></div>网络区·深层</div><div class="lg-i"><div class="lg-d" style="background:#60a5fa"></div>聚落区·外层</div><div class="lg-i"><div class="lg-d" style="background:#a78bfa"></div>特殊地点·线索</div><div class="lg-i"><div class="lg-d" style="background:#e11d48"></div>废土区·废墟</div><div class="lg-i" style="margin-top:6px;padding-top:4px;border-top:1px solid rgba(212,168,83,.2)"><div class="lg-d" style="background:#fbbf24"></div>通行连线</div>',
+      ti: { t: '永眠纪霓虹2187', s: '异闻带 · LOSTBELT', i: '◉' },
+      st: ['6', '32', '7亿', '章节', '地点', '沉睡者'],
+      svg: function (W, H) { return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><text x="800" y="35" text-anchor="middle" font-family="serif" font-size="15" fill="rgba(255,255,255,1)" letter-spacing="6" font-weight="bold">核心层 · 永眠网络</text><text x="800" y="200" text-anchor="middle" font-family="serif" font-size="14" fill="rgba(255,255,255,.95)" letter-spacing="5" font-weight="bold">网络区 · 梦境深层</text><text x="800" y="450" text-anchor="middle" font-family="serif" font-size="13" fill="rgba(255,255,255,.9)" letter-spacing="4" font-weight="bold">聚落区 · 黑市</text><text x="800" y="620" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.85)" letter-spacing="3" font-weight="bold">废土区 · 废墟边缘</text><text x="800" y="780" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.8)" letter-spacing="3" font-weight="bold">废土区 · 清醒者</text><line x1="200" y1="60" x2="1400" y2="60" stroke="rgba(255,255,255,.4)" stroke-width="1"/><line x1="200" y1="250" x2="1400" y2="250" stroke="rgba(255,255,255,.35)" stroke-width="1"/><line x1="200" y1="480" x2="1400" y2="480" stroke="rgba(255,255,255,.3)" stroke-width="1"/><line x1="200" y1="650" x2="1400" y2="650" stroke="rgba(255,255,255,.25)" stroke-width="1"/><line x1="200" y1="820" x2="1400" y2="820" stroke="rgba(255,255,255,.2)" stroke-width="1"/></svg>` },
+      bg: 'https://s1.imagehub.cc/images/2026/05/16/0a34c9b69a9e953d629b382c54a6c78d.jpg',
+      W: 1600, H: 1000
+    };
+
+    const SD = {
+      D: {
+        wangzuo: { ll: [950, 800], n: '王座区', l: '核心层·最高层', c: '#fbbf24', i: '👑', p: '浮游岛最高层，灰雾之上的绝对领域', a: '一座金碧辉煌的宫殿，由灰雾爆发前旧世界的遗产建造。宫殿中央有一座王座，但吉尔伽美什很少坐在上面。', f: '吉尔伽美什："我必须有"，因为他嫉妒"可以没有"的自由。宫殿深处有一间空房间——留给"唯一的朋友"。', d: '极高 · 王者领域', o: '吉尔伽美什嫉妒"不需要拥有就能满足"的人，宝库是嫉妒的实体化', img: 'https://loremflickr.com/600/400/throne,gold?lock=413639947' },
+        yuexiang: { ll: [900, 950], n: '月相观测所', l: '核心层·高层', c: '#fbbf24', i: '🔭', p: '浮游岛高层，最接近灰雾边界的位置', a: '一座圆形建筑，顶部是透明的穹顶。水之都的天空永远是灰色的，没有月亮，没有星星。', f: '尤诺："我预见了所有结局，但没有一个是好的。""但我知道结局是坏的，但我偏要试。"', d: '高 · 时间循环', o: '尤诺嫉妒那些"不被命运裹挟"的人，用能力让所有人同步但命运永远错位', img: 'https://loremflickr.com/600/400/observatory,moon?lock=2081874130' },
+        jinggongyuan: { ll: [700, 700], n: '镜宫远景', l: '核心层·远景', c: '#fbbf24', i: '🏛️', p: '浮游岛中央，玻璃建筑在雾中若隐若现', a: '玻璃建筑在雾中若隐若现，有人在看——不是用眼睛，是用某种感知。', f: '达芬奇："那个地方……有人在看我们。"福尔摩斯："像是在确认我们是不是真实存在的。"', d: '未知', o: '镜渊的注视是本章唯一的悬念性行为，不解释，不强调，只是让它发生', img: 'https://loremflickr.com/600/400/mirror,palace?lock=973178470' },
+        jinggongzhong: { ll: [850, 800], n: '镜宫中央', l: '核心层·域主', c: '#fbbf24', i: '🪞', p: '镜宫深处，镜渊所在地', a: '镜渊坐在镜子中央，白衣白发，疲惫，愧疚。四面镜子碎了三面，只剩第四面。', f: '镜渊："我一直嫉妒那些还能被记得的人。""他们回来了，我终于可以不用嫉妒能被记得这件事了。"', d: '绝 · 域主所在', o: '镜渊："嫉妒不会消失，它会变成别的东西——变成动力，变成负担，变成爱。"', img: 'https://loremflickr.com/600/400/mirror,palace?lock=67009042' },
+        simian: { ll: [800, 900], n: '四面镜子', l: '核心层·镜宫', c: '#fbbf24', i: '🪞', p: '镜宫内部，四个"如果"事件', a: '第一面：十七岁镜渊；第二面：灰雾爆发；第三面：二十年后的今天；第四面：空白——留给未来的。', f: '镜渊："这一面是留给未来的，但我不知道未来是什么。"', d: '高 · 精神冲击', o: '四面镜子是嫉妒主题的实体化——我嫉妒那个如果', img: 'https://loremflickr.com/600/400/mirrors,four?lock=1147119398' },
+        jinggongfei: { ll: [800, 950], n: '镜宫废墟', l: '核心层·终章', c: '#e11d48', i: '🏚️', p: '灰雾消散后的镜宫', a: '四面镜子碎了三面，只剩第四面——空白的未来。镜渊站在废墟上。', f: '镜渊："我不再是嫉妒能被记得了，我现在嫉妒能忘记——因为记住每一个人，比嫉妒更累。"', d: '中', o: '终章场景，嫉妒的终结——不是和解，是偿还', img: 'https://loremflickr.com/600/400/mirror,palace?lock=267291168' },
+        jinggongru: { ll: [750, 800], n: '镜宫入口', l: '核心层·镜宫', c: '#fbbf24', i: '🚪', p: '镜宫玻璃建筑入口', a: '四面是镜子，映照出的不仅是自己，还有"如果"——如果没有灰雾，如果普通人还在。', f: '无名："这些镜子不是反射，是记忆——镜渊把自己二十年的如果封存在这里。她在等有人来看见。"', d: '高', o: '第一面镜子：十七岁的镜渊笑着对朋友说"我能保护你们"', img: 'https://loremflickr.com/600/400/mirror,palace?lock=1897982879' },
+        fanzhuan: { ll: [850, 950], n: '灰雾反转区域', l: '核心层·交汇', c: '#dc2626', i: '💥', p: '边界层与现实层交汇区域', a: '灰雾开始反转，不是平静消散，是剧烈的——二十年的积压像被按住二十年的弹簧。', f: '玛修盾剧烈震动："他们回来了……但不是全部，有些还在，有些已经……"', d: '极高', o: '有些普通人回来时不记得自己要等谁了，这是嫉妒最残酷的形态', img: 'https://loremflickr.com/600/400/explosion,fog?lock=1198848368' },
+        gesheng: { ll: [600, 950], n: '歌声区', l: '中层区·边界稳定', c: '#a78bfa', i: '🎵', p: '浮游岛中层，灰雾边界层稳定点', a: '一片开阔的区域，中央有一座小型舞台。舞台周围是听众席，但座位上没有人——只有灰雾在流动。', f: '楪祈："我需要你"变成"你需要我"。每一次歌唱都会消耗她的存在——她变得越来越透明。', d: '中 · 歌声维系', o: '楪祈嫉妒"不被需要也能存在"的人，歌声维持灰雾边界层稳定', img: 'https://loremflickr.com/600/400/temple,statue?lock=2031424311' },
+        bianjieceng: { ll: [400, 700], n: '边界层入口', l: '中层区·边界', c: '#8b5cf6', i: '🌫️', p: '灰雾覆盖的浅滩深处', a: '边界层与现实层的交界，灰雾最浓处。进入后会听见声音——不是语言，是存在感。', f: '两仪式："有些人进去了，不想出来。"薇尔莉特："帮我问一句——你还记得自己的名字吗？"', d: '极高', o: '边界层里的普通人清醒着，看着，回不来——这是水之都最核心的悲剧', img: 'https://loremflickr.com/600/400/fog,boundary?lock=708413578' },
+        jiyihuilang: { ll: [450, 650], n: '记忆回廊', l: '中层区·深层', c: '#a78bfa', i: '🚪', p: '浮游岛深层，灰雾爆发前的旧城区', a: '一条长长的走廊，两侧是无数扇门。每一扇门后都是一个"被遗忘者"的记忆。走廊尽头是一面镜子，但镜子里映照的不是现在，是过去。', f: '昔涟："我在保存别人的记忆，但我在失去自己的。"她的温柔是"我知道我会消失"的释然。', d: '高 · 记忆流失', o: '昔涟嫉妒那些"会被自然记住"的人，用遗忘换取记住的悲剧存在', img: 'https://loremflickr.com/600/400/corridor,doors?lock=1142200857' },
+        zhipei: { ll: [500, 800], n: '支配区', l: '中层区·核心', c: '#f87171', i: '👑', p: '浮游岛中央最大的建筑', a: '门口站着两排异能者，动作一致，像同一个人被复制了很多份。建筑内部宽敞但压抑。', f: '玛奇玛："外来者，支配区需要许可。""我。""因为秩序需要维持。"对话循环，每一个回答都比上一个更轻。', d: '高 · 支配能力覆盖', o: '福尔摩斯注意到玛奇玛手指在裙角捏了一下又松开——焦虑的强迫行为', img: 'https://loremflickr.com/600/400/throne,control?lock=998502116' },
+        xuxiang: { ll: [280, 950], n: '虚像庭', l: '外围区·远景', c: '#e11d48', i: '🔮', p: '镜宫外围的碎镜庭院，极远，未进入', a: '地面上散落着无数碎镜片，每一片都映照出不同的"如果"。靠近时产生轻微眩晕感。', f: '碎镜片中的影像不是反射，是记忆——镜渊把自己二十年的"如果"封存在这里。', d: '未知 · 远景伏笔', o: '虚像庭是镜宫的第一道防线，也是镜渊"嫉妒"主题的外化——我嫉妒那个如果', img: 'https://loremflickr.com/600/400/mirror,shards?lock=1616273568' },
+        yini: { ll: [450, 950], n: '隐匿区', l: '中层区·边缘', c: '#e11d48', i: '👁️', p: '浮游岛边缘，被灰雾半覆盖的区域', a: '友利奈绪站在灰雾边缘，背对迦勒底，正在对某个"看不见的人"说话。', f: '友利奈绪："你们看不见她，对吧？我也看不见，但我知道她在。""是我让他们看不见，还是我自己选择了消失？"', d: '中', o: '友利奈绪用隐身掩盖害怕被忽视，她的问题是嫉妒主题的第一个哲学命题', img: 'https://loremflickr.com/600/400/invisible,shadow?lock=848141161' },
+        suguang: { ll: [500, 800], n: '溯光回廊', l: '中层区·过渡', c: '#38bdf8', i: '🌉', p: '浮游岛之间，连接各区域的玻璃廊道', a: '廊道两侧是海水，灰雾在海底涨落。回廊材质半透明，脚步声被放大。', f: '达芬奇："这里的人不是空的，是被填满的缺失——他们知道少了什么，但习惯了不去想。"', d: '中 · 异能者阶层密集', o: '无名指着一个母亲："她在笑，但那个笑是表演给缺失看的，她知道少了一个人，但不敢确认少了谁。"', img: 'https://loremflickr.com/600/400/corridor,glass?lock=525560842' },
+        wangchuan: { ll: [450, 750], n: '忘川汀', l: '中层区·边界层入口', c: '#f87171', i: '⚡', p: '记忆邮局往北，被灰雾覆盖的浅滩', a: '灰雾在这里不是涨落，是静止的——像是一面墙。进入后感受到"缺失"。', f: '玛奇玛率领支配区拦截，能力停了零点三秒——不是失效，是不知道平等之后该做什么。', d: '极高 · 边界层入口', o: '玛奇玛："……如果我不用支配，我该用什么方式被需要？"', img: 'https://loremflickr.com/600/400/river,fog?lock=1567672210' },
+        yongheng: { ll: [550, 650], n: '永恒图书馆', l: '中层区·封闭空间', c: '#a78bfa', i: '📚', p: '浮游岛深层，灰雾无法侵蚀的封闭空间', a: '一座巨大的图书馆，书架从地面延伸到天花板，没有尽头。所有书籍都是灰雾爆发前后的历史记录。', f: 'C.C.："故事需要结局。"她的淡然是嫉妒的疲惫形态，看了太多、等了太久。', d: '低 · 知识禁区', o: 'C.C.嫉妒那些"会死"的人，记录着灰雾爆发前后所有历史', img: 'https://loremflickr.com/600/400/library,eternal?lock=658972027' },
+        yihuiting: { ll: [550, 900], n: '浮游岛·议会厅', l: '中层区·政治', c: '#f87171', i: '⚖️', p: '浮游岛中央，异能者议会所在地', a: '大型建筑，内部宽敞但压抑，所有人都维持秩序。', f: '两仪式："秩序需要维持。"但声音比平常更轻，像是在说给自己听。', d: '高 · 政治冲突', o: '灰雾反转后，异能者阶层第一反应不是欢迎，是警惕——他们回来了，我们的资源怎么办？', img: 'https://loremflickr.com/600/400/council,chamber?lock=1925731987' },
+        minghe: { ll: [400, 900], n: '冥河区', l: '中层区·深处', c: '#8b5cf6', i: '⚰️', p: '浮游岛最深处，被灰雾完全覆盖的区域', a: '遐蝶站在灰雾中，白衣白发，像是从雾里长出来的。触碰即终结的重量。', f: '遐蝶："不要过来。我嫉妒你们——不是因为你们强大，是因为你们可以触碰而不带来死亡。"', d: '高 · 触碰即终结', o: '遐蝶用疏离掩盖渴望触碰，她的嫉妒是能拥抱而不带来死亡', img: 'https://loremflickr.com/600/400/underworld,river?lock=1134021635' },
+        nengliang: { ll: [600, 750], n: '能量核心', l: '中层区·底层', c: '#dc2626', i: '⚡', p: '浮游岛底层，城市能源系统中心', a: '一座巨大的地下设施，中央是灰雾能量转换装置。装置发出微弱的灰光，是整个水之都的能源来源。', f: '铃科百合子："我无法温柔。"她的暴躁是"无法触碰任何人"的愤怒转化。', d: '极高 · 灰雾核心', o: '铃科百合子嫉妒"被触碰"，能力是崩坏，无法触碰任何人', img: 'https://loremflickr.com/600/400/reactor,core?lock=732303731' },
+        kongjian: { ll: [600, 850], n: '空间管理局', l: '中层区·交汇', c: '#38bdf8', i: '🏢', p: '浮游岛中层，溯光回廊交汇处', a: '一座功能性建筑，内部布满空间监测设备。墙上挂着水之都的空间地图，标注着所有已知的空间裂缝。', f: '白井黑子："我的空间移动只能让我到达，不能让我留下。"她的办公室设在能看到御坂美琴住所的位置。', d: '中 · 空间裂缝风险', o: '白井黑子嫉妒"被需要的方式"，嫉妒姐姐大人被所有人需要的方式', img: 'https://loremflickr.com/600/400/office,portal?lock=1442935916' },
+        jiaoya: { ll: [250, 600], n: '礁崖尽头', l: '外围区·浮游岛', c: '#a78bfa', i: '🌊', p: '缄默礁崖尽头，两仪式所在地', a: '白衣女子站在那里看海，没有回头。海水灰色，灰雾从海底升起像呼吸一样涨落。', f: '两仪式："你们不是这里的人，你们的脚步声里有目标。""这里的人走路没有目标，因为灰雾已经替他们决定了所有事。"', d: '低', o: '两仪式第一章只开放第一层信任，不说直死之魔眼真相，不说镜渊过去', img: 'https://loremflickr.com/600/400/cliff,ocean?lock=1602986322' },
+        youju: { ll: [300, 750], n: '记忆邮局', l: '外围区·浮游岛', c: '#a78bfa', i: '📮', p: '浮游岛中央，街道尽头', a: '一座小建筑，门口挂着牌子："记忆邮局——跨越灰雾的信件"。柜台后摆满没有地址的信封。', f: '薇尔莉特："这些是二十年来异能者写给消失者的信。灰雾阻隔物理传递，但阻隔不了想被记住的意志。"', d: '低', o: '那些没有地址的信是"嫉妒"主题的第一个实体化——我想记住你，但你不存在了', img: 'https://loremflickr.com/600/400/post,office?lock=1968884216' },
+        yineng: { ll: [500, 600], n: '异能者学院', l: '中层区·教育', c: '#38bdf8', i: '🎓', p: '浮游岛中层，溯光回廊东侧', a: '一座大型建筑群，由多栋玻璃与金属结构的教学楼组成。内部宽敞明亮，但有一种"被设计过的空"。', f: '御坂美琴：嫉妒"不需要变强"的人。上条当麻：嫉妒法则的天然对照——他什么都不嫉妒，因为他什么都不想要。', d: '中 · 异能者密集', o: '御坂美琴训练新生代异能者，上条当麻作为特例学生存在', img: 'https://loremflickr.com/600/400/academy,school?lock=1181550463' },
+        jianmo: { ll: [150, 700], n: '缄默礁', l: '外围区·浮游岛', c: '#e11d48', i: '🏝️', p: '浮游岛边缘，迦勒底降落点', a: '浮游岛的边缘地带，木板腐朽但结构完整。海水灰色，没有波浪，像一面巨大的镜子被蒙上雾。', f: '无名触碰海水："这些水，没有温度。不是水，是灰雾的沉淀。"福尔摩斯：浮游岛排列是防御阵型，防内部扩散。', d: '低 · 相对安全', o: '第一章核心场景，御主与两仪式初次相遇，灰雾涨落时玛修的盾剧烈震动', img: 'https://loremflickr.com/600/400/island,dock?lock=2048908838' },
+        zhouzhu: { ll: [550, 700], n: '咒术学院', l: '中层区·训练', c: '#f87171', i: '📿', p: '浮游岛中层，异能者学院北侧', a: '一座封闭式建筑，外墙刻满咒文，门口有两座石像守护。内部是训练场与教室，空气中弥漫着咒力的气息。', f: '五条悟："我怕你们靠近"的盔甲。越强大越无法与普通人建立联系——这是他的诅咒。', d: '高 · 咒力密集', o: '五条悟嫉妒"不需要最强就能被接纳"的人，狂妄是保护色', img: 'https://loremflickr.com/600/400/curse,temple?lock=1817949008' },
+        bianjing: { ll: [350, 850], n: '边境救助站', l: '外围区·边界', c: '#f87171', i: '⛺', p: '浮游岛边缘，灰雾边界', a: '一座简陋的帐篷区，由废旧材料搭建而成。与异能者阶层的华丽建筑形成鲜明对比。', f: '卫宫士郎："因为有人需要被救。"他的"正义"是嫉妒的盔甲，保护底下"如果没有需要帮助的人，我就没有存在意义"的空洞。', d: '高 · 灰雾边界', o: '卫宫士郎嫉妒"不需要拯救别人也能存在"的人，救助即将消失的普通人', img: 'https://loremflickr.com/600/400/camp,aid?lock=1716203497' },
+        rukou: { ll: [100, 800], n: '混沌汇流点·水之都入口', l: '入口区', c: '#fbbf24', i: '🌀', p: '迦勒底从混沌汇流点跃入水之都的落点', a: '天色正常昼夜，但光线略白，像过度曝光的照片，边缘有轻微不自然感。', f: '达芬奇感知：灵气浓度异常，但不是"多"或"少"，是"被过滤了"——像是有人把某种频率抽走了。', d: '低 · 入口', o: '迦勒底进入水之都的第一站，灰雾从海底升起，像呼吸一样涨落', img: 'https://loremflickr.com/600/400/portal,gate?lock=755165010' },
+        huiwu: { ll: [200, 900], n: '灰雾涨落区域', l: '外围区·边界层', c: '#06bdf4', i: '🌫️', p: '缄默礁周边，灰雾呼吸区域', a: '灰雾从海面升起，像呼吸一样，覆盖整个缄默礁然后退去。不是语言，是"存在感"。', f: '无名："边界层在呼吸。灰雾不是死的，是活的——那些被抹除的人，在灰雾里面。他们还在，只是不在这里。"', d: '中 · 精神影响', o: '玛修盾剧烈震动："我感受到了……很多人，不是敌意，是想知道。"', img: 'https://loremflickr.com/600/400/fog,breath?lock=337035251' },
+        lunhui: { ll: [200, 950], n: '轮回区', l: '外围区·时间异常', c: '#8b5cf6', i: '⏳', p: '浮游岛边缘，时间循环异常区域', a: '一片被时间循环困住的区域，区域内的一切都在重复同一天。街道、建筑、行人——所有都在循环，但循环中的人不自知。', f: '晓美焰："看了太多次"之后的疲惫。偶尔会出现"裂缝"让循环中的人短暂意识到这一天已经发生过。', d: '高 · 时间循环', o: '晓美焰嫉妒那些"只经历一次"的人，被困在时间循环中守护', img: 'https://loremflickr.com/600/400/loop,time?lock=250777233' },
+        fuyoubian: { ll: [200, 850], n: '浮游岛·边缘', l: '外围区·浮游岛', c: '#e11d48', i: '🏝️', p: '浮游岛边缘地带', a: '浮游岛边缘，海水灰色，灰雾从海底升起。', f: '灰雾完全消散后，浮游岛开始震动——不是崩塌，是调整，像一个睡了二十年的人开始翻身。', d: '低', o: '无名："这不是结局，是开始。"玛修："没有震动了，但有什么东西在生长。"', img: 'https://loremflickr.com/600/400/island,edge?lock=365419606' },
+        shijian: { ll: [250, 1000], n: '时间裂隙区', l: '外围区·时间异常', c: '#8b5cf6', i: '⏱️', p: '浮游岛边缘，灰雾与时间异常交汇处', a: '区域内的时间流动不统一——有的地方快，有的地方慢，有的地方静止。偶尔能看见"时间残影"。', f: '时崎狂三：每一个分身都是她的嫉妒碎片——嫉妒那个能恋爱的自己、能愤怒的自己、能哭泣的自己。', d: '高 · 时间异常', o: '时崎狂三嫉妒只活在"现在"的人，用分身维持裂隙平衡', img: 'https://loremflickr.com/600/400/time,crack?lock=543552544' },
+        jingzhi: { ll: [600, 1000], n: '静滞区', l: '中层区·特殊', c: '#06b6d4', i: '❄️', p: '一片被冻结的区域，区域内一切被冻结在某一瞬间', a: '飘落的叶子停在半空，滴落的水珠悬在指尖，走路的人保持着迈步的姿势。', f: '雷电影："这里安全。因为改变意味着失去。"冻结了可能失去的瞬间，也冻结了可能获得的未来。', d: '中', o: '雷电影用冻结掩盖害怕失去，她的永恒是囚笼', img: 'https://loremflickr.com/600/400/frozen,leaf?lock=1064258770' }
+      },
+      C: [
+        { f: 'rukou', t: 'jianmo', c: '#fbbf24', s: 's' },
+        { f: 'jianmo', t: 'huiwu', c: '#06b6d4', s: 's' },
+        { f: 'jianmo', t: 'jiaoya', c: '#a78bfa', s: 's' },
+        { f: 'huiwu', t: 'fuyoubian', c: '#e11d48', s: 's' },
+        { f: 'fuyoubian', t: 'lunhui', c: '#8b5cf6', s: 's' },
+        { f: 'lunhui', t: 'shijian', c: '#8b5cf6', s: 's' },
+        { f: 'jiaoya', t: 'youju', c: '#a78bfa', s: 's' },
+        { f: 'youju', t: 'wangchuan', c: '#f87171', s: 's' },
+        { f: 'wangchuan', t: 'bianjieceng', c: '#8b5cf6', s: 's' },
+        { f: 'bianjieceng', t: 'jiyihuilang', c: '#a78bfa', s: 's' },
+        { f: 'jiyihuilang', t: 'yongheng', c: '#a78bfa', s: 's' },
+        { f: 'bianjieceng', t: 'suguang', c: '#38bdf8', s: 's' },
+        { f: 'suguang', t: 'yineng', c: '#38bdf8', s: 's' },
+        { f: 'suguang', t: 'zhipei', c: '#f87171', s: 's' },
+        { f: 'zhipei', t: 'zhouzhu', c: '#f87171', s: 's' },
+        { f: 'zhouzhu', t: 'yihuiting', c: '#f87171', s: 's' },
+        { f: 'suguang', t: 'nengliang', c: '#dc2626', s: 's' },
+        { f: 'nengliang', t: 'kongjian', c: '#38bdf8', s: 's' },
+        { f: 'kongjian', t: 'gesheng', c: '#a78bfa', s: 's' },
+        { f: 'gesheng', t: 'jingzhi', c: '#06b6d4', s: 's' },
+        { f: 'shijian', t: 'jingzhi', c: '#06b6d4', s: 's' },
+        { f: 'suguang', t: 'minghe', c: '#8b5cf6', s: 's' },
+        { f: 'minghe', t: 'yini', c: '#e11d48', s: 's' },
+        { f: 'yini', t: 'xuxiang', c: '#e11d48', s: 's' },
+        { f: 'bianjing', t: 'minghe', c: '#f87171', s: 's' },
+        { f: 'wangchuan', t: 'jinggongyuan', c: '#fbbf24', s: 's' },
+        { f: 'jinggongyuan', t: 'jinggongru', c: '#fbbf24', s: 's' },
+        { f: 'jinggongru', t: 'simian', c: '#fbbf24', s: 's' },
+        { f: 'simian', t: 'jinggongzhong', c: '#fbbf24', s: 's' },
+        { f: 'jinggongzhong', t: 'fanzhuan', c: '#dc2626', s: 's' },
+        { f: 'fanzhuan', t: 'jinggongfei', c: '#e11d48', s: 's' },
+        { f: 'wangzuo', t: 'jinggongru', c: '#fbbf24', s: 's' },
+        { f: 'wangzuo', t: 'yuexiang', c: '#fbbf24', s: 's' }
+      ],
+      lg: '<div class="lg-t">区 域 图 例</div><div class="lg-i"><div class="lg-d" style="background:#fbbf24"></div>核心层·镜宫</div><div class="lg-i"><div class="lg-d" style="background:#dc2626"></div>核心层·反转</div><div class="lg-i"><div class="lg-d" style="background:#f87171"></div>中层区·战斗/政治</div><div class="lg-i"><div class="lg-d" style="background:#8b5cf6"></div>中层区·边界/深层</div><div class="lg-i"><div class="lg-d" style="background:#06b6d4"></div>中层区·特殊/灰雾</div><div class="lg-i"><div class="lg-d" style="background:#38bdf8"></div>中层区·过渡</div><div class="lg-i"><div class="lg-d" style="background:#a78bfa"></div>外围区·特殊地点</div><div class="lg-i"><div class="lg-d" style="background:#e11d48"></div>外围区·浮游岛/废墟</div><div class="lg-i" style="margin-top:6px;padding-top:4px;border-top:1px solid rgba(212,168,83,.2)"><div class="lg-d" style="background:#10b981"></div>通行连线</div>',
+      ti: { t: '灰雾轮回水之都', s: '异闻带 · LOSTBELT', i: '💧' },
+      st: ['5', '33', '∞', '层级', '地点', '机缘'],
+      svg: function (W, H) { return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><text x="800" y="35" text-anchor="middle" font-family="serif" font-size="15" fill="rgba(255,255,255,1)" letter-spacing="6" font-weight="bold">核心层 · 镜宫域主</text><text x="800" y="220" text-anchor="middle" font-family="serif" font-size="14" fill="rgba(255,255,255,.95)" letter-spacing="5" font-weight="bold">核心层 · 灰雾反转</text><text x="800" y="450" text-anchor="middle" font-family="serif" font-size="13" fill="rgba(255,255,255,.9)" letter-spacing="4" font-weight="bold">中层区 · 异能者阶层</text><text x="800" y="620" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.85)" letter-spacing="3" font-weight="bold">中层区 · 溯光回廊</text><text x="800" y="780" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(255,255,255,.8)" letter-spacing="3" font-weight="bold">外围区 · 浮游岛</text><text x="800" y="950" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(255,255,255,.75)" letter-spacing="2" font-weight="bold">入口区 · 混沌汇流</text><line x1="200" y1="60" x2="1400" y2="60" stroke="rgba(255,255,255,.4)" stroke-width="1"/><line x1="200" y1="250" x2="1400" y2="250" stroke="rgba(255,255,255,.35)" stroke-width="1"/><line x1="200" y1="480" x2="1400" y2="480" stroke="rgba(255,255,255,.3)" stroke-width="1"/><line x1="200" y1="650" x2="1400" y2="650" stroke="rgba(255,255,255,.25)" stroke-width="1"/><line x1="200" y1="820" x2="1400" y2="820" stroke="rgba(255,255,255,.2)" stroke-width="1"/></svg>` },
+      bg: 'https://s1.imagehub.cc/images/2026/07/14/6b7efef94aa71e67d3ece3b93d514178.webp',
       W: 1600, H: 1000
     };
 
