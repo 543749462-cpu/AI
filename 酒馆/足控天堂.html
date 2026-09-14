@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>足控天堂 Ⅱ · 事务所地图</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=ZCOOL+KuaiLe&family=Baloo+2:wght@700;800&display=swap');
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --cy:#6fd0f2;--cy-d:#5cc3e8;--cy-l:rgba(111,208,242,.15);
+      --pk:#ff9fc6;--pk-d:#ff77ab;--vi:#b39aec;
+      --ink:#dbe9f3;--ink2:#8aa3b8;--line:rgba(120,205,240,.20);
+      --grad:linear-gradient(135deg,#5cc3e8 0%,#f48fbe 100%);
+      --shadow:0 10px 26px rgba(0,0,0,.45);
+    }
+    body{background:linear-gradient(160deg,#0b1420 0%,#0d1a2a 45%,#151228 100%);font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;color:var(--ink);overflow:hidden;height:100vh}
+
+    /* ===== 顶部杂志栏 ===== */
+    #h{position:fixed;top:0;left:0;right:0;z-index:1000;min-height:56px;background:rgba(10,18,30,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);box-shadow:0 6px 22px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:8px 16px;gap:8px}
+    #h .logo{display:flex;align-items:center;gap:11px}
+    #h .logo-icon{width:36px;height:36px;background:var(--grad);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:19px;box-shadow:0 6px 16px rgba(140,200,230,.5)}
+    #h .title-text{font-family:'ZCOOL KuaiLe','Noto Sans SC',sans-serif;font-size:21px;color:var(--cy-d);letter-spacing:2px;line-height:1.15}
+    #h .subtitle{font-family:'Baloo 2',sans-serif;font-size:9px;color:var(--ink2);letter-spacing:3.5px;margin-top:1px}
+    #h .tabs{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;flex:1 1 auto;min-width:0}
+    .tab{padding:7px 16px;border-radius:999px;border:1.5px solid var(--line);background:rgba(20,32,50,.9);color:#9fb6c6;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit;white-space:nowrap;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+    .tab:hover{border-color:var(--cy);color:var(--cy-d);transform:translateY(-1px)}
+    .tab.on{background:var(--grad);color:#0b1420;border-color:transparent;box-shadow:0 8px 20px rgba(92,195,232,.35)}
+    #h .stats{display:flex;gap:6px}
+    .stat{text-align:center;padding:4px 12px;background:rgba(20,32,50,.9);border:1.5px solid var(--line);border-radius:16px;min-width:54px}
+    .stat-v{font-family:'Baloo 2',sans-serif;font-size:17px;font-weight:800;color:var(--cy-d);line-height:1.1}
+    .stat-l{font-size:8px;color:var(--ink2);letter-spacing:1px}
+
+    /* ===== 地图 ===== */
+    #map{position:fixed;top:56px;left:0;right:0;bottom:0;background:#0b1420;transition:top .15s}
+    .leaflet-container{background:#0b1420!important;font-family:inherit}
+    .leaflet-control-zoom{border:none!important;box-shadow:var(--shadow)!important;border-radius:14px!important;overflow:hidden}
+    .leaflet-control-zoom a{background:rgba(20,32,50,.95)!important;border:none!important;border-bottom:1px solid var(--line)!important;color:var(--cy)!important;font-family:'Baloo 2',sans-serif!important;font-weight:800!important;width:34px!important;height:34px!important;line-height:34px!important}
+    .leaflet-control-zoom a:hover{background:var(--cy-l)!important;color:var(--pk-d)!important}
+    .mk{background:#fff;border-radius:38%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .15s ease;box-shadow:0 6px 16px rgba(110,170,200,.4)}
+    .mk:hover{transform:scale(1.14) rotate(-3deg)}
+    .mk-lb{white-space:nowrap;font-family:inherit;font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;background:rgba(255,255,255,.94);box-shadow:0 4px 12px rgba(110,170,200,.3);pointer-events:none}
+
+    /* ===== 图例 ===== */
+    #lg{position:fixed;bottom:14px;left:14px;z-index:900;background:rgba(13,22,36,.93);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1.5px solid rgba(120,205,240,.22);border-radius:22px;padding:12px 16px;max-height:52vh;overflow-y:auto;box-shadow:var(--shadow)}
+    .lg-t{font-family:'ZCOOL KuaiLe','Noto Sans SC',sans-serif;font-size:12px;letter-spacing:3px;color:var(--cy);margin-bottom:8px}
+    .lg-i{display:flex;align-items:center;gap:7px;font-size:11px;color:#9fb6c6;margin-bottom:4px;font-weight:500}
+    .lg-d{width:9px;height:9px;border-radius:4px;flex-shrink:0;box-shadow:0 0 0 2px rgba(0,0,0,.55)}
+
+    /* ===== 罗盘 ===== */
+    #compass{position:fixed;right:18px;bottom:18px;z-index:900;width:98px;height:98px;border-radius:50%;background:rgba(255,255,255,.94);border:2px solid #e9f5fc;box-shadow:var(--shadow);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+    #compass::before{content:'';position:absolute;inset:15px;border-radius:50%;border:1.5px dashed #d9eefb}
+    #compass div{position:absolute;font-family:'ZCOOL KuaiLe','Noto Sans SC',sans-serif;font-weight:700;color:var(--cy-d);line-height:1}
+    #compass .cp-n{top:7px;left:50%;transform:translateX(-50%)}
+    #compass .cp-s{bottom:7px;left:50%;transform:translateX(-50%);color:var(--pk-d)}
+    #compass .cp-w{left:9px;top:50%;transform:translateY(-50%)}
+    #compass .cp-e{right:9px;top:50%;transform:translateY(-50%);color:var(--pk-d)}
+    #compass .cp-c{left:50%;top:50%;transform:translate(-50%,-50%);font-size:26px}
+
+    /* ===== 杂志弹窗 ===== */
+    #locModal{position:fixed;inset:0;z-index:5000;display:none;align-items:center;justify-content:center}
+    #locModal.show{display:flex;animation:lmFade .25s ease}
+    @keyframes lmFade{from{opacity:0}to{opacity:1}}
+    #locModal .lm-overlay{position:absolute;inset:0;background:rgba(5,10,18,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);cursor:pointer}
+    #locModal .lm-box{position:relative;width:92%;max-width:420px;max-height:86vh;overflow-y:auto;background:#111d2f;border:1.5px solid rgba(120,205,240,.28);border-radius:24px;box-shadow:0 28px 70px rgba(0,0,0,.75);animation:lmUp .3s cubic-bezier(.34,1.3,.5,1)}
+    @keyframes lmUp{from{transform:translateY(38px) scale(.94);opacity:0}to{transform:none;opacity:1}}
+    #locModal .lm-close{position:absolute;top:10px;right:12px;width:32px;height:32px;border-radius:50%;background:rgba(11,20,32,.75);border:1.5px solid rgba(120,205,240,.28);color:#6fd0f2;font-size:19px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:20;transition:all .2s;font-family:serif}
+    #locModal .lm-close:hover{background:#ff77ab;color:#0b1420;border-color:#ff77ab;transform:rotate(90deg)}
+    #locModal .lm-box::-webkit-scrollbar{width:6px}
+    #locModal .lm-box::-webkit-scrollbar-thumb{background:rgba(111,208,242,.3);border-radius:3px}
+    .lp-img{width:100%;height:auto;aspect-ratio:1/1;object-fit:contain;display:block;background:#0d1727;border-bottom:1px solid rgba(120,205,240,.16)}
+    .pz-hero{position:relative;padding:24px 24px 20px;border-radius:26px 26px 0 0;overflow:hidden}
+    .pz-hero::after{content:'';position:absolute;right:-30px;top:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.5)}
+    .pz-profile{font-family:'Baloo 2',sans-serif;font-size:11px;letter-spacing:5px;color:var(--cy-d);opacity:.65;margin-bottom:6px;position:relative;z-index:2}
+    .pz-emoji{position:absolute;right:22px;top:22px;font-size:52px;line-height:1;filter:drop-shadow(0 8px 14px rgba(120,180,210,.35));z-index:2}
+    .pz-cat{display:inline-block;font-size:11px;font-weight:700;color:#fff;padding:3px 13px;border-radius:999px;margin-bottom:9px;letter-spacing:.5px;position:relative;z-index:2;box-shadow:0 5px 12px rgba(120,180,210,.3)}
+    .pz-name{font-family:'ZCOOL KuaiLe','Noto Sans SC',sans-serif;font-size:27px;color:#37546a;letter-spacing:1px;line-height:1.25;position:relative;z-index:2}
+    .pz-body{padding:16px 22px 22px;display:flex;flex-direction:column;gap:13px}
+    .pz-row{display:flex;gap:9px;font-size:14px;line-height:1.78;color:#55707f;align-items:flex-start}
+    .pz-k{flex-shrink:0;font-weight:700;color:var(--cy-d);font-size:13px;min-width:62px;padding-top:1px}
+    .pz-row p{margin:0}
+    .pz-ev{background:#fff6fb;border:1.6px dashed #f8cbdf;border-radius:18px;padding:13px 15px;font-size:13.5px;line-height:1.78;color:#8f6a80;display:flex;gap:9px;align-items:flex-start}
+    .pz-ev .pz-k{color:var(--pk-d)}
+    .pz-ev p{margin:0}
+    .pz-tags{display:flex;flex-wrap:wrap;gap:7px}
+    .pz-tags span{font-size:12px;padding:4px 11px;border-radius:999px;background:#f2f9fe;border:1.4px solid #dceffb;color:var(--cy-d);font-weight:600}
+    .pz-btn{width:100%;margin-top:4px;padding:14px;border:none;border-radius:999px;background:var(--grad);color:#fff;font-size:16px;font-weight:800;letter-spacing:2px;cursor:pointer;font-family:inherit;box-shadow:0 12px 26px rgba(140,200,230,.5);transition:transform .15s}
+    .pz-btn:hover{transform:translateY(-2px)}
+
+    @media screen and (max-width:820px){
+      #h{padding:7px 10px;gap:6px}
+      #h .logo-icon{width:30px;height:30px;font-size:16px;border-radius:11px}
+      #h .title-text{font-size:17px}
+      #h .subtitle{display:none}
+      .tab{padding:5px 12px;font-size:12px}
+      .stat{padding:3px 9px;min-width:46px}
+      .stat-v{font-size:14px}
+      #lg{max-height:40vh;padding:9px 12px}
+    }
+    @media screen and (max-width:520px){
+      #h .stats{display:none}
+      #lg{display:none}
+      #compass{display:none}
+      .pz-name{font-size:23px}
+      .pz-emoji{font-size:42px}
+    }
+
+    /* ===== 发光标记 ===== */
+    .mk2{display:flex;align-items:center;justify-content:center;border-radius:50%;background:#0f1b2c;border:2px solid var(--c);cursor:pointer;animation:mkGlow 2.8s ease-in-out infinite;transition:transform .15s}
+    .mk2:hover{transform:scale(1.15)}
+    @keyframes mkGlow{0%,100%{box-shadow:0 0 0 2px rgba(0,0,0,.45),0 0 9px var(--c)}50%{box-shadow:0 0 0 6px rgba(0,0,0,.25),0 0 18px var(--c)}}
+    .mk2-lb{white-space:nowrap;font-size:10px;font-weight:700;letter-spacing:.3px;pointer-events:none;text-shadow:0 0 5px #0b1420,0 0 10px #0b1420,0 1px 3px rgba(0,0,0,.95)}
+
+    /* ===== 星点/气泡背景 ===== */
+    #fx{position:fixed;inset:0;z-index:500;pointer-events:none}
+
+    /* ===== Popup（青粉） ===== */
+    .leaflet-popup-content-wrapper{background:#111d2f!important;border-radius:22px!important;border:1.5px solid rgba(120,205,240,.26)!important;box-shadow:0 20px 44px rgba(0,0,0,.62)!important;padding:0!important;overflow:hidden}
+    .leaflet-popup-content{margin:0!important;color:#dbe9f3;font-family:inherit!important;line-height:1.6}
+    .leaflet-popup-content-wrapper,.leaflet-popup-content{min-width:250px}
+    .lp-h,.lp-b{width:100%}
+    .leaflet-popup-tip{background:#111d2f!important;border:1.5px solid rgba(120,205,240,.26)!important}
+    .leaflet-popup-close-button{color:var(--cy-d)!important;font-size:20px!important;top:10px!important;right:12px!important;z-index:20}
+    .lp-h{position:relative;padding:18px 20px 14px;border-bottom:1px solid rgba(120,205,240,.16)}
+    .lp-emoji{position:absolute;right:16px;top:16px;font-size:36px;line-height:1}
+    .lp-badge{display:inline-block;font-size:10px;font-weight:700;color:#0b1420;padding:3px 11px;border-radius:999px;margin-bottom:8px}
+    .lp-name{font-family:'ZCOOL KuaiLe','Noto Sans SC',sans-serif;font-size:21px;color:#e6f3fb;letter-spacing:1px;padding-right:40px}
+    .lp-b{padding:13px 20px 17px;display:flex;flex-direction:column;gap:9px}
+    .lp-r{display:flex;gap:8px;font-size:12.5px;color:#a9bfcd;align-items:flex-start}
+    .lp-k{flex-shrink:0;font-weight:700;color:var(--cy);font-size:11.5px;min-width:52px}
+    .lp-r .v{flex:1}
+    .lp-btn{width:100%;margin-top:3px;padding:11px;border:none;border-radius:999px;background:var(--grad);color:#0b1420;font-size:13.5px;font-weight:800;letter-spacing:1.5px;cursor:pointer;font-family:inherit;box-shadow:0 8px 18px rgba(0,0,0,.45)}
+    .lp-btn:hover{filter:brightness(1.04)}
+  </style>
+</head>
+
+<body>
+  <div id="h">
+    <div class="logo">
+      <div class="logo-icon" id="logo-icon">🎀</div>
+      <div>
+        <div class="title-text" id="title-text">足控天堂 Ⅱ · 全城总图</div>
+        <div class="subtitle" id="subtitle">FOOT PARADISE Ⅱ · SUPER MAP</div>
+      </div>
+    </div>
+    <div class="tabs" id="tabs">
+      <div class="tab on" data-w="city" onclick="sw('city')">城区地点</div>
+      <div class="tab" data-w="gs" onclick="sw('gs')">公司内部</div>
+    </div>
+    <div class="stats" id="stats">
+      <div class="stat"><div class="stat-v" id="stat1">0</div><div class="stat-l" id="stat1l">地点</div></div>
+      <div class="stat"><div class="stat-v" id="stat2">0</div><div class="stat-l" id="stat2l">分区</div></div>
+      <div class="stat"><div class="stat-v" id="stat3">0</div><div class="stat-l" id="stat3l">章节</div></div>
+    </div>
+  </div>
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <div id="map"></div>
+  <div id="lg"></div>
+  <div id="locModal">
+    <div class="lm-overlay" onclick="closeLocModal()"></div>
+    <div class="lm-box">
+      <div class="lm-close" onclick="closeLocModal()">×</div>
+      <div id="locModalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    /* ---------- 前往（发送到酒馆输入框） ---------- */
+    function g(l) {
+      const m = '前往' + l;
+      try {
+        const t = document.querySelector('#send_textarea');
+        if (t) { t.value = m; const s = document.querySelector('#send_but'); if (s) s.click(); }
+      } catch (e) { console.log(m); }
+    }
+
+    /* ---------- Popup 内容（青粉杂志风） ---------- */
+    /* ---------- 居中弹窗内容（含地点插图，深色） ---------- */
+    var IMG_BASE = 'https://zyxjack123.top/足控天堂/插图/地图/';
+    function locModalContent(l) {
+      var img = IMG_BASE + encodeURI(l.n) + '1.webp';
+      return '<img class="lp-img" src="' + img + '" alt="' + l.n + '" loading="lazy" onerror="this.style.display=\'none\'"/>' +
+        '<div class="lp-h" style="background:linear-gradient(135deg,' + l.c + '38 0%,rgba(17,29,47,0) 78%),#111d2f">' +
+          '<div class="lp-emoji">' + l.i + '</div>' +
+          '<div class="lp-badge" style="background:' + l.c + ';color:#0b1420">' + l.l + '</div>' +
+          '<div class="lp-name">' + l.n + '</div>' +
+        '</div>' +
+        '<div class="lp-b">' +
+          '<div class="lp-r"><span class="lp-k">📍 位置</span><span class="v">' + (l.p || '') + '</span></div>' +
+          '<div class="lp-r"><span class="lp-k">🎯 功能</span><span class="v">' + (l.fn || '') + '</span></div>' +
+          '<div class="lp-r"><span class="lp-k">👁 外观</span><span class="v">' + (l.a || '') + '</span></div>' +
+          '<button class="lp-btn" onclick="g(\'' + l.n + '\')">前往 ' + l.n + '</button>' +
+        '</div>';
+    }
+    function showLocModal(l) {
+      var box = document.getElementById('locModalContent');
+      if (box) box.innerHTML = locModalContent(l);
+      var el = document.getElementById('locModal');
+      if (el) el.classList.add('show');
+    }
+    function closeLocModal() {
+      var el = document.getElementById('locModal');
+      if (el) el.classList.remove('show');
+    }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLocModal(); });
+
+    /* ---------- 地图底层 ---------- */
+    let M, LY = [], MK = [], LN = [], PP = [];
+    function initMap() {
+      M = L.map('map', { crs: L.CRS.Simple, minZoom: -2, maxZoom: 2.5, zoomControl: true, attributionControl: false, center: [800, 1100], zoom: 0, maxBoundsViscosity: 1 });
+    }
+    function clearMap() {
+      LY.forEach(l => M.removeLayer(l)); MK.forEach(m => M.removeLayer(m));
+      LN.forEach(n => M.removeLayer(n)); PP.forEach(p => M.removeLayer(p));
+      LY = []; MK = []; LN = []; PP = [];
+    }
+    function addBg(u, W, H) {
+      const B = [[0, 0], [H, W]];
+      M.setMaxBounds(B);
+      const bg = L.imageOverlay(u, B, { opacity: 1, zIndex: 1, interactive: false }).addTo(M);
+      LY.push(bg);
+      M.fitBounds(B, { paddingTopLeft: [10, 8], paddingBottomRight: [10, 8] });
+      return B;
+    }
+
+    /* ---------- 地形绘制：城区（虚拟坐标系 2000×1480） ---------- */
+    function cityTerrain(W, H) {
+      /* 有机地块：Catmull-Rom 平滑闭合曲线，彻底去掉方正感 */
+      function blob(cx, cy, rx, ry, wob, seed) {
+        const n = seed.length, pts = [];
+        for (let i = 0; i < n; i++) {
+          const a = Math.PI * 2 * i / n - Math.PI / 2;
+          const k = 1 + wob * seed[i];
+          pts.push([cx + Math.cos(a) * rx * k, cy + Math.sin(a) * ry * k]);
+        }
+        let d = 'M' + pts[0][0].toFixed(0) + ',' + pts[0][1].toFixed(0);
+        for (let i = 0; i < n; i++) {
+          const p0 = pts[(i - 1 + n) % n], p1 = pts[i], p2 = pts[(i + 1) % n], p3 = pts[(i + 2) % n];
+          d += ' C' + (p1[0] + (p2[0] - p0[0]) / 6).toFixed(0) + ',' + (p1[1] + (p2[1] - p0[1]) / 6).toFixed(0) +
+            ' ' + (p2[0] - (p3[0] - p1[0]) / 6).toFixed(0) + ',' + (p2[1] - (p3[1] - p1[1]) / 6).toFixed(0) +
+            ' ' + p2[0].toFixed(0) + ',' + p2[1].toFixed(0);
+        }
+        return d + ' Z';
+      }
+      const SEEDS = [
+        [.9, -.7, 1.1, -.5, .8, -1, .6, -.9, 1, -.4, .7, -1.1],
+        [-.8, 1, -.6, .9, -1.1, .5, -.7, 1.1, -.9, .6, -1, .8],
+        [1, -.9, .6, -1.1, .8, -.5, 1.2, -.8, .7, -1, .9, -.6],
+        [-1, .7, -1.2, .9, -.6, 1.1, -.8, .5, -1, .8, -1.1, .6],
+        [.7, -1.1, 1, -.6, .9, -1.2, .5, 1.1, -.7, .8, -1, 1.2]
+      ];
+      const DIST = [
+        { cx: 390, cy: 265, rx: 330, ry: 175, wob: .15, c: '#57a6cb', t: '西市口商圈', e: 'WEST MARKET', lx: 150, ly: 402 },
+        { cx: 1440, cy: 262, rx: 340, ry: 172, wob: .16, c: '#4e9fc4', t: '老城民生区', e: 'OLDTOWN', lx: 1212, ly: 398 },
+        { cx: 820, cy: 640, rx: 580, ry: 118, wob: .14, c: '#6aa9c9', t: '滨江地带', e: 'RIVERSIDE', lx: 350, ly: 702 },
+        { cx: 1680, cy: 640, rx: 250, ry: 118, wob: .17, c: '#5fa9cf', t: '东区娱乐带', e: 'EAST ENT.', lx: 1548, ly: 722 },
+        { cx: 1010, cy: 1265, rx: 900, ry: 270, wob: .17, c: '#57a6cb', t: '专属场景 · 十二章节', e: 'SCENE GROUP · CH.1-12', lx: 300, ly: 1340 }
+      ];
+      const land = DIST.map(function (d, i) {
+        return '<path d="' + blob(d.cx, d.cy, d.rx, d.ry, d.wob, SEEDS[i]) + '" fill="#16263d" fill-opacity=".92" stroke="#6fd0f2" stroke-opacity=".3" stroke-width="2.5" stroke-dasharray="12 9" stroke-linejoin="round"/>' +
+          '<text x="' + d.lx + '" y="' + d.ly + '" font-family="sans-serif" font-weight="bold" font-size="20" fill="#9fdcf7" opacity=".6" letter-spacing="3">' + d.t + '</text>' +
+          '<text x="' + (d.lx + 1) + '" y="' + (d.ly + 18) + '" font-family="sans-serif" font-size="10" fill="#9fdcf7" opacity=".32" letter-spacing="3">' + d.e + '</text>';
+      }).join('');
+
+      /* 湖泊 */
+      const lakes = [
+        { cx: 420, cy: 1120, rx: 175, ry: 90, wob: .16, s: SEEDS[2] },
+        { cx: 820, cy: 1330, rx: 195, ry: 105, wob: .15, s: SEEDS[1] },
+        { cx: 600, cy: 180, rx: 110, ry: 60, wob: .17, s: SEEDS[3] },
+        { cx: 1620, cy: 180, rx: 110, ry: 60, wob: .16, s: SEEDS[0] }
+      ].map(function (k) {
+        return '<path d="' + blob(k.cx, k.cy, k.rx, k.ry, k.wob, k.s) + '" fill="url(#lake)" stroke="#7fd0ee" stroke-opacity=".34" stroke-width="2" stroke-linejoin="round"/>' +
+          '<path d="M' + Math.round(k.cx - k.rx * .45) + ',' + Math.round(k.cy - k.ry * .16) + ' C' + Math.round(k.cx - k.rx * .1) + ',' + Math.round(k.cy - k.ry * .5) + ' ' + Math.round(k.cx + k.rx * .25) + ',' + Math.round(k.cy - k.ry * .34) + ' ' + Math.round(k.cx + k.rx * .5) + ',' + Math.round(k.cy - k.ry * .1) + '" fill="none" stroke="#a8dff8" stroke-opacity=".22" stroke-width="2"/>';
+      }).join('');
+
+      /* 公路 */
+      const roads = [
+        'M20,486 C260,452 520,516 800,478 C1080,440 1340,502 1620,466 C1780,446 1900,458 1985,472',
+        'M640,486 C636,600 646,700 640,806',
+        'M1420,486 C1424,600 1416,700 1420,806',
+        'M640,934 C700,998 900,1012 1010,1000 C1300,982 1600,1012 1962,988',
+        'M300,1000 C330,1130 300,1310 348,1480',
+        'M1700,1000 C1686,1140 1724,1320 1680,1490'
+      ].map(function (d) {
+        return '<path d="' + d + '" fill="none" stroke="#1d2c40" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>' +
+          '<path d="' + d + '" fill="none" stroke="#8fd4f2" stroke-opacity=".18" stroke-width="2" stroke-dasharray="12 14"/>';
+      }).join('');
+
+      /* 植被 */
+      const TREES = [[50, 60], [1950, 60], [50, 1550], [1950, 1550], [200, 1180], [1800, 1160], [620, 1460],
+        [700, 1030], [820, 560], [1180, 470], [900, 1140], [1300, 1010], [520, 1300], [1600, 1150], [1050, 300], [1850, 1180]];
+      const GRASS = [[260, 700], [520, 700], [1000, 700], [1220, 700], [1480, 700], [1760, 700], [430, 820], [1120, 1050]];
+      const veg = TREES.map(function (t) {
+        return '<circle cx="' + t[0] + '" cy="' + t[1] + '" r="15" fill="#2b5a46" opacity=".9"/>' +
+          '<circle cx="' + (t[0] - 11) + '" cy="' + (t[1] + 11) + '" r="10" fill="#356a52" opacity=".9"/>' +
+          '<circle cx="' + (t[0] + 11) + '" cy="' + (t[1] + 11) + '" r="10" fill="#356a52" opacity=".9"/>';
+      }).join('') + GRASS.map(function (g) {
+        return '<ellipse cx="' + g[0] + '" cy="' + g[1] + '" rx="30" ry="10" fill="#2f5d49" opacity=".5"/>' +
+          '<ellipse cx="' + (g[0] + 34) + '" cy="' + (g[1] + 8) + '" rx="20" ry="7" fill="#2f5d49" opacity=".38"/>';
+      }).join('');
+
+      const bridges = [640, 1420].map(function (x) {
+        return '<rect x="' + (x - 38) + '" y="806" width="76" height="128" rx="14" fill="#26364b" stroke="#8a7355" stroke-width="3"/>' +
+          '<line x1="' + (x - 38) + '" y1="846" x2="' + (x + 38) + '" y2="846" stroke="#8a7355" stroke-width="2"/>' +
+          '<line x1="' + (x - 38) + '" y1="894" x2="' + (x + 38) + '" y2="894" stroke="#8a7355" stroke-width="2"/>';
+      }).join('');
+
+      return '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '">' +
+        '<defs>' +
+        '<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1420"/><stop offset=".5" stop-color="#0f1a2a"/><stop offset="1" stop-color="#161329"/></linearGradient>' +
+        '<pattern id="dots" width="36" height="36" patternUnits="userSpaceOnUse"><circle cx="5" cy="5" r="2.2" fill="#7fd0ee" opacity=".12"/></pattern>' +
+        '<linearGradient id="riv" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#16405c"/><stop offset=".5" stop-color="#21688f"/><stop offset="1" stop-color="#1a4a6a"/></linearGradient>' +
+        '<radialGradient id="lake" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#2b7ca6"/><stop offset="1" stop-color="#123c56"/></radialGradient>' +
+        '</defs>' +
+        '<rect width="' + W + '" height="' + H + '" fill="url(#bg)"/>' +
+        '<rect width="' + W + '" height="' + H + '" fill="url(#dots)"/>' +
+        '<circle cx="300" cy="1150" r="300" fill="#3fa8d6" opacity=".07"/>' +
+        '<circle cx="1800" cy="260" r="260" fill="#3fa8d6" opacity=".06"/>' +
+        '<circle cx="1000" cy="1300" r="380" fill="#e066a0" opacity=".06"/>' +
+        land + lakes + roads + veg +
+        '<path d="M0,812 C500,786 1000,866 1500,830 C1750,812 1900,808 ' + W + ',826 L' + W + ',904 C1900,886 1750,890 1500,910 C1000,946 500,866 0,892 Z" fill="url(#riv)"/>' +
+        '<path d="M0,846 C500,826 1000,898 1500,864 C1750,848 1900,844 ' + W + ',862" fill="none" stroke="#8fd4f2" stroke-width="3" stroke-dasharray="22 16" opacity=".2"/>' +
+        '<path d="M0,872 C500,854 1000,922 1500,890 C1750,876 1900,872 ' + W + ',888" fill="none" stroke="#8fd4f2" stroke-width="2" stroke-dasharray="10 14" opacity=".14"/>' +
+        '<text x="160" y="882" font-family="sans-serif" font-weight="bold" font-size="38" fill="#a8dff8" opacity=".3" letter-spacing="14">临 江</text>' +
+        '<text x="' + (W - 160) + '" y="882" text-anchor="end" font-family="sans-serif" font-size="18" fill="#a8dff8" opacity=".24" letter-spacing="5">LINJIANG RIVER</text>' +
+        bridges +
+        '</svg>';
+    }
+
+    /* ---------- 地形绘制：公司内部（虚拟坐标系 1400×1140，楼层剖面） ---------- */
+    function buildingTerrain(W, H) {
+      const rows = [
+        { y: 80, h: 160, t: '屋顶 · ROOF' },
+        { y: 240, h: 200, t: '1F · 门面层' },
+        { y: 440, h: 200, t: '2F · 内容层' },
+        { y: 640, h: 180, t: '3F · 生活层' },
+        { y: 820, h: 140, t: '4F · 机能层' },
+        { y: 960, h: 160, t: '附楼 · ANNEX' }
+      ];
+      const slabs = rows.map(function (r, i) {
+        return '<rect x="90" y="' + r.y + '" width="' + (W - 180) + '" height="' + r.h + '" fill="' + (i % 2 ? '#152238' : '#1a2740') + '"/>' +
+          '<line x1="90" y1="' + (r.y + r.h) + '" x2="' + (W - 90) + '" y2="' + (r.y + r.h) + '" stroke="#6fd0f2" stroke-opacity=".32" stroke-width="4"/>' +
+          '<text x="112" y="' + (r.y + 30) + '" font-family="sans-serif" font-weight="bold" font-size="18" fill="#8fd8f5" opacity=".7" letter-spacing="2">' + r.t + '</text>';
+      }).join('');
+
+      const cores = [[495, 535], [895, 935]].map(function (c) {
+        const x = c[0], w = c[1] - c[0];
+        let s = '<rect x="' + x + '" y="240" width="' + w + '" height="880" fill="#1e3050" opacity=".95"/>';
+        for (let y = 270; y < 1100; y += 26) {
+          s += '<line x1="' + x + '" y1="' + y + '" x2="' + (x + w) + '" y2="' + y + '" stroke="#a0d7f5" stroke-opacity=".16" stroke-width="2"/>';
+        }
+        return s;
+      }).join('');
+
+      const windows = [];
+      for (let y = 268; y < 1100; y += 52) {
+        windows.push('<rect x="100" y="' + y + '" width="14" height="24" rx="3" fill="#8fd8f5" fill-opacity=".3"/>');
+        windows.push('<rect x="' + (W - 114) + '" y="' + y + '" width="14" height="24" rx="3" fill="#8fd8f5" fill-opacity=".3"/>');
+      }
+
+      return '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '">' +
+        '<defs>' +
+        '<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1420"/><stop offset="1" stop-color="#161329"/></linearGradient>' +
+        '<pattern id="dots" width="36" height="36" patternUnits="userSpaceOnUse"><circle cx="5" cy="5" r="2.2" fill="#7fd0ee" opacity=".12"/></pattern>' +
+        '</defs>' +
+        '<rect width="' + W + '" height="' + H + '" fill="url(#bg)"/>' +
+        '<rect width="' + W + '" height="' + H + '" fill="url(#dots)"/>' +
+        '<circle cx="1330" cy="1030" r="46" fill="#2b5a46" opacity=".85"/>' +
+        '<circle cx="60" cy="118" r="40" fill="#2b5a46" opacity=".85"/>' +
+        '<rect x="90" y="60" width="' + (W - 180) + '" height="1080" rx="30" fill="#101d2e" stroke="#6fd0f2" stroke-opacity=".32" stroke-width="3"/>' +
+        slabs + cores + windows.join('') +
+        '<text x="112" y="46" font-family="sans-serif" font-size="12" fill="#7fa8c2" letter-spacing="4">LINJIANG · XINGFULI NO.7 · B1-ROOF</text>' +
+        '</svg>';
+    }
+    function bgUri(svg) { return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); }
+
+    /* ---------- 渲染当前分页 ---------- */
+    function renderTab(t) {
+      const T = (t === 'gs') ? GS_TAB : CITY_TAB;
+      document.getElementById('title-text').textContent = T.ti.t;
+      document.getElementById('subtitle').textContent = T.ti.s;
+      document.getElementById('logo-icon').textContent = T.ti.i;
+      document.getElementById('stat1').textContent = Object.keys(T.D).length;
+      document.getElementById('stat2').textContent = T.groups.length;
+      document.getElementById('stat3').textContent = 12;
+      document.getElementById('stat1l').textContent = '地点';
+      document.getElementById('stat2l').textContent = '分区';
+      document.getElementById('stat3l').textContent = '章节';
+
+      document.getElementById('lg').innerHTML = '<div class="lg-t">区 域 图 例</div>' +
+        T.groups.map(function (gp) {
+          return '<div class="lg-i"><div class="lg-d" style="background:' + gp.c + '"></div>' + gp.t + '（' + gp.keys.length + '）</div>';
+        }).join('');
+
+      T.groups.forEach(function (gp) {
+        gp.keys.forEach(function (k) {
+          const l = T.D[k];
+          if (!l) return;
+          const size = l.core ? 28 : 19;
+          const icon = L.divIcon({
+            html: '<div class="mk2" style="--c:' + l.c + ';width:' + size + 'px;height:' + size + 'px;font-size:' + Math.round(size * .52) + 'px">' + l.i + '</div>',
+            className: '', iconSize: [size, size], iconAnchor: [size / 2, size / 2]
+          });
+          const m = L.marker(l.ll, { icon: icon, interactive: true }).addTo(M);
+          MK.push(m);
+          m.on('click', (function (loc) { return function () { showLocModal(loc); }; })(l));
+          const lab = L.divIcon({
+            html: '<div class="mk2-lb" style="color:' + l.c + '">' + l.n + '</div>',
+            className: '', iconSize: [150, 18], iconAnchor: [-13, 10]
+          });
+          LN.push(L.marker(l.ll, { icon: lab, interactive: false }).addTo(M));
+        });
+      });
+    }
+
+    /* ---------- 切换分页 ---------- */
+    function loadTab(w) {
+      const T = (w === 'gs') ? GS_TAB : CITY_TAB;
+      clearMap();
+      addBg(bgUri(T.terrain(T.W, T.H)), T.W, T.H);
+      renderTab(w);
+    }
+    function sw(w) {
+      document.querySelectorAll('.tab').forEach(function (t) { t.classList.toggle('on', t.dataset.w === w); });
+      loadTab(w);
+    }
+
+    /* =================== 公司本部（15） =================== */
+    var GS = {
+      W: 1600, H: 1000,
+      D: {
+        benbu: { ll: [300, 1050], core: 1, n: '公司本部', l: '核心 · 大通间', c: '#3aa6d0', i: '🏠', p: '临江市老城区·幸福里城中村7号楼·一楼大通间', fn: '足控直播主战场、全员会议、元老修罗场', a: '砖头垫桌腿的破大通间，直播灯架、凑数的电脑、快断电的霓虹招牌；空气里常混着香水、汗味和男粉寄来的原味袜纸箱味。门上贴着褪色告示：入内请自觉交出一只袜子——这是本公司的投名状。', e: '房东上门收租撞见满屋子光脚，把收据一拍就跑，第二天拎来水果问：以后收租能不能改成下午，我想多看两眼。快递大叔被隔壁住户追问这家到底卖什么，压低声音：卖仙女味的，懂的人都懂。深夜全员抢沙发，谁都想把脚搭上主角膝头。', t: '公司本部, 一楼大通间, 元老修罗场, 投名状' },
+        tiantai: { ll: [120, 800], n: '公司天台', l: '屋顶 · 天台线', c: '#7cc7e8', i: '🌙', p: '7号楼顶层·晾衣绳与破霓虹之间', fn: '谈心夜、酒醉夜、观星、公司改名夜', a: '水泥地裂缝里长草，几根锈晾衣绳挂着晾到半干的白丝与黑丝；夜里能看到整片城中村灯火，风一吹，袜子飘起来像一排旗子。护栏外夜深时总无声多出几个蹲在楼下暗角透气的大叔。', e: '菈米微醺把过膝袜褪到脚踝晾脚，被楼下晚归大叔撞见，他当场石化在路灯下看了半分钟。晾着的白丝少了一只，第二天被折好放回门口，附字条：闻过了，实在没忍住，想买出个价。改名清流那晚全员碰杯，有人把脚踩上主角鞋面：以后不许把我们的脚给别人验。', t: '公司天台, 晾衣绳, 城中村灯火, 改名夜, 清流' },
+        menkou: { ll: [300, 350], n: '公司门口台阶', l: '门面 · 台阶', c: '#7cc7e8', i: '🚪', p: '7号楼单元门外·三级水泥台阶', fn: '收留乞讨少女、堵门谈判、投奔入口', a: '台阶磨得发亮，边角摆着没人收的旧鞋盒和半袋猫粮；深夜路灯把台阶照成一小块舞台，谁跪在那儿，谁就被这座城市看见了。两侧常年坐着几个晒太阳的大叔，其实在等每天固定出没的那几位姑娘。', e: '又一只湿透的白丝袜出现在台阶上，袜尖朝门口，大叔们集体倒吸一口气：这味道是新人，还是上等的。佩克拉堵门要一姐，光脚跺地，四只兔耳竖成天线。路人拍到少女们光脚排排坐晒太阳发圈，配文城中村居然有足模窝点，评论区瞬间被老哥刷爆。', t: '公司门口台阶, 三级台阶, 投奔, 乞讨收留, 堵门谈判' },
+        zoudao: { ll: [300, 700], n: '公司走道·楼梯间', l: '通道 · 楼梯间', c: '#7cc7e8', i: '🪜', p: '7号楼1-2层楼梯间与走道', fn: '光脚日常、被房东撞见、深夜偶遇走廊', a: '声控灯忽明忽暗，墙皮剥落，扶手锈迹斑斑；走道上散着拖鞋、袜子和补光灯。转角贴着手写告示：夜间如有穿黑丝白丝或光脚的女士经过请勿尾随，违者后果自负（她们的老板很凶）。', e: '光脚直播到一半房东上门，saba踩在冰凉水泥地上窜回房，房东大叔掏出一双棉拖鞋放门口说这楼冷。深夜东雪莲路过主角房间，把一只黑丝袜搭在门把手上，第二天换成洗干净的，附字条：昨晚风大，借你垫垫手。楼梯间总蹲着个鬼鬼祟祟的大叔，被逮住后老实交代：我就是想闻闻这楼道里飘的到底是什么神仙味道。', t: '公司走道, 楼梯间, 声控灯, 光脚日常, 门把手袜' },
+        zhibo: { ll: [480, 300], n: '公司直播间矩阵', l: '内容 · 直播间', c: '#4fb0d8', i: '🎙️', p: '公司本部隔间改造的3间小直播间', fn: '东雪莲独立间、嘉然白袜间、露西娅白丝间、saba光脚间、吹雪腿环间等专属直播室', a: '隔音棉加补光灯再配一张椅子，镜头前贴满角度提示条；墙角堆着各人的道具箱——护理精油、体温计、定妆喷雾、脚膜、专烘湿袜的烘干机。门外挂着直播中、投喂请轻手轻脚的牌子。', e: '直播到一半麦克风串线，隔壁声音漏进来：各位老板，今天这只白袜穿了整整十二个小时。弹幕集体炸锅。男粉寄来的定制要求被当场念出——想让姐姐穿这双白丝去菜市场走一圈回来直播脱袜，平台警告邮件准时到家，东雪莲对着邮件冷笑。', t: '公司直播间矩阵, 独立间, 直播中, 补光灯, 角度提示条' },
+        shafa: { ll: [480, 620], n: '沙发区·验货后宫', l: '接待 · 验货区', c: '#ec6fa5', i: '🛋️', p: '公司本部一角·塌陷破皮沙发', fn: '验脚、验货、全员争宠、深夜脚部按摩大会', a: '破沙发垫着毛毯，扶手上搭着各色丝袜——白丝、黑丝、网袜、单腿袜；茶几上摆着护脚霜、指甲油和拆到一半的原味袜订单。沙发脚边蹲着两个抽签抽中的志愿者大叔，被勒令只准看、只准等吩咐。', e: '周三验脚权日，姑娘们抢先验谁的抢到东雪莲发火：排队，按进公司先后。她验完把脚翘上扶手，冲角落志愿者勾脚趾：过来给本小姐按脚心，按得好赏你闻一下袜口。谁先把脚搭上主角膝头，谁就赢今晚的被照顾权，姑娘们在沙发上打成一团。', t: '沙发区, 破沙发, 验货后宫, 争宠, 脚部按摩大会' },
+        cangku: { ll: [480, 940], n: '仓库舞台', l: '地下 · 密室', c: '#b39aec', i: '🕯️', p: '公司本部地下室仓库', fn: '蜡烛谈心角、密室直播、足控调教夜谈', a: '货架清空后铺上地毯，角落点着电子蜡烛，暖光摇曳；墙上是贴满便利贴的心愿墙，一张写着想被踩背，下面被人用口红添了排队先来后到，再下面又添一行小字：本小姐的脚，不接受排队——只接受预约。', e: '蜡烛夜谈会轮流讲心事，讲到最后总有人悄悄把脚搭到主角膝上，谁都不肯先收回去；东雪莲嗤笑要搭膝头也得讲究先来后到，话没说完自己先把腿叠了过去。仓库门被风带上，门锁偏偏坏了，姑娘们扒着门缝起哄。深夜密室直播开私密频道，只有通过忠诚度测试的男粉能进。', t: '仓库舞台, 蜡烛谈心, 密室直播, 心愿墙, 私密频道' },
+        chufang: { ll: [680, 300], n: '厨房', l: '生活 · 厨房', c: '#f2b06a', i: '🍲', p: '公司本部·兔田妈妈灶台', fn: '一日三餐、妈妈系关怀、投喂男粉福利', a: '老式灶台，高压锅嘶嘶冒气，菜板边摆着别饿着的手写便签；油烟气里飘着炖汤的香。灶台边木牌写着：外卖不接，只喂自家人。想蹭饭？先帮忙揉脚。——下面一行小字是女儿们偷偷添的：妈妈开玩笑的，揉脚请排队找老板。', e: '兔田妈妈端汤给熬夜的主播，逮到光脚丫在厨房踩出一串油印的佩克拉，拎着兔耳朵训到一半，又蹲下给她泡脚：脚凉着怎么蹦。窗外蹲着几个眼馋的男粉，她一锅铲敲在窗框上：想吃汤，先把你们自己的袜子交上来换。', t: '厨房, 灶台, 炖汤, 妈妈系关怀, 投喂' },
+        faming: { ll: [680, 620], n: '发明角', l: '生活 · 工坊', c: '#b39aec', i: '🛠️', p: '公司本部西北角·工作台', fn: '塔菲防走光发明舱、整活发明、事故直播引流点', a: '焊枪、3D打印件、游标卡尺、防走光裙夹试验机；墙上贴着塔菲手绘的发明蓝图与有耻lady作战计划。墙角挂着一排实验牺牲品——崩坏的黑过膝袜、被夹出印子的袜口，全裱在相框里当荣誉墙。', e: '塔菲的自动脱袜机试验失败，把全公司的袜子卷成一团甩上天花板，现场下起袜子雨，男粉在窗外欢呼着抢接。她调试裙夹时漏电，黑过膝袜烧出个洞，红着脸发明漏洞补丁袜。深夜她蹲在地上量脚踝数据，对着草图发呆，耳朵尖悄悄红透。', t: '发明角, 工作台, 防走光发明, 整活发明, 事故直播' },
+        huashi: { ll: [680, 940], n: '画室', l: '生活 · 画室', c: '#b39aec', i: '🎨', p: '公司本部东隔间', fn: '羽衣、七奈画脚课、速写室、足部实物写生室', a: '画架、素描纸、铅笔灰，墙上钉满全公司姑娘的脚部速写，最中间一张是主角的侧影；颜料味里混着淡淡的护脚霜香。角落支着模特台，铺白绒布，是画脚课专用，每周末都有姑娘自愿上去当脚模。', e: '画脚课示范时铅笔芯断了，画师含住笔尖，全班姑娘脸红，门口男粉差点挤破玻璃。七奈把正式版画挂出来被超天酱撞见，醋意翻涌整晚，第二天偷偷在画底添字：这双脚的主人身价太高，普通颜料配不上。深夜画布上多了一双没人认领的脚，铅笔痕还带着体温。', t: '画室, 画脚课, 速写, 模特台, 实物写生' },
+        baojian: { ll: [680, 1260], n: '保健室', l: '生活 · 保健', c: '#5fcfb8', i: '🩺', p: '公司本部·魔界保健室改造', fn: '巧可魅魔体检室、健康管理、脚感评分', a: '医疗床、听诊器、体温计墙，墙角摆着绿萝，消毒水味里混着一丝甜腻的魔界气息；门上贴着体检请预约、脚部检查优先、本医生是专业的。门口摆着一台老式量脚器，刻度表被磨得发亮，排队的大叔一个个自觉脱鞋等着量。', e: '巧可给全员体检时顺带检查脚部，评到高分眼睛发亮：这双脚，是上等的足控收藏品。有人想赖账不脱袜子，她握着听诊器敲桌：体检是正经事，把袜子脱了。听诊器按到主角胸口时她总走神，一本正经：心跳太快需要复查——复查三次了还没查出结果。', t: '保健室, 体检, 脚感评分, 量脚器, 健康管理' },
+        zhiwu: { ll: [870, 400], n: '植物角', l: '角落 · 绿意', c: '#7cc76a', i: '🪴', p: '公司本部窗台', fn: '法娜生命花园、自然系擦边直播', a: '窗台挤满绿萝、薄荷、薰衣草，泥土盆边摆着小铲子；阳光透进来叶子绿得发亮，空气里是泥土和草叶的气息。花盆沿架着一台手机，镜头对准花盆口——那是法娜体检时专门给男粉看的泥脚印特写位。', e: '法娜直播植物体检时，单腿袜那只脚的袜子褪到脚踝，脚背沾着湿泥慢慢踩进花盆土里：脚踩到土里的感觉，比什么擦边都踏实。有男粉寄来家乡土想让她替自己踩踩故乡，她真铺进花盆赤脚踩了两下，那晚付费率直接登顶。深夜她给新芽唱歌，盯着自己没擦干净的泥脚小声嘀咕。', t: '植物角, 绿萝, 植物体检, 泥脚印, 自然系直播' },
+        liangyi: { ll: [870, 760], n: '晾衣阳台', l: '角落 · 晾晒', c: '#ec6fa5', i: '🧦', p: '7号楼后阳台', fn: '晾白丝、黑丝、袜子的圣地，风干原味订货点', a: '晾衣绳上挂满白丝、黑丝、网袜、单腿袜，风一吹像一排旗帜；阳光好的日子袜子晒得蓬松，凑近能闻到洗衣粉混着淡淡体香。栏杆上夹着木牌：本阳台袜子均为展示品，偷袜者报警，闻袜者随缘。栏杆外永远蹲着几个假装抽烟的大叔。', e: '一阵风把某只袜子吹下楼，正好盖在楼下大叔脸上，他捏着愣了三秒没舍得还，直到姑娘喊才红着脸双手捧回。阳台袜子半夜被偷，第二天原物返还，附字条：闻过了，舍不得还，拍了个照，袜子奉还。深夜有人借月光一件件收袜子，收得很慢，像在数家底。', t: '晾衣阳台, 晾袜, 风干原味, 订货点, 偷袜' },
+        bengchuang: { ll: [870, 1120], n: '蹦床房', l: '内容 · 蹦床', c: '#f2a0c8', i: '🐰', p: '公司本部·兔兔蹦床专区', fn: '佩克拉蹦床直播、PK舞台、弹力竞猜', a: '一张小蹦床，护网缠着彩灯，四角堆着兔耳朵发箍和奖杯；弹跳声咯吱咯吱，地板被踩得发亮。护网上挂着竞猜板：猜中今晚袜口卷多高，奖兔兔签名袜——附赠闻一口机会。', e: '蹦床直播时裙摆飞扬，黑裤袜绷出弧线，护网外男粉押注押红了眼：再高一点。佩克拉落地时差点踩到边缘，脚趾在袜子里蜷了蜷，叉腰瞪镜头：刚才那是Peko故意秀的弹力，才不是失误——弹幕压根不信。有男粉押中袜口卷到脚踝，她瞪大眼睛时，袜口已经卷到脚踝上方。', t: '蹦床房, 蹦床, 弹力竞猜, PK舞台, 兔耳发箍' },
+        liange: { ll: [480, 1260], n: '练歌房', l: '内容 · 歌房', c: '#9db8f0', i: '🎤', p: '公司本部隔音间', fn: '星街、时乃空练歌室，门缝偷听墙', a: '隔音棉、话筒架、歌词本，墙角放着一盒喉糖和保温杯；灯关掉时只有话筒架的轮廓立在黑暗里。门外地板上垫着一排小板凳——那是男粉蹲点听歌留下的，被时乃空默许，前提是不许出声、不许录音。', e: '星街练歌到嗓子哑也不肯停，润喉茶推到手边她愣住，嘴硬本座自己会照顾自己，下一句却唱得格外认真，门外大叔听得大气不敢出。时乃空哼摇篮曲哄人，门外大叔全睡着了，她给每人脚边放一双淘汰的旧袜，附字条：睡醒记得还回来，本姑娘的袜子可值钱。', t: '练歌房, 隔音间, 门缝偷听, 蹲点小板凳, 练歌' }
+      },
+      C: [
+        { f: 'benbu', t: 'menkou', s: 's' }, { f: 'benbu', t: 'zoudao', s: 's' },
+        { f: 'benbu', t: 'zhibo', s: 's' }, { f: 'benbu', t: 'shafa', s: 's' },
+        { f: 'benbu', t: 'cangku', s: 's' }, { f: 'benbu', t: 'liange', s: 's' },
+        { f: 'benbu', t: 'chufang', s: 's' }, { f: 'benbu', t: 'faming', s: 's' },
+        { f: 'benbu', t: 'huashi', s: 's' }, { f: 'benbu', t: 'baojian', s: 's' },
+        { f: 'benbu', t: 'zhiwu', s: 's' }, { f: 'benbu', t: 'liangyi', s: 's' },
+        { f: 'benbu', t: 'bengchuang', s: 's' }, { f: 'zoudao', t: 'tiantai', s: 'd' },
+        { f: 'menkou', t: 'zoudao', s: 's' }
+      ],
+      lg: '<div class="lg-t">区 域 图 例</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#3aa6d0"></div>核心 · 公司本部</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#4fb0d8"></div>内容 · 直播间</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#ec6fa5"></div>接待 · 验货区</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#b39aec"></div>地下 · 密室工坊</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#f2b06a"></div>生活 · 厨房</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#5fcfb8"></div>生活 · 保健</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#7cc76a"></div>角落 · 绿意</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#9db8f0"></div>内容 · 歌房</div>',
+      ti: { t: '公司本部 · 幸福里7号楼', s: 'COMPANY · 7TH BLDG', i: '🏠' },
+      st: { third: '4', l1: '连线', l2: '地点', l3: '区块' }
+    };
+
+    /* =================== 城区地标（16） =================== */
+    var CQ = {
+      W: 1600, H: 1000,
+      D: {
+        laojie: { ll: [190, 250], n: '西市口老街', l: '街区 · 日常', c: '#7cc7e8', i: '🏮', p: '临江市西市口·老街便利店台阶', fn: '露西娅神侍乞讨角、塌房主播集散地、男粉朝圣地', a: '凌晨的街灯惨白，便利店灯光亮着，台阶边堆着纸箱和乞讨牌；空气里是关东煮和旧纸箱的味道，混着一点捂了一天的袜气。电线杆下常年蹲着几个大叔，人手一个小马扎，说是晨练，其实在等乞讨少女起床脱袜换新。', e: '又有人跪在台阶上举着求收留的纸牌，白丝磨破袜尖露出一点脚趾，蹲点的大叔集体倒吸一口气，有人已经开始往纸箱里塞钱。路人往纸箱里丢硬币，也有人蹲下嗅她脚边的气味，同伴不但不拉反而跟着蹲下，被便利店店员举着拖把赶开。', t: '西市口老街, 老街便利店, 乞讨角, 塌房主播, 朝圣' },
+        luosen: { ll: [190, 620], n: '罗森便利店', l: '街区 · 日常', c: '#7cc76a', i: '🏪', p: '临江市西市口·24小时便利店', fn: '古拉薯片窝、塔菲贩卖机发明、原味袜暗号交易点', a: '货架灯光白亮，薯片区被古拉占领，贩卖机前贴满塔菲的实验便签；收银台边摆着一只玻璃罐，罐里塞满纸团——那是有缘人留下的袜子暗号。夜班店员是个见多识广的大叔，对深夜来买袜子的客人见怪不怪，还会贴心问一句：冷藏的要不要。', e: '古拉深夜进货薯片，光脚踩在冰柜边上被店员提醒，她满嘴鲨鲨才不是故意的，大叔却盯着她那双光脚看了两秒，默默递来一双拖鞋。塔菲蹲在贩卖机前研究袜子贩卖机，路人差点报警，几个大叔围上来问这机器能不能出穿过的，气得她抄起文件夹赶人。', t: '罗森便利店, 贩卖机, 吞币, 薯片区, 袜字暗号' },
+        cai: { ll: [190, 990], n: '老城区菜市场', l: '街区 · 日常', c: '#7cc76a', i: '🥬', p: '临江市老城区菜市场', fn: '兔田妈妈采购战场、女儿们的脚被蹭味现场', a: '菜摊湿漉漉，鱼腥味和葱蒜味混着；兔田妈妈挑菜砍价，背影利落，脚边的小推车塞满菜和半只鸡。市场大门左侧常年停着几辆三轮车——顺路的大叔们，其实是算准了她每天几点来买菜，好偶遇那些来帮提菜的女儿们。', e: '兔田妈妈砍价时被认出是兔兔直播间的妈妈，大叔们围上来问女儿脚上那双袜子哪买的，她笑着打太极，扭头护住身后：问袜子可以，离我闺女远点。市场深处有个摊位卖按摩袜，摊主神秘地压低声音：穿过的更值钱，越久越有那味儿。', t: '老城区菜市场, 买菜砍价, 按摩袜摊, 蹭味, 三轮车' },
+        kuaidi: { ll: [190, 1350], n: '快递驿站', l: '街区 · 日常', c: '#f2b06a', i: '📦', p: '临江市老城区快递驿站', fn: '原味丝袜中转站、指定穿法定制单集散地', a: '货架上一排排快递箱，标签写着定制、带味、指定穿法、穿满三天勿洗的暗号；老板是个戴老花镜的大叔，见怪不怪，分到写着急件冷藏的箱子时会特意先放进冰柜，嘀咕一句这是要的鲜货。柜台下压着一本泛黄笔记本，记着哪位姑娘的袜号、脚感、回头客。', e: '一箱原味丝袜被错送到隔壁大叔家，大叔拆开当场社死，连环call炸了驿站——结果电话接通语气反而软了：这箱袜子你们还有同款吗，没有的话这箱我留着，我按原价付。驿站深夜收到一箱袜子，箱底压着一张脚奴名单，老板看了一眼塞回箱底，什么都没说。', t: '快递驿站, 原味中转, 指定穿法, 定制箱, 行话账本' },
+        shequ: { ll: [420, 250], n: '社区医院', l: '街区 · 医疗', c: '#5fcfb8', i: '🏥', p: '临江市老城区社区医院', fn: '巧可出诊点、健康体检、脚气门诊流量王', a: '白墙消毒水味，输液室电视机放着养生节目；走廊尽头诊室门上贴着脚部专科手写牌，候诊椅上坐满戴工牌的大叔，人手一双脱下来的鞋，眼巴巴盯着诊室门。门框上挂着锦旗：妙手回春，脚感一流——全体脚奴敬赠，被巧可反扣着说太羞耻。', e: '巧可给女主播做脚部体检，顺便推销原味袜健康指南，被护士长白眼：你是医生不是带货的。有男社畜拿脚气当借口来体检，被巧可一眼看穿你是来看脚的还是来闻袜子的，他当场认罚三盒脚膜，交完钱又小声问脚膜能指定姑娘用过的吗，被病历本拍出去。', t: '社区医院, 脚部专科, 脚气门诊, 体检, 候诊' },
+        mojie: { ll: [420, 620], n: '魔界保健室', l: '街区 · 医疗', c: '#b39aec', i: '🩹', p: '魔界·保健室走廊尽头（巧可迷路地）', fn: '巧可的魔界大本营、体检验脚、跨域门诊', a: '门牌写着魔界文字，消毒水味里混着甜腻气息，墙上挂着本医生什么都查的锦旗，角落还绣着脚感优先四个小字；走廊上放着一台老式量脚器，刻度表磨得发亮，两侧木地板被魔界脚奴们跪出两道浅浅的膝痕。', e: '巧可抱GPS在人间迷路，边跑边骂：魔界的路我闭着眼都能走，你们人间的门怎么都长得一样。等她冲回保健室，门口已经跪着三个排队验脚的大叔，她抄起听诊器敲桌：排队，本医生先去洗个手。有人门口留白袜附字条找本医生验脚出价面议，她气得跺脚，跺完又偷偷把袜子收进抽屉。', t: '魔界保健室, 魔界文字, 跨域门诊, 量脚器, 魔界大本营' },
+        guangchang: { ll: [420, 990], n: '市民文化广场', l: '街区 · 公共', c: '#4fb0d8', i: '⛲', p: '临江市中心·喷泉广场', fn: '嘉然白袜练舞喷泉、露天舞台、男粉望远镜区', a: '喷泉夜里亮着彩灯，水花溅到台阶上，大理石被踩得温润；广场舞方阵和练舞少女各占一角，白袜与舞鞋齐飞。喷泉外围常年架着一排长枪短炮——不是记者，是一群自带望远镜三脚架的大叔，说是摄影爱好者，构图却永远只框住一双脚。', e: '嘉然练舞时白袜踩进喷泉边积水，湿透的白袜贴着脚背，她脚趾在水里蜷了蜷，外围摄影师齐刷刷按下快门，闪光灯亮成一片。有土豪当场转账要包月，被路过的东雪莲一记眼刀瞪回去：本小姐的公司，轮得到你们点菜。台阶上晒着的白袜被风刮进喷泉，成了喷泉限定款。', t: '市民文化广场, 喷泉, 广场舞, 白袜练舞, 望远镜' },
+        binjiang: { ll: [420, 1350], n: '滨江路', l: '街区 · 公共', c: '#7cc7e8', i: '🌊', p: '临江市·江边马路牙子', fn: 'saba光脚领地、摆烂晒太阳、脚气竞价', a: '江风大，马路牙子被晒得发烫，saba光脚踩上去又缩回来；黄昏时江面反光，把她的影子拉得很长。她常坐的那截马路牙子被男粉自发用粉笔圈了出来，写着：鲨鲨晒太阳专用位，旁人勿坐——闻味道也不行。', e: 'saba光脚躺在马路牙子上晒太阳，路过的狗凑过来闻她的脚，她炸毛：鲨鲨才不给你闻。赶走狗转头又冲蹲在十米外的男粉喊：你们也一样。钓鱼佬递冰棍套近乎问脚不烫吗，她一口咬住冰棍踩了踩石墩：烫才有味道，懂不懂啊大叔。', t: '滨江路, 马路牙子, 江边, 晒太阳, 光脚领地' },
+        tiyuguan: { ll: [650, 250], n: '星海体育馆', l: '街区 · 娱乐', c: '#9db8f0', i: '🏟️', p: '临江市·星海体育馆后台与自助餐区', fn: '星街堵门、玛琳护甜点、AZKi找炒面、后台邂逅', a: '后台通道窄长，灯光刺眼，墙边堆着器材箱；自助餐区长桌摆满食物，奶油甜点区被玛琳划为本船长的领地，餐盘旁竖着一面小旗：甜点与黑丝，皆本船长私产。更衣室门口挂着无关男士请止步的牌子，牌子下面却总有几双男鞋。', e: '自助餐区有个大叔趁乱想偷摸玛琳换下的黑丝，被她叉子一挑甩回去，异色瞳一瞪：敢动船长的甜点和袜子，都得跳海。她慢悠悠补一句：不过你要是肯去码头搬一箱提拉米苏来，倒是可以赏你闻一口。深夜走廊里只剩一只落单的高跟鞋，第二天出现在失物招领处。', t: '星海体育馆, 后台, 自助餐区, 甜点区, 更衣室' },
+        ktv: { ll: [650, 620], n: '量贩KTV', l: '街区 · 娱乐', c: '#ec6fa5', i: '🎶', p: '临江市·量贩KTV', fn: '歌姬专属包厢、光脚打拍安可区', a: '灯光转成彩球，茶几上摆着果盘和麦；隔音门一关就是另一个世界，点歌屏上全是苦情歌。包厢门口摆着一排小马扎——那是蹲点听歌的大叔们的专属座位，保洁大叔每次都默默摆整齐，还不忘在下面垫张报纸。', e: '星街和时乃空合唱到兴起，脱了高跟鞋光脚踩在沙发上，白袜脚趾跟着节拍点，门缝外的马扎上坐满了人，谁也不敢出声。有人偷拍歌姬的脚被保安请走，保安把手机还回去前自己也看了两眼，咳嗽一声：这张构图不错，删了怪可惜的。', t: '量贩KTV, 歌姬包厢, 光脚打拍, 马扎听歌, 安可区' },
+        dianjing: { ll: [650, 990], n: '电竞网吧', l: '街区 · 娱乐', c: '#9db8f0', i: '🖥️', p: '临江市·老城区电竞网吧', fn: '阿库娅0-10电竞舱、哭包直播、袜子赌注', a: '机箱风扇嗡嗡响，屏幕光映在脸上，女仆装的阿库娅抱着键盘嚎；包间里泡面味和烟味混着，她的专属机位旁立着随时能哭的抱枕。机位后面常年围着一圈观战的大叔，不是看操作——是等她打哭了蹬袜子。', e: '阿库娅0-10翻车拍桌哀嚎，弹幕笑疯看你哭比看片还上头，礼物反而刷不停。网吧老板给常驻哭包留了专属机位还送会员卡，卡上印着余裕余裕，背面写着可兑换观看哭包直播一次或闻袜一次（需本人同意），被她发现后红着脸没收，改天又偷偷还回去，背面多了一行小字：闻袜那条划掉。', t: '电竞网吧, 0-10, 哭包, 组装机位, 袜子赌注' },
+        yeshi: { ll: [650, 1350], n: '江堤夜市', l: '街区 · 娱乐', c: '#b39aec', i: '🍢', p: '临江市江堤·夜市一条街', fn: 'Bae掷骰子、大排档醉酒、原味袜黑市', a: '霓虹灯串成片，烧烤烟弥漫，塑料桌椅沿江摆开；骰子摊、套圈摊、唱歌摊挤在一起，人声鼎沸。夜市最深处藏着一个不起眼的袜子摊，摊主是个戴草帽的大叔，竹筐里码着一排密封袋，袋上贴着姑娘们的直播ID——熟客都知道，这是原味黑市。', e: 'Bae蹲在路边掷骰子选中路人，非要请对方吃饭，骰子说了算，谁也拦不住。大排档里有个姑娘喝醉脱鞋晾脚，那股味一飘开，邻桌男客不但不躲反而凑过来：姐这味够正，今晚这桌我请了。袜子摊前排着长队，有个社畜买完当场拆袋深吸一口，被提醒城管来了，抱着袜子就跑。', t: '江堤夜市, 大排档, 袜子黑市, 骰子摊, 草帽摊主' },
+        qinai: { ll: [870, 250], n: '七奈画稿直播间', l: '街区 · 擦边', c: '#ec6fa5', i: '🖌️', p: '临江市·某公寓单间画室', fn: 'R18软色情画室、画脚课、留白解锁直播', a: '数位屏、压感笔、满墙速写——阳台晾的白丝、沙发上的网袜腿、主角的侧影；颜料和咖啡味混着。墙角晾着一排素材袜，每只都挂着小标签：穿一整天加200，指定穿法加500，脱袜瞬间特写只给榜一。', e: '直播画脚时笔尖停在袜口——点到为止的极限，弹幕集体窒息，疯狂刷礼物求再往下画三寸。她抿唇一笑：再往下？那就要看姐姐今天心情值不值了。有富哥刷十万点名画主角的脚，被一记虎牙笑怼回去：姐姐的模特是镇店之宝，画不画姐姐说了算——说完自己先愣了两秒。', t: '画稿直播间, 压感笔, 素材袜, 留白解锁, 画脚课' },
+        kafei: { ll: [870, 620], n: '咖啡厅', l: '街区 · 暗线', c: '#c9a07a', i: '☕', p: '临江市·星桥附近咖啡厅', fn: '星探约谈桌、验脚面试角', a: '落地窗、木桌，下午的光斜斜切进杯沿；墙角那桌永远有人谈签约，桌上永远摆着两份合同和一杯凉透的咖啡。靠窗的卡座被圈内戏称为验脚面试位——想签约的姑娘先在这脱一次鞋，老板都是行家，看一眼就知道值不值。', e: '有个假星探借谈合作的名义让主播脱鞋验脚，脚还没脱就被东雪莲一句甩干脑积水别TM做管人痴怼回，合同甩他脸上。旁边桌的真行家摇摇头递来名片：那人是骗子，验脚这行当讲究的是眼缘和尊重。门口有人发脚模招募传单，注明日结只限JK，被城管没收一半，剩下的被大叔抢光。', t: '咖啡厅, 星探约谈, 验脚面试, 签约桌, 卡座' },
+        shalong: { ll: [870, 990], n: '地下直播沙龙', l: '街区 · 暗线', c: '#b39aec', i: '🎭', p: '临江市·地下负一层·私密直播沙龙', fn: '第1章铺垫·神秘直播圈·深夜验脚局·脚奴会所入口', a: '黑皮沙发、昏暗射灯，台上一位女主播直播脱袜，台下满座的男观众屏息凝神，有人举着高脚杯，杯里盛的不是酒，是刚从台上换下的袜尖蘸水——吧台叫这本日特调。吧台提供带味道的酒，杯垫上印着入座即默认接受验脚服务。', e: '沙龙的验脚拍卖环节，一位女主播把穿了一整天的黑丝当众褪下，用脚趾夹着扬了扬，底价五千起拍，最后被一个秃顶社畜用三万拍走，他捧到手热泪盈眶，当场对着袜口深吸一口。主办方递来VIP黑卡：楼下还有一层——脚奴会所，验货通过的姑娘一晚上能顶你三场直播。', t: '地下直播沙龙, 深夜验脚局, 脚奴会所, 验脚拍卖, 特调' },
+        zuyu: { ll: [870, 1350], n: '临江丝足足浴城', l: '街区 · 暗线', c: '#f2a0c8', i: '♨️', p: '临江市·足浴城', fn: '香脚护理天堂、指定袜泡脚VIP区、男客朝圣所', a: '玫瑰浴盐、SPA床，技师戴着白手套端出木盆；大厅里飘着精油香，价目表写着指定袜子泡脚加50（袜子自带，需消毒证明）。大堂沙发区常年坐着一排西装大叔，人手一份报纸，目光却全往VIP包厢飘——那里泡的，是各平台下播后来养脚的女主播。', e: '女主播躺在SPA床上，女技师失手捏到她的脚心，她笑出声，隔壁包厢传来一片吞咽口水的声音，VIP男客把耳朵贴在毛玻璃上，被经理敲玻璃提醒注意素质。有男客点名要指定袜子泡脚，经理面不改色：加钱，袜子自带，不过得先说好，只准泡，不准偷喝泡脚水。', t: '临江丝足足浴城, 香脚护理, 指定袜泡脚, VIP区, 朝圣所' }
+      },
+      C: [
+        { f: 'laojie', t: 'luosen', s: 's' }, { f: 'luosen', t: 'cai', s: 's' }, { f: 'cai', t: 'kuaidi', s: 's' },
+        { f: 'shequ', t: 'mojie', s: 's' }, { f: 'mojie', t: 'guangchang', s: 's' }, { f: 'guangchang', t: 'binjiang', s: 's' },
+        { f: 'tiyuguan', t: 'ktv', s: 's' }, { f: 'ktv', t: 'dianjing', s: 's' }, { f: 'dianjing', t: 'yeshi', s: 's' },
+        { f: 'qinai', t: 'kafei', s: 's' }, { f: 'kafei', t: 'shalong', s: 's' }, { f: 'shalong', t: 'zuyu', s: 's' },
+        { f: 'laojie', t: 'shequ', s: 'd' }, { f: 'cai', t: 'shequ', s: 'd' }, { f: 'kuaidi', t: 'shequ', s: 'd' },
+        { f: 'luosen', t: 'qinai', s: 'd' }, { f: 'binjiang', t: 'yeshi', s: 'd' }, { f: 'ktv', t: 'qinai', s: 'd' }
+      ],
+      lg: '<div class="lg-t">区 域 图 例</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#7cc7e8"></div>日常 · 商贸街区</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#5fcfb8"></div>医疗 · 公共设施</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#9db8f0"></div>娱乐 · 消遣场所</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#b39aec"></div>黑市 · 暗线场所</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#ec6fa5"></div>擦边 · 内容据点</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#c9a07a"></div>约谈 · 星探角</div>',
+      ti: { t: '临江市 · 城区地标', s: 'LINJIANG · CITY', i: '🌆' },
+      st: { third: '16', l1: '连线', l2: '地点', l3: '街区' }
+    };
+
+    /* =================== 专属场景（22） =================== */
+    var ZS = {
+      W: 1600, H: 1000,
+      D: {
+        tianshi: { ll: [150, 230], n: '天使白袜试炼间', l: '第1章 · 专属', c: '#ec6fa5', i: '🕊️', p: '临江市某舞蹈室改造·白袜试炼间', fn: '第1章·超天酱脚尖蹭镜头角度培训、白袜营业特训', a: '四面补光灯加一面落地镜，地板铺白绒毯；墙上贴着超天酱手绘的角度提示条——脚尖蹭镜头的弧度、脚趾蜷缩的时机、袜底压镜面停留的秒数，全标了红圈。角落多了一台验货小窗，玻璃上糊着防偷看贴纸。', e: '男粉在验货小窗外排号，每人领一个号码牌，能看十秒超天酱的白袜脚特训。她练脚尖蹭镜头练到脚趾蜷起，白袜袜底在镜面上蹭出一道热气印，弹幕瞬间炸成烟花。她忽然把穿了一小时的白袜当众脱下，隔着玻璃冲外面晃了晃：想要的话下播来找阿P登记。', t: '天使白袜试炼间, 角度培训, 脚尖蹭镜头, 验货小窗, 特训' },
+        shenxun: { ll: [150, 530], n: '周三验脚审讯室', l: '第1章 · 专属', c: '#b39aec', i: '👠', p: '临江市旧写字楼·改造审讯室', fn: '第1章·东雪莲验脚权兑现地、黑丝验货仪式', a: '一盏台灯、一把审讯椅、一张白桌；桌角摆着东雪莲的验脚权合约，墙上贴着排队验货四个大字，字下面用口红添了一行小字：本小姐心情好，才赏你们闻十秒。', e: '男脚奴跪在审讯椅前排成一溜，每人举着编号牌。东雪莲把黑丝脚高高翘到桌上，趾尖一勾：今天规则改了，谁先闻出本小姐今早喷的香水尾调，谁就多赏三十秒。有人报错答案被高跟鞋跟敲手背。验完她把黑丝转了一圈：今天这双谁出价高归谁——最后那晚，她把新换的黑丝收进口袋：这双不卖。', t: '周三验脚审讯室, 验脚权, 黑丝验货, 排队验货, 编号牌' },
+        penquan: { ll: [150, 830], n: '喷泉玉足练舞房', l: '第2章 · 专属', c: '#4fb0d8', i: '💃', p: '临江市市民文化广场·喷泉边', fn: '第2章·嘉然白袜练舞、踩水湿袜直播', a: '喷泉夜里亮着彩灯，水花溅到大理石台；嘉然的练舞鞋和白袜叠在台阶边。台阶下的男粉自带小板凳排排坐，人手一副望远镜，纪律好得像小学生早操。', e: '嘉然练舞时白袜踩进积水，湿透的白袜紧贴脚背，脚趾在水里蜷了蜷，水珠顺着袜沿往下滴，台下望远镜齐刷刷抬高两寸。她拗不过弹幕求湿袜印，用湿袜脚在镜头前轻轻按了一下，留下一个水印，弹幕当场疯掉。有人想捡她换下的湿袜，被同伴一把按住：这是要留到签售会抽奖的。', t: '喷泉玉足练舞房, 白袜练舞, 踩水湿袜, 白袜踩水舞, 望远镜' },
+        fangzou: { ll: [150, 1130], n: '防走光发明舱', l: '第2章 · 专属', c: '#b39aec', i: '🧵', p: '临江市塔菲工作室·发明舱', fn: '第2章·塔菲防走光发明试验、裙夹走光事故现场', a: '焊枪、3D打印件、半成品裙夹；墙角堆着塔菲的黑过膝袜，其中一只烧了个洞，被她裱在相框里当历史性事故记录。桌上摊着一本有耻lady防走光手账，封面画着一双炸毛的脚。', e: '塔菲发明自动防走光裙夹，实验时夹住裙摆没走光，却把黑过膝袜袜口崩开一大截，镜头正好怼着她蹲下的背影，男粉当场看直眼。她红着脸捂袜口：刚才那十秒的录像谁截屏了自觉删掉——删不掉就拿一个月工资来赎。男粉不光没删，还给她起外号叫发明の走光姬。', t: '防走光发明舱, 裙夹, 走光事故, 袜口加固, 试验' },
+        baiss: { ll: [150, 1400], n: '白丝晾晒小屋', l: '第3章 · 专属', c: '#ec6fa5', i: '🧺', p: '临江市老城区·露西娅出租屋阳台', fn: '第3章·露西娅洗白丝、晾白丝、病娇验货屋', a: '小小的出租屋，阳台上晾着一排刚洗的白丝，滴着水珠；屋角纸箱里码着标好日期的验货款，每双都用丝带绑好，标签写着当日新鲜、指定穿法加500。门后小镜子背面贴着一张泛黄字条：露西娅的袜子，只有露西娅能决定给谁。', e: '男粉按档期上门取验货款，露西娅翘着白丝脚让他们在门口排队，一只一只出示：看可以，闻要加钱，摸——她眯起眼，病娇式微笑慢慢绽开：摸了的人，就永远留下来陪露西娅哦。有胆大的出指定穿法的价要她穿满一整天，她歪头认真问：那露西娅走路的时候，你会在后面跟着闻吗。', t: '白丝晾晒小屋, 洗白丝, 晾白丝, 验货款, 验货档期' },
+        shupian: { ll: [340, 230], n: '薯片脚趾游戏屋', l: '第3章 · 专属', c: '#7cc7e8', i: '🥔', p: '临江市·街机厅夹层', fn: '第3章·古拉脚趾夹薯片挑战屋、脚趾整活互动', a: '满地薯片袋，游戏机改装的挑战台；古拉赤脚盘在软垫上，脚趾灵巧地夹起一片薯片，往空中一抛稳稳接住。墙上挂着鲨鲨脚趾挑战纪录榜，第一名写着连夹三十片，署名是一个歪歪扭扭的爪印。', e: '男粉挑战让鲨鲨用脚趾喂你一片薯片，赢了送签名袜，输了买一年薯片。古拉脚趾夹起薯片慢悠悠伸到挑战者嘴边，等人张嘴才啪地弹回自己嘴里：鲨鲨的脚趾只喂自己。有男粉连输三局输得裤兜掏空，她才大发慈悲夹了一片递过去：就一片啊，看在你输得这么惨的份上。', t: '薯片脚趾游戏屋, 脚趾夹薯片, 挑战纪录榜, 整活互动' },
+        quanniang: { ll: [340, 530], n: '犬娘脚趾猜猜房', l: '第4章 · 专属', c: '#c9a07a', i: '🐾', p: '临江市·宠物主题民宿隔间', fn: '第4章·茸茸猜哪根脚趾动了游戏屋、软软单腿袜鉴定', a: '软垫铺地，运动鞋脱了一排，鞋口朝外整整齐齐；茸茸盘腿坐着，短袜脚在镜头前晃来晃去，软软的单腿袜挂在椅背上当镇店之宝，标签写着本店只鉴不卖。', e: '男粉隔着玻璃窗猜茸茸哪根脚趾动了，猜对能获得软软姐的单腿袜鉴定三分钟，猜错要跪在窗外学三声狗叫。茸茸脚趾动得飞快，把一群大叔耍得团团转，笑得在软垫上打滚。软软单手叉腰当裁判，网袜腿一翘：Fuwawa的袜子，只给猜对三次以上的赢家闻。', t: '犬娘脚趾猜猜房, 猜脚趾, 单腿袜鉴定, 宠物民宿, 游戏屋' },
+        shaitai: { ll: [340, 830], n: '滨江光脚晒台', l: '第5章 · 专属', c: '#7cc7e8', i: '☀️', p: '临江市滨江路·马路牙子晒太阳角', fn: '第5章·saba光脚晒太阳、雌小鬼脚气竞价', a: '江风大，马路牙子晒得发烫；saba光脚搭在石墩上，脚趾头对着太阳张开，像在晒被子。石墩下摆着一块手写价目牌：闻脚100一次，踩脸500一次，闻完喊爸爸白送（鲨鲨高兴的话）。', e: '男粉举着钞票在十米外排队，saba光脚丫一翘斜眼瞥过来：今天晒了三小时，脚气足得很——但鲨鲨心情不好，起价五百。有人咬牙付了跪下凑近，她忽然把脚一缩：骗你的，鲨鲨才不随便给人闻。看人失望又慢悠悠补一句：不过你要是愿意陪鲨鲨晒到日落，可以考虑让你闻一秒。', t: '滨江光脚晒台, 光脚晒太阳, 价目牌, 雌小鬼, 脚气竞价' },
+        tuihuan: { ll: [340, 1130], n: '腿环鉴赏室', l: '第5章 · 专属', c: '#9db8f0', i: '🎀', p: '临江市·和风鉴赏室', fn: '第5章·吹雪腿环展示、隔间验味直播', a: '榻榻米、屏风、茶香；墙边立着一排亚克力盒，每只盒里躺着一条吹雪换下的腿环，编号归档。屏风前设一张验味台，台上摆着一条今日换下的腿环，用白瓷碟托着，像供着什么珍品。', e: '男粉排号验味，吹雪坐在屏风后，尾巴慢悠悠地扫：今日这条穿了六个时辰。想闻——先过三关：跪正、闭眼、只许吸一口。有男粉忍不住偷吸第二口，她尾巴一甩把碟子收走：犯规，出去重新排队。有人豪掷千金想买今日腿环，她端起碟子自己先轻轻嗅了一下，摇头：这条，本狐要自己留着。', t: '腿环鉴赏室, 腿环展示, 验味台, 隔间验味, 过三关' },
+        tutu: { ll: [340, 1400], n: '兔兔蹦床PK台', l: '第6章 · 专属', c: '#f2a0c8', i: '🐰', p: '临江市·蹦床馆·PK专区', fn: '第6章·佩克拉蹦床擦边PK、弹力值竞猜', a: '蹦床缠着彩灯，四角堆着兔耳发箍和奖杯；护网上挂着一块今日弹力值竞猜板，上面写满男粉的押注金额和猜中可获兔兔签名袜一双。', e: '佩克拉蹦床直播时裙摆飞扬，黑裤袜绷出弧线，护网外的男粉押注押得眼睛都红了：蹦高一点，再高一点。她落到蹦床边缘一个趔趄，弹幕瞬间爆炸，她哼一声站稳：Peko刚才那是故意秀的弹力。有男粉押中袜口会露多少毫米，她瞪大眼睛：Peko穿的是防走光裤袜——话没说完，袜口已经卷到了脚踝上方。', t: '兔兔蹦床PK台, 蹦床PK, 弹力值竞猜, 护网押注, 彩灯' },
+        mama: { ll: [530, 230], n: '妈妈系汤足食堂', l: '第6章 · 专属', c: '#f2b06a', i: '🍜', p: '临江市·兔田妈妈深夜食堂', fn: '第6章·兔田妈妈别饿着投喂点、女儿们的光脚食堂', a: '老灶台、保温桶、手写菜单今日特供乌鸡汤加白袜检查；灶火暖黄，空气里是炖汤的香。灶台边放着一把小板凳和一条白毛巾，兔田妈妈给每个来吃饭的女儿都备好了饭后暖脚的位置。', e: '男粉排长队陪女儿们吃饭，兔田妈妈握着锅铲守门：想蹭饭？先过了我这关——报上你最喜欢的女儿的袜号，答错扣饭。有个大叔张口就答，她眼睛一亮：行家啊，进来吧。有女儿光脚在食堂地板踩出油印，她拎着耳朵训人，一边训一边端来一盆热水给她泡脚：脚凉着怎么跳舞，先泡。', t: '妈妈系汤足食堂, 深夜食堂, 乌鸡汤, 泡脚热水, 投喂' },
+        nvpuh: { ll: [530, 530], n: '女仆翻车电竞舱', l: '第7章 · 专属', c: '#9db8f0', i: '🖥️', p: '临江市·电竞网吧·女仆专区', fn: '第7章·阿库娅0-10翻车现场、哭腔补偿验脚', a: '机箱风扇嗡嗡响，女仆装阿库娅的专属机位立着随时能哭的抱枕；屏幕贴纸写着余裕余裕，底下被人用马克笔加了一行哭哭余裕。机位脚边放着一个竹篮，篮里躺着几双她打哭后随手蹬掉的袜子。', e: '阿库娅连跪三把0-10翻车，拍桌嚎啕大哭，弹幕笑疯看你哭比看片还上头，礼物反而刷得更凶。她边哭边把脚从拖鞋里蹬出来，不小心踢翻竹篮，袜子滚出来，弹幕狂刷求特写。她红着眼眶破罐子破摔：哭都哭了，不差这一下，把黑袜脚往镜头前一伸。', t: '女仆翻车电竞舱, 翻车现场, 哭哭余裕, 补偿验脚, 袜子赌注' },
+        suxie: { ll: [530, 830], n: '画脚速写室', l: '第7章 · 专属', c: '#b39aec', i: '✏️', p: '临江市·画室·速写角', fn: '第7章·羽衣画脚课、脚部速写私教', a: '画架、素描纸、铅笔灰，墙上钉满女孩子们的脚部速写；最中间一张是主角的侧影，铅笔痕还没干透。墙角放着一把矮凳，凳上搁着一只被画过无数次的石膏脚模，脚趾缝里卡着断掉的铅笔芯。', e: '羽衣的脚部速写私教课一座难求，男学员排号排到下周。她蹲下来示范，铅笔尖虚悬在模特脚背上：画脚，要画出温度和气味——你们先闭上眼睛，闻一闻空气里那种被穿了一整天的味道，再落笔。满屋子大叔闭眼猛嗅，画出来的脚全带着迷离滤镜。深夜她对着主角那张侧影，铅笔悬在半空迟迟没落下。', t: '画脚速写室, 脚部速写, 速写私教, 石膏脚模, 笔尖虚悬' },
+        geji: { ll: [530, 1130], n: '歌姬高音房', l: '第8章 · 专属', c: '#9db8f0', i: '🎼', p: '临江市·录音棚·高音练习房', fn: '第8章·星街、时乃空练歌、安可脚尖小剧场', a: '隔音棉、话筒架、歌词本，墙角放着一盒喉糖和保温杯；落地镜前铺了一条红毯，时乃空每次练完歌都会赤脚站在上面，让脚尖踩一踩舞台的温度。', e: '星街飙到高音C时录音棚的玻璃都在颤，门外偷听的男粉当场跪了一片。时乃空则走安可路线，练完歌赤脚踩在红毯上，脚尖踮起又落下，慢悠悠哼摇篮曲，外面的大叔全睡着了，东倒西歪躺了一地。有男粉想偷摸她换下的白袜，被星街一记高音震得耳鸣。', t: '歌姬高音房, 高音练习, 安可红毯, 录音棚, 高音C' },
+        heisi: { ll: [530, 1400], n: '黑丝船长舱', l: '第9章 · 专属', c: '#ec6fa5', i: '⚓', p: '临江市·主题KTV·海盗船长包厢', fn: '第9章·玛琳黑过膝袜验货夜、船长舱投喂提拉米苏直播', a: '船舵装饰、航海地图墙纸、船长椅；玛琳的黑过膝袜搭在椅背，像一面海盗旗。桌上堆着整盘提拉米苏，旁边立着一块木牌：想吃甜点？拿上船验货券来换。', e: '男粉排号上船验货，玛琳坐在船长椅上把黑丝脚翘到桌沿：今日验货主题——深海八小时，这双袜子陪本船长在直播间站了八小时，气味浓郁得能当航海图。她允许男粉隔着半米闻，闻到一半忽然收脚：停，你闻太久了，扣一块提拉米苏。深夜她把黑丝叠好放进保险箱锁了三道：这双，谁出价都不卖。', t: '黑丝船长舱, 黑丝验货, 提拉米苏, 上船验货券, 航海图' },
+        chuangbian: { ll: [720, 230], n: '窗边清唱角', l: '第9章 · 专属', c: '#5fcfb8', i: '🪟', p: '临江市·咖啡馆窗边角落', fn: '第9章·AZKi清冷歌姬的角落、温水脚趾打拍日常', a: '靠窗的小桌，半杯温水永远放在同一位置；窗外是街灯，她唱歌时谁也不敢打断。桌下放着一双她换下来的白袜，叠得整整齐齐，旁边压着一张手写卡片：问袜勿扰，点歌请递纸条。', e: '男粉隔着三张桌听墙角，规矩得像在听音乐会——因为她立过规矩：吵到我的拍子，永远拉黑。她清唱时赤脚在桌下打拍子，白袜脚趾一蜷一放，那双换下的袜子被胆大的男粉偷摸捡起想塞进兜里，被AZKi低头看了一眼，淡淡道：放下，那只不卖。隔壁桌立刻有人递纸条问那只袜子多少钱，她回了一行字：问就是，无价。', t: '窗边清唱角, 清唱, 温水脚趾, 打拍, 点歌纸条' },
+        xuejian: { ll: [720, 530], n: '雪见酒台', l: '第10章 · 专属', c: '#a8c8f0', i: '🍶', p: '临江市·居酒屋·雪见清酒专柜', fn: '第10章·菈米酒醉褪袜、微醺醉脚验货台', a: '木柜台、暖帘、雪见清酒瓶排成一排；柜台前设一张矮榻，菈米醉意上来时会把脚搁在矮榻边缘，过膝袜褪到脚踝，白袜在夜风里晃。暖帘上绣着一朵雪见花，花心绣着小字：本小姐的脚，只给懂酒的人闻。', e: '男客排号陪大小姐喝一杯，菈米喝到微醺把过膝袜慢慢褪到脚踝：谁能让本小姐喝高兴了，这只脚就赏他闻十秒。有的大叔使出浑身解数讲段子，她听得直笑，脚趾也跟着一蜷一蜷。有人借酒劲想偷看更多，她一记眼刀甩过去，酒杯咚地墩在柜台上：再看，本小姐就把你泡进雪见清酒里当个酒脚奴。', t: '雪见酒台, 雪见清酒, 酒醉褪袜, 醉脚验货, 矮榻' },
+        meimo: { ll: [720, 830], n: '魅魔体检室', l: '第10章 · 专属', c: '#5fcfb8', i: '💉', p: '临江市·魔界保健室·体检隔间', fn: '第10章·巧可体检验脚、脚感评分调教课', a: '医疗床、听诊器、体温计墙，门牌写着魔界文字；走廊上放着一台老式量脚器，刻度表磨得发亮。墙上挂着一块今日脚感评分榜，榜首写着五星：脚感醇厚，袜气绵长，署名是一个羞红的爪印。', e: '巧可给男社畜们做脚部健康体检，听诊器越按越低，最后按到自己胸口，她脸一红，一本正经：病人心跳太快，需要先冷静。体检的隐藏项目是脚感评分——她捏着每个姑娘的脚，从足弓、脚踝到脚背逐项打分，评到高分眼睛发亮。深夜她翻评分册，翻到某一页笔尖停了，那页只写了四个字还没写完——他的脚。', t: '魅魔体检室, 体检, 脚感评分, 量脚器, 评分榜' },
+        huya: { ll: [720, 1130], n: '虎牙留白画坊', l: '第11章 · 专属', c: '#ec6fa5', i: '🐯', p: '临江市·七奈画稿直播间（加租半层改造）', fn: '第11章·七奈R18软色情画房、加钱解锁调教直播间', a: '画架上钉着半成品——裙摆被铅笔挑到袜口三寸，画到关键处戛然而止，留白处用红笔圈了个加钱解锁；墙角晾着一排画脚课用的白丝、网袜，全是真货，供学员参考质感和气味。每只袜子标签上都写着闻一口加100。', e: '七奈直播画脚课，画到袜口就停笔，虎牙一露：留白，才是最高级的擦边。弹幕哀嚎刷礼物求画完，她眯眼笑得意味深长：想解锁？先让姐姐验验你们的诚意。有男社畜豪掷十万点名要她画主角的脚，她铅笔尖点了点屏幕：姐姐的模特，是镇店之宝——出多少都不卖。', t: '虎牙留白画坊, 画脚课, 留白, 加钱解锁, 素材袜' },
+        touzi: { ll: [720, 1400], n: '骰子天命脚奴局', l: '第11章 · 专属', c: '#b39aec', i: '🎲', p: '临江市·江堤夜市·Bae自搭骰子台', fn: '第11章·Bae混沌流直播、骰子定生死脚奴玩法', a: '一张破桌子铺红布，中央摆着三枚骰子；桌面画满格子——亲脚背、闻袜底、跪半小时、踩背三分钟、罚款请烧烤、舔脚趾缝，骰子掷到哪格，脚奴就得照办。红白黑挑染的Bae蹲在桌上，赤脚晃着骰盅，脚踝上系着一条红绳，绳上挂着一个小骰子挂坠。', e: 'Bae三枚骰子连掷三个亲脚背，被选中的大叔当场滑跪，捧起她的赤脚就要亲，她忽然把脚一收笑得前仰后合：骰子说的是亲脚背——可鲨鲨今天心情好，改成闻脚趾缝。有人掷到罚款请烧烤想赖账，她摸出更大的骰子：赖账的人要加罚用鼻子拱脚心三十下哦。深夜收摊，骰子自己滚到了踩背三分钟那格，她盯着看了很久，悄悄把骰子揣进兜里。', t: '骰子天命脚奴局, 骰子定生死, 脚奴格子, 红布桌, 骰盅' },
+        nijiao: { ll: [900, 650], n: '泥脚森林温室', l: '第12章 · 专属', c: '#7cc76a', i: '🌱', p: '公司本部·植物角扩建·法娜玻璃温室', fn: '第12章·法娜自然系首播、泥脚踩土擦边圣地', a: '半间玻璃温室，泥土垄沟整整齐齐，绿萝薄荷薰衣草挤得密密匝匝；法娜赤脚踩在松软的湿土上，脚背沾着泥点，单腿袜卷在脚踝，另一只脚还套着袜子踩在木屐上。玻璃上贴着一行小字：本温室的土，只认法娜的脚。', e: '法娜直播时把赤脚慢慢踩进湿泥里，脚趾陷进去又拔出来，带出一串泥，泥水顺着脚背的纹路往下淌：脚踩到土里的感觉，比什么擦边都踏实。有男粉寄来一袋家乡土想让她替自己踩踩故乡，她真把土铺进垄里赤脚踩了两下。深夜她坐在田埂边擦脚，从脚背擦到脚趾缝，轻声对那双脚说：你们好像也喜欢这里。', t: '泥脚森林温室, 泥脚踩土, 踩土直播, 家乡土, 玻璃温室' },
+        zhongyan: { ll: [900, 950], n: '白袜终演天台', l: '第12章 · 专属', c: '#f2a0c8', i: '🌟', p: '公司天台·清流灯牌下', fn: '第12章·超天酱归心终演、告别旧天使白袜签售夜', a: '天台的晾衣绳换成了一排白炽灯串，清流灯牌立在一旁；正中摆着一张旧课桌，桌上放着一只玻璃罐，里面叠着一双双超天酱签过名的白袜，每双都标着日期和一句给最亮的星星。她光脚盘腿坐在桌上，白袜整整齐齐地叠在膝边，脚踝上系着一条褪色的红丝带。', e: '终演夜，超天酱把脚伸到镜头前，白袜在灯串下白得发光：今晚不卖艺，卖告别。她抽出一双穿了一整天的白袜，对着镜头慢慢卷起来，卷到一半袜口翻出一点汗湿的痕迹，她停住，声音有点抖：这双，想留给一个人。弹幕疯狂起哄问留给谁，她红着脸把袜子塞回玻璃罐，死死不肯说。深夜人都散了，她一个人坐在天台上，把袜底那只留白的袜子摸出来轻轻贴了贴脸颊。', t: '白袜终演天台, 告别旧天使, 白袜签售, 灯串, 玻璃罐' }
+      },
+      C: [
+        { f: 'tianshi', t: 'shenxun', s: 's' }, { f: 'shenxun', t: 'penquan', s: 's' },
+        { f: 'penquan', t: 'fangzou', s: 's' }, { f: 'fangzou', t: 'baiss', s: 's' },
+        { f: 'shupian', t: 'quanniang', s: 's' }, { f: 'quanniang', t: 'shaitai', s: 's' },
+        { f: 'shaitai', t: 'tuihuan', s: 's' }, { f: 'tuihuan', t: 'tutu', s: 's' },
+        { f: 'mama', t: 'nvpuh', s: 's' }, { f: 'nvpuh', t: 'suxie', s: 's' },
+        { f: 'suxie', t: 'geji', s: 's' }, { f: 'geji', t: 'heisi', s: 's' },
+        { f: 'chuangbian', t: 'xuejian', s: 's' }, { f: 'xuejian', t: 'meimo', s: 's' },
+        { f: 'meimo', t: 'huya', s: 's' }, { f: 'huya', t: 'touzi', s: 's' },
+        { f: 'nijiao', t: 'zhongyan', s: 's' },
+        { f: 'tianshi', t: 'shupian', s: 'd' }, { f: 'baiss', t: 'tutu', s: 'd' },
+        { f: 'mama', t: 'chuangbian', s: 'd' }, { f: 'heisi', t: 'chuangbian', s: 'd' },
+        { f: 'nijiao', t: 'mama', s: 'd' }, { f: 'zhongyan', t: 'touzi', s: 'd' }
+      ],
+      lg: '<div class="lg-t">章 节 图 例</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#ec6fa5"></div>第 1/3/5/9/11/12 章</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#b39aec"></div>第 1/2/7/11 章</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#4fb0d8"></div>第 2 章</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#7cc7e8"></div>第 3/5 章</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#c9a07a"></div>第 4 章</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#f2a0c8"></div>第 6/12 章</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#f2b06a"></div>第 6 章 · 食堂</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#9db8f0"></div>第 5/7/8 章</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#5fcfb8"></div>第 9/10 章</div>' +
+        '<div class="lg-i"><div class="lg-d" style="background:#7cc76a"></div>第 12 章 · 温室</div>',
+      ti: { t: '专属场景 · 十二章节', s: 'EXCLUSIVE · CH.1-12', i: '🎬' },
+      st: { third: '12', l1: '连线', l2: '地点', l3: '章节' }
+    };
+
+    /* =================== 分区定义 =================== */
+    var CITY_GROUPS = [
+      { t: '西市口商圈', c: '#4fb0d8', keys: ['laojie', 'luosen', 'cai', 'kuaidi'] },
+      { t: '老城民生区', c: '#5fcfb8', keys: ['shequ', 'mojie', 'guangchang', 'kafei'] },
+      { t: '滨江地带', c: '#7cc76a', keys: ['binjiang', 'yeshi', 'zuyu', 'tiyuguan'] },
+      { t: '东区娱乐带', c: '#b39aec', keys: ['ktv', 'dianjing', 'qinai', 'shalong'] },
+      {
+        t: '专属场景 · 章节', c: '#ec6fa5',
+        keys: ['tianshi', 'shenxun', 'penquan', 'fangzou', 'baiss', 'shupian', 'quanniang', 'shaitai', 'tuihuan', 'tutu',
+          'mama', 'nvpuh', 'suxie', 'geji', 'heisi', 'chuangbian', 'xuejian', 'meimo', 'huya', 'touzi']
+      }
+    ];
+    var GS_GROUPS = [
+      { t: '屋顶', c: '#7cc7e8', keys: ['tiantai'] },
+      { t: '一楼 · 门面', c: '#4fb0d8', keys: ['menkou', 'zoudao', 'benbu'] },
+      { t: '二楼 · 内容', c: '#ec6fa5', keys: ['zhibo', 'shafa', 'cangku'] },
+      { t: '三楼 · 生活', c: '#f2b06a', keys: ['chufang', 'faming', 'huashi'] },
+      { t: '四楼 · 机能', c: '#5fcfb8', keys: ['baojian', 'zhiwu', 'liangyi', 'bengchuang'] },
+      { t: '附楼', c: '#b39aec', keys: ['liange', 'nijiao', 'zhongyan'] }
+    ];
+
+    /* =================== 坐标（ll = [y, x]，逐行错落避免拥挤） =================== */
+    var CITY_POS = {
+      /* 西市口商圈 · 左上 */
+      luosen: [238, 178], laojie: [148, 332], kuaidi: [418, 468], cai: [298, 702],
+      /* 老城民生区 · 右上 */
+      shequ: [160, 1200], mojie: [248, 1548], guangchang: [330, 1332], kafei: [390, 1650],
+      /* 滨江地带 · 沿江北岸 */
+      binjiang: [600, 360], yeshi: [652, 668], zuyu: [586, 1024], tiyuguan: [690, 1320],
+      /* 东区娱乐带 · 江东北岸 */
+      qinai: [566, 1520], ktv: [586, 1626], shalong: [742, 1722], dianjing: [676, 1852],
+      /* 专属场景群 · 江南（椭圆式散点） */
+      tianshi: [1072, 520], penquan: [1094, 800], shenxun: [1060, 1080], fangzou: [1088, 1360], baiss: [1070, 1600],
+      shupian: [1188, 330], shaitai: [1214, 650], quanniang: [1176, 980], tuihuan: [1222, 1310], tutu: [1190, 1660],
+      mama: [1308, 300], suxie: [1336, 640], nvpuh: [1300, 980], geji: [1342, 1320], heisi: [1310, 1690],
+      chuangbian: [1428, 470], meimo: [1452, 780], xuejian: [1420, 1070], huya: [1458, 1360], touzi: [1426, 1640]
+    };
+    var GS_POS = {
+      tiantai: [150, 700],
+      menkou: [320, 300], zoudao: [320, 700], benbu: [320, 1100],
+      zhibo: [520, 300], shafa: [520, 700], cangku: [520, 1100],
+      chufang: [720, 300], faming: [720, 700], huashi: [720, 1100],
+      baojian: [880, 180], zhiwu: [880, 460], liangyi: [880, 740], bengchuang: [880, 1050],
+      liange: [1030, 300], nijiao: [1030, 700], zhongyan: [1030, 1100]
+    };
+
+    /* =================== 合并数据源 → 生成分页 =================== */
+    function allLoc() {
+      const S = {};
+      [GS, CQ, ZS].forEach(function (set) {
+        Object.keys(set.D).forEach(function (k) { S[k] = set.D[k]; });
+      });
+      return S;
+    }
+    function buildTab(w) {
+      const src = allLoc();
+      const isGs = (w === 'gs');
+      const POS = isGs ? GS_POS : CITY_POS;
+      const groups = isGs ? GS_GROUPS : CITY_GROUPS;
+      const D = {};
+      groups.forEach(function (gp) {
+        gp.keys.forEach(function (k) {
+          const v = src[k];
+          if (!v) return;
+          D[k] = { ll: POS[k], core: v.core, n: v.n, l: v.l, c: v.c, i: v.i, p: v.p, fn: v.fn, a: v.a, e: v.e, t: v.t };
+        });
+      });
+      return {
+        D: D, groups: groups,
+        W: isGs ? 1400 : 2000,
+        H: isGs ? 1140 : 1600,
+        terrain: isGs ? buildingTerrain : cityTerrain,
+        ti: isGs
+          ? { t: '公司内部 · 幸福里7号楼', s: 'COMPANY · 7TH BLDG', i: '🏠' }
+          : { t: '城区地点 · 临江市', s: 'LINJIANG · CITY MAP', i: '🌆' }
+      };
+    }
+    var CITY_TAB = buildTab('city');
+    var GS_TAB = buildTab('gs');
+
+    /* ---------- 顶部栏高度自适应（防止换行时地图被遮挡） ---------- */
+    function syncMapTop() {
+      const h = document.getElementById('h'), m = document.getElementById('map');
+      if (h && m) m.style.top = h.offsetHeight + 'px';
+    }
+    window.addEventListener('resize', syncMapTop);
+
+    /* ---------- 青粉气泡背景 ---------- */
+    (function () {
+      const c = document.getElementById('fx');
+      if (!c) return;
+      const ctx = c.getContext('2d');
+      function resize() { c.width = window.innerWidth; c.height = window.innerHeight; }
+      resize(); window.addEventListener('resize', resize);
+      const COL = ['rgba(143,212,239,', 'rgba(247,168,201,', 'rgba(179,154,236,'];
+      const P = [];
+      for (let i = 0; i < 64; i++) {
+        P.push({ x: Math.random(), y: Math.random(), r: Math.random() * 3.2 + 1.6, s: Math.random() * 0.0005 + 0.00012, a: Math.random() * 0.4 + 0.18, up: Math.random() > 0.5 });
+      }
+      function draw() {
+        ctx.clearRect(0, 0, c.width, c.height);
+        for (let i = 0; i < P.length; i++) {
+          const p = P[i];
+          p.y += (p.up ? -1 : 1) * p.s;
+          if (p.y < -0.05) p.y = 1.05;
+          if (p.y > 1.05) p.y = -0.05;
+          ctx.beginPath();
+          ctx.arc(p.x * c.width, p.y * c.height, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = COL[i % 3] + p.a + ')';
+          ctx.fill();
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    /* ---------- 启动 ---------- */
+    initMap();
+    loadTab('city');
+    syncMapTop();
+    if (document.getElementById('h') && window.MutationObserver) {
+      new MutationObserver(syncMapTop).observe(document.getElementById('h'), { childList: true, subtree: true, attributes: true });
+    }
+  </script>
+</body>
+
+</html>
